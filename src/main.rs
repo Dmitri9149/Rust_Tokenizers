@@ -3,7 +3,9 @@ use std::fs::File;
 
 fn main() {
     let txt = build_text_stage1("alice_wonderland.txt");
-    let txt = TextStage1::replace_u2581(&txt);
+    let txt = TextStage1::replace_u2581(txt);
+    let txt = TextStage1::to_lowercase(txt);
+
     println!("The txt {}", txt.text1);
     println!("Hello, world!");
 }
@@ -28,8 +30,13 @@ pub fn build_text_stage1(path: &str) -> TextStage1 {
 
 impl TextStage1 {
 // replace white space by u{2581} symbol 
-    pub fn replace_u2581(&self) -> TextStage1 {
+    pub fn replace_u2581(self) -> TextStage1 {
         let text = self.text1.replace(' ', "\u{2581}");
+        TextStage1 { text1: text }
+    }
+
+    pub fn to_lowercase(self) -> TextStage1 {
+        let text = self.text1.to_lowercase();
         TextStage1 { text1: text }
     }
 }
