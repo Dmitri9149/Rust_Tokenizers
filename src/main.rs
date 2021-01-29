@@ -55,7 +55,7 @@ impl TextStage1 {
     }
 // replace non-breaking space with space
     pub fn replace_u202f(self) -> TextStage1 {
-        let text = self.text1.replace('\u202f', ' ').replace('\xa0', ' ');
+        let text = self.text1.replace('\u{202f}', ' ').replace('\xa0', ' ');
         TextStage1 { text1: text, ..self }
     }
 
