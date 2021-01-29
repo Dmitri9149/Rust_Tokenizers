@@ -47,11 +47,19 @@ impl TextStage1 {
         let text = self.text1.replace(' ', "\u{2581}");
         TextStage1 { text1: text, ..self }
     }
+
 // to lowercase all the string
     pub fn to_lowercase(self) -> TextStage1 {
         let text = self.text1.to_lowercase();
         TextStage1 { text1: text, ..self }    
     }
+// replace non-breaking space with space
+    pub fn replace_u202f(self) -> TextStage1 {
+        let text = self.text1.replace('\u202f', ' ').replace('\xa0', ' ');
+        TextStage1 { text1: text, ..self }
+    }
+
+
 }
 // keep String from which to build vocab
 // split the string , build vocab from splitted parts
