@@ -7,8 +7,8 @@ fn main() {
     let txt = TextStage1::build_text_stage1("alice_wonderland.txt");
     let txt = TextStage1::replace_u2581(txt);
     let txt = TextStage1::to_lowercase(txt);
+    let txt = TextStage1::remove_whitespace(txt);
     let txt2 = TextStage2::build_text_stage2(txt.text0);
-    let txt2 = TextStage2::remove_whitespace(txt2);
     let voc = TextStage2::build_vocab_s2(txt2);
     let num_tokens = TextStage2::num_tokens_s2(&voc);
     println!("{:?}", voc.vocab);
@@ -55,11 +55,23 @@ impl TextStage1 {
         let text = self.text1.to_lowercase();
         TextStage1 { text1: text, ..self }    
     }
-// replace non-breaking space with space
-    pub fn replace_u202f(self) -> TextStage1 {
-        let text = self.text1.replace('\u{202f}',&' '.to_string());
-        TextStage1 { text1: text, ..self }
+// eliminate all white space characters
+// is_whitespace -> returns true if this char has the White_Space property.
+// White_Space is specified in the Unicode Character Database PropList.txt.
+// https://www.unicode.org/Public/UCD/latest/ucd/PropList.txt
+    pub fn remove_whitespace(self) -> TextStage1 {
+        let text0 = self.text0
+            .chars()
+            .map(|x| -> char {
+                if x.is_whitespace() {
+                    ' '
+                } else { x }
+            })
+            .collect();
+
+        TextStage1 {text0:text0, ..self}   
     }
+
 // replace non-breaking spaces by space
     pub fn replace_non_breaking(self) -> TextStage1 {
         let text = self.text1.replace('\t',&' '.to_string()); // '\t'
@@ -100,19 +112,5 @@ impl TextStage2 {
 // calculate number of tokens in the vocab
     pub fn num_tokens_s2(&self) -> usize {
         return self.vocab.keys().len();
-    }
-// eliminate all white space characters
-//
-    pub fn remove_whitespace(self) -> TextStage2 {
-        let text0 = self.text0
-            .chars()
-            .map(|x| -> char {
-                if x.is_whitespace() {
-                    ' '
-                } else { x }
-            })
-            .collect();
-
-        TextStage2 {text0:text0, ..self}   
     }
 }
