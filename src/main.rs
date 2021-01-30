@@ -8,6 +8,7 @@ fn main() {
     let txt = TextStage1::replace_u2581(txt);
     let txt = TextStage1::to_lowercase(txt);
     let txt2 = TextStage2::build_text_stage2(txt.text0);
+    let txt2 = TextStage2::remove_whitespace(txt2);
     let voc = TextStage2::build_vocab_s2(txt2);
     let num_tokens = TextStage2::num_tokens_s2(&voc);
     println!("{:?}", voc.vocab);
