@@ -50,6 +50,25 @@ impl TextStage1 {
         TextStage1 { text1: text, ..self }
     }
 
+// change a char to another char
+    pub fn replace_char_to_char(self, x:char, y:char) -> TextStage1 {
+        let xx = x;
+        let yy = y;
+        let text = self.text0.chars()
+            .map(|x| -> char {
+                if x==xx {
+                    yy
+                } else {x}
+            })
+        .collect();
+
+        TextStage1 {
+            text0:text, ..self
+        }
+    }
+
+
+
 // to lowercase all the string
     pub fn to_lowercase(self) -> TextStage1 {
         let text = self.text1.to_lowercase();
