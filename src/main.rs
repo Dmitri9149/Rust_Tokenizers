@@ -2,6 +2,7 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::collections::HashMap;
 
+
 fn main() {
     let txt = TextStage1::build_text_stage1("alice_wonderland.txt");
     let txt = TextStage1::replace_u2581(txt);
@@ -99,5 +100,18 @@ impl TextStage2 {
     pub fn num_tokens_s2(&self) -> usize {
         return self.vocab.keys().len();
     }
-}
+// eliminate all white space characters
+//
+    pub fn remove_whitespace(self) -> TextStage2 {
+        let text0 = self.text0
+            .chars()
+            .map(|x| -> char {
+                if x.is_whitespace() {
+                    ' '
+                } else { x }
+            })
+            .collect();
 
+        TextStage2 {text0:text0, ..self}   
+    }
+}
