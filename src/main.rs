@@ -17,10 +17,13 @@ fn main() {
 //    println!("The txt {}", &txt.text1[0..10000]);
 //    println!("Hello, world!");
 }
+
+
 // read file in different modes
-// Text is treated as one big string 
+// Text is treated as one big string at TextStage1
 // Stage1, Stage2 are marked different stages in full string processing
 // what preprocessing stages are -> see the impl of the structure and comments
+//
 pub struct TextStage1 {
 // original unprocesses string
     pub text0: String,
@@ -36,14 +39,14 @@ impl TextStage1 {
 //
 // build by reading a file, no a buffer
     pub fn build_text_stage1(path: &str) -> TextStage1 {
-    let mut f = File::open(path).unwrap();
-    let mut contents = String::new();
-    f.read_to_string(&mut contents).unwrap();
-    TextStage1 {
-        text0: contents.clone(),
-        text1: contents
+        let mut f = File::open(path).unwrap();
+        let mut contents = String::new();
+        f.read_to_string(&mut contents).unwrap();
+        TextStage1 {
+            text0: contents.clone(),
+            text1: contents
+        }
     }
-}
 // replace white space by u{2581} symbol 
     pub fn replace_u2581(self) -> TextStage1 {
         let text = self.text1.replace(' ', "\u{2581}");
@@ -67,6 +70,53 @@ impl TextStage1 {
         }
     }
 
+// insert ' ' between punctuation marks '!,.' and a word 
+//
+    pub fn separate_punctuation(self) -> TextStage1 {
+        let mut new_str = String::new();
+//        let no_space = |(char, prev_char)| { "!.,?".contains(char) && prev_char != ' ' };
+        
+        let mut it = self.text0.chars().peekable();
+
+        while let Some(current) = it.next() {
+            if let Some(&next) = it.peek() {
+                if current != ' ' &&  "!.,?".contains(next){
+                    new_str.push(current);
+                    new_str.push(' ');
+                } else { new_str.push(current) }
+            }
+        }
+
+        TextStage1 {text0: new_str, ..self}
+    }
+
+
+
+//        for (i,cr) in self.text0.chars().enumerate() {
+//            if i > 0 && no_space((cr,&self.text0.chars().enumerate()[i-1])) {
+//                new_str.push(' ').push(cr);
+//            } else {
+//                new_str.push(cr); }; 
+//        };
+//
+//        TextStage1 {text0: new_str, ..self}
+//    }
+
+/////////////////////
+pub fn doublette(word: &str) -> bool {
+    let mut it = word.chars().peekable();
+
+    while let Some(current) = it.next() {
+        if let Some(&next) = it.peek() {
+            if current == next {
+                return true;
+            }
+        }
+    }
+
+    false
+}
+/////////////////////
 
 
 // to lowercase all the string
@@ -74,6 +124,8 @@ impl TextStage1 {
         let text = self.text1.to_lowercase();
         TextStage1 { text1: text, ..self }    
     }
+
+//
 // eliminate all white space characters
 // is_whitespace -> returns true if this char has the White_Space property.
 // White_Space is specified in the Unicode Character Database PropList.txt.
@@ -101,6 +153,8 @@ impl TextStage1 {
 
 
 }
+
+
 // keep String from which to build vocab
 // split the string , build vocab from splitted parts
 pub struct TextStage2 {
