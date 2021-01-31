@@ -7,12 +7,13 @@ fn main() {
     let txt = TextStage1::build_text_stage1("alice_wonderland.txt");
 //    let txt = TextStage1::replace_u2581(txt);
     let txt = TextStage1::to_lowercase(txt);
-//    let txt = TextStage1::remove_whitespace(txt);
+    let txt = TextStage1::separate_punctuation(txt);
+    let txt = TextStage1::replace_char_to_char(txt, '(', '🦀');
     let txt2 = TextStage2::build_text_stage2(txt.text1);
     let voc = TextStage2::build_vocab_from_lines_ascii_ws(txt2);
     let num_tokens = TextStage2::num_tokens_s2(&voc);
-    println!("{:?}", voc.vocab);
-    println!("There are {} tokens in the text", num_tokens );
+    println!("{:?}", &voc.vocab);
+    println!("There are {} tokens in the text", &num_tokens );
 
 //    println!("The txt {}", &txt.text1[0..10000]);
 //    println!("Hello, world!");
@@ -27,15 +28,18 @@ fn main() {
 pub struct TextStage1 {
 // original unprocesses string
     pub text0: String,
-// strings after some processings belonging to stage1
+// strings after some processings belonging to stage1 are saved in text1 field
 // the stage1 is for processing the initial string as 
 // 'one entity': to lowercase, to replace some symbols, to make 
-// may be unicode unification
+// unicode unification etc...
     pub text1: String,
 }
 
 impl TextStage1 {
-// build the string for processing in several different ways
+// building the string for processing
+// originally build string is saved in text0 and text1 fields
+// processing is with text1 field, text0 is kept without a 
+// change -> the 'original string' is there 
 //
 // build by reading a file, no a buffer
     pub fn build_text_stage1(path: &str) -> TextStage1 {
@@ -76,18 +80,17 @@ impl TextStage1 {
         let mut new_str = String::new();
 //        let no_space = |(char, prev_char)| { "!.,?".contains(char) && prev_char != ' ' };
         
-        let mut it = self.text0.chars().peekable();
+        let mut it = self.text1.chars().peekable();
 
         while let Some(current) = it.next() {
             if let Some(&next) = it.peek() {
-                if current != ' ' &&  "!.,?".contains(next){
+                if current != ' ' &&  "!.,?".contains(next) {
                     new_str.push(current);
                     new_str.push(' ');
-                } else { new_str.push(current) }
+                }  else { new_str.push(current) }
             }
         }
-
-        TextStage1 {text0: new_str, ..self}
+        TextStage1 {text1: new_str, ..self}
     }
 
 
