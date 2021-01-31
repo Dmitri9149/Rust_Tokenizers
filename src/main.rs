@@ -8,7 +8,8 @@ fn main() {
 //    let txt = TextStage1::replace_u2581(txt);
     let txt = TextStage1::to_lowercase(txt);
     let txt = TextStage1::separate_punctuation(txt);
-    let txt = TextStage1::replace_chars_to_char(txt, "—()_\\–[]\"/", '🦀');
+    let txt = TextStage1::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘", '🦀');
+    let txt = TextStage1::replace_char_to_char(txt, '🦀', ' ');
     let txt2 = TextStage2::build_text_stage2(txt.text1);
     let voc = TextStage2::build_vocab_from_lines_ascii_ws(txt2);
     let num_tokens = TextStage2::num_tokens_s2(&voc);
@@ -96,7 +97,7 @@ impl TextStage1 {
 //
     pub fn separate_punctuation(self) -> TextStage1 {
         let mut new_str = String::new();
-//        let no_space = |(char, prev_char)| { "!.,?;:".contains(char) && prev_char != ' ' };
+//        let no_space = |(char, prev_char)| { "!\;.,?\;:".contains(char) && prev_char != ' ' };
         
         let mut it = self.text1.chars().peekable();
 
