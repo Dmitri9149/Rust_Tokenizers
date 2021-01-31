@@ -8,7 +8,7 @@ fn main() {
 //    let txt = TextStage1::replace_u2581(txt);
     let txt = TextStage1::to_lowercase(txt);
     let txt = TextStage1::separate_punctuation(txt);
-    let txt = TextStage1::replace_char_to_char(txt, '(', '🦀');
+    let txt = TextStage1::replace_chars_to_char(txt, "—()_\\–[]\"/", '🦀');
     let txt2 = TextStage2::build_text_stage2(txt.text1);
     let voc = TextStage2::build_vocab_from_lines_ascii_ws(txt2);
     let num_tokens = TextStage2::num_tokens_s2(&voc);
@@ -73,6 +73,24 @@ impl TextStage1 {
             text1:text, ..self
         }
     }
+
+// change a chars from a list to another char
+    pub fn replace_chars_to_char(self, aa:&str, b:char) -> TextStage1 {
+//        let xx = x;
+//        let yy = y;
+        let text = self.text1.chars()
+            .map(|x| -> char {
+                if aa.contains(x) {
+                    b
+                } else {x}
+            })
+        .collect();
+
+        TextStage1 {
+            text1:text, ..self
+        }
+    }
+
 
 // insert ' ' between punctuation marks '!,.' and a word 
 //
