@@ -61,7 +61,7 @@ impl TextStage1 {
     pub fn replace_char_to_char(self, x:char, y:char) -> TextStage1 {
         let xx = x;
         let yy = y;
-        let text = self.text0.chars()
+        let text = self.text1.chars()
             .map(|x| -> char {
                 if x==xx {
                     yy
@@ -70,7 +70,7 @@ impl TextStage1 {
         .collect();
 
         TextStage1 {
-            text0:text, ..self
+            text1:text, ..self
         }
     }
 
@@ -78,7 +78,7 @@ impl TextStage1 {
 //
     pub fn separate_punctuation(self) -> TextStage1 {
         let mut new_str = String::new();
-//        let no_space = |(char, prev_char)| { "!.,?".contains(char) && prev_char != ' ' };
+//        let no_space = |(char, prev_char)| { "!.,?;:".contains(char) && prev_char != ' ' };
         
         let mut it = self.text1.chars().peekable();
 
@@ -93,38 +93,10 @@ impl TextStage1 {
         TextStage1 {text1: new_str, ..self}
     }
 
-
-
-//        for (i,cr) in self.text0.chars().enumerate() {
-//            if i > 0 && no_space((cr,&self.text0.chars().enumerate()[i-1])) {
-//                new_str.push(' ').push(cr);
-//            } else {
-//                new_str.push(cr); }; 
-//        };
-//
-//        TextStage1 {text0: new_str, ..self}
-//    }
-
-/////////////////////
-pub fn doublette(word: &str) -> bool {
-    let mut it = word.chars().peekable();
-
-    while let Some(current) = it.next() {
-        if let Some(&next) = it.peek() {
-            if current == next {
-                return true;
-            }
-        }
-    }
-
-    false
-}
-/////////////////////
-
-
 // to lowercase all the string
     pub fn to_lowercase(self) -> TextStage1 {
         let text = self.text1.to_lowercase();
+        println!("in lowercase !!!!!!!!!!!!!!!!!!!");
         TextStage1 { text1: text, ..self }    
     }
 
@@ -152,11 +124,7 @@ pub fn doublette(word: &str) -> bool {
 
         TextStage1 { text1: text, ..self }
     }
-
-
-
 }
-
 
 // keep String from which to build vocab
 // split the string , build vocab from splitted parts
@@ -164,10 +132,11 @@ pub struct TextStage2 {
     pub text0: String,
     pub vocab: HashMap<String, i32>
 }
+
 impl TextStage2 {
 // build the HashMap similar to vocab from preprocessed whole string
 // by splitting the string
-// take Text1.text0 string and set tex1 to new empty HashMap
+// intended to take Text1.text1 string to 'text0' and set ''vocab' to new empty HashMap
     pub fn build_text_stage2(strng: String) -> TextStage2 {
         let voc = HashMap::new();
         TextStage2 {
