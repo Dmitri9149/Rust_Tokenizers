@@ -8,7 +8,8 @@ fn main() {
 //    let txt = TextStage1::replace_u2581(txt);
     let txt = TextStage1::to_lowercase(txt);
     let txt = TextStage1::separate_punctuation(txt);
-    let txt = TextStage1::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘", '🦀');
+    let txt = TextStage1::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
+    let txt = TextStage1::separate_punctuation(txt);
     let txt = TextStage1::replace_char_to_char(txt, '🦀', ' ');
 //    let txt = TextStage1::replace_chars_to_char(txt, ";:", '🦀');
 //    let txt = TextStage1::separate_punctuation(txt);
