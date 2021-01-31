@@ -5,11 +5,11 @@ use std::collections::HashMap;
 
 fn main() {
     let txt = TextStage1::build_text_stage1("alice_wonderland.txt");
-    let txt = TextStage1::replace_u2581(txt);
+//    let txt = TextStage1::replace_u2581(txt);
     let txt = TextStage1::to_lowercase(txt);
-    let txt = TextStage1::remove_whitespace(txt);
-    let txt2 = TextStage2::build_text_stage2(txt.text0);
-    let voc = TextStage2::build_vocab_s2(txt2);
+//    let txt = TextStage1::remove_whitespace(txt);
+    let txt2 = TextStage2::build_text_stage2(txt.text1);
+    let voc = TextStage2::build_vocab_from_lines_ascii_ws(txt2);
     let num_tokens = TextStage2::num_tokens_s2(&voc);
     println!("{:?}", voc.vocab);
     println!("There are {} tokens in the text", num_tokens );
@@ -132,4 +132,36 @@ impl TextStage2 {
     pub fn num_tokens_s2(&self) -> usize {
         return self.vocab.keys().len();
     }
+// split the whole string on lines
+// trim the lines (eliminate multiple white spaces from beginning and end)
+// split_witespace -> split on whitespace 
+// white space here is Unicode Derived Core Property White_Space 
+// see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
+    pub fn build_vocab_from_lines_ws(self) -> TextStage2 {
+        let mut voc = HashMap::new();
+        for line in self.text0.lines() {
+            for word in line.trim().split_whitespace() { 
+                let count = voc.entry(word.to_string()).or_insert(0);
+                *count +=1; 
+            }  
+        }
+        TextStage2 {vocab:voc, ..self}
+    }
+
+// split the whole string on lines
+// trim the lines (eliminate multiple white spaces from beginning and end)
+// split_witespace -> split on whitespace 
+// white space here is ASCII White_Space 
+// https://doc.rust-lang.org/std/primitive.str.html#method.split_ascii_whitespace
+    pub fn build_vocab_from_lines_ascii_ws(self) -> TextStage2 {
+        let mut voc = HashMap::new();
+        for line in self.text0.lines() {
+            for word in line.trim().split_ascii_whitespace() { 
+                let count = voc.entry(word.to_string()).or_insert(0);
+                *count +=1; 
+            }  
+        }
+        TextStage2 {vocab:voc, ..self}
+    }
+
 }
