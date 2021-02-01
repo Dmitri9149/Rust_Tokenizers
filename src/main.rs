@@ -7,9 +7,9 @@ fn main() {
     let txt = TextStage1::build_text_stage1("alice_wonderland.txt");
 //    let txt = TextStage1::replace_u2581(txt);
     let txt = TextStage1::to_lowercase(txt);
-    let txt = TextStage1::separate_punctuation(txt);
+    let txt = TextStage1::separate_punctuation(txt, ".,!?;:");
     let txt = TextStage1::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
-    let txt = TextStage1::separate_punctuation(txt);
+    let txt = TextStage1::separate_punctuation(txt, ",.!?;:");
     let txt = TextStage1::replace_char_to_char(txt, '🦀', ' ');
 //    let txt = TextStage1::replace_chars_to_char(txt, ";:", '🦀');
 //    let txt = TextStage1::separate_punctuation(txt);
@@ -99,15 +99,14 @@ impl TextStage1 {
 
 // insert ' ' between punctuation marks '!,.' and a word 
 //
-    pub fn separate_punctuation(self) -> TextStage1 {
+    pub fn separate_punctuation(self, s:&str) -> TextStage1 {
         let mut new_str = String::new();
-//        let no_space = |(char, prev_char)| { "!;.,?:".contains(char) && prev_char != ' ' };
         
         let mut it = self.text1.chars().peekable();
 
         while let Some(current) = it.next() {
             if let Some(&next) = it.peek() {
-                if current != ' ' &&  "!.,?:;".contains(next) {
+                if current != ' ' &&  s.contains(next) {
                     new_str.push(current);
                     new_str.push(' ');
                 }  else { new_str.push(current) }
@@ -119,7 +118,6 @@ impl TextStage1 {
 // to lowercase all the string
     pub fn to_lowercase(self) -> TextStage1 {
         let text = self.text1.to_lowercase();
-        println!("in lowercase !!!!!!!!!!!!!!!!!!!");
         TextStage1 { text1: text, ..self }    
     }
 
@@ -213,4 +211,28 @@ impl TextStage2 {
         TextStage2 {vocab:voc, ..self}
     }
 
+}
+
+// this function insert space before every char in a string
+// 
+pub fn add_space_infront(input: &str) -> String {
+    let mut output = String::new();
+    for c in input.chars() {
+        output.push_str(" ");
+        output.push(c)
+    }
+    output
+}
+
+// this function changes particular character in a string to particular string 
+//
+pub fn char_to_string(input: &str, x: char, y: &str) -> String {
+    let mut output = String::new();
+    for c in input.chars() {
+        match c {
+            x => output.push_str(y),
+            _ => output.push(c)
+        }
+    }
+    output
 }
