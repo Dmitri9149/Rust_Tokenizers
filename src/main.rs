@@ -238,10 +238,20 @@ pub fn add_space_infront(input: &str) -> String {
 pub fn char_to_string(input: &str, x: char, y: &str) -> String {
     let mut output = String::new();
     for c in input.chars() {
-        match c {
-            x => output.push_str(y),
-            _ => output.push(c)
-        }
+        if  c == x { output.push_str(y); 
+        } else {output.push(c);}
     }
     output
+}
+
+
+// construct vector of all words from a string by splitting on ascii space
+pub fn build_vector_of_words_ascii_ws(s:&str) -> Vec<&str> {
+    let mut results = Vec::new();
+    for line in s.lines() {
+        for word in line.trim().split_ascii_whitespace() { 
+            results.push(word);
+        }  
+    }
+    results
 }
