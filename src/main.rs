@@ -211,6 +211,15 @@ impl TextStage2 {
         TextStage2 {vocab:voc, ..self}
     }
 
+// insert space before every char in every word in vocab
+//    pub fn space_infront(self) -> TextStage2 {
+//        for word in self.vocab {
+//
+//        }
+//    }
+
+
+
 }
 
 // this function insert space before every char in a string
