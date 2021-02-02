@@ -210,7 +210,7 @@ impl TextStage2 {
         }
         TextStage2 {vocab:voc, ..self}
     }
-
+}
 // insert space before every char in every word in vocab
 //    pub fn space_infront(self) -> TextStage2 {
 //        for word in self.vocab {
@@ -219,7 +219,36 @@ impl TextStage2 {
 //    }
 
 
+// collection of words we may get in some way from string
+pub struct WordsVector {
+    pub words: Vec <String>
+}
 
+impl WordsVector {
+    
+// construct vector of all words from a string by splitting on ascii space
+    pub fn from_string_ascii_ws(stage1:TextStage1) -> WordsVector{
+        let mut results = Vec::new();
+        for line in stage1.text1.lines() {
+            for word in line.trim().split_ascii_whitespace() { 
+                results.push(String::from(word));
+            }  
+        }
+        WordsVector {words: results}
+    }
+// white space here is Unicode Derived Core Property White_Space 
+// see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
+// construct vector of all words from a string by splitting on white space
+    pub fn from_string_ws(stage1:TextStage1) -> WordsVector {
+        let mut results = Vec::new();
+        for line in stage1.text1
+            .lines() {
+            for word in line.trim().split_whitespace() { 
+                results.push(String::from(word));
+            }  
+        }
+        WordsVector {words:results}
+    }
 }
 
 // this function insert space before every char in a string
