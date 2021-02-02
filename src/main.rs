@@ -11,14 +11,18 @@ fn main() {
     let txt = TextStage1::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
     let txt = TextStage1::separate_punctuation(txt, ",.!?;:");
     let txt = TextStage1::replace_char_to_char(txt, '🦀', ' ');
-//    let txt = TextStage1::replace_chars_to_char(txt, ";:", '🦀');
-//    let txt = TextStage1::separate_punctuation(txt);
-    
+    let vec = WordsVector::from_string_ws(txt);
+    let vec = WordsVector::infront(vec);
+
+    println!("{:?}",&vec.words);
+
+/*    
     let txt2 = TextStage2::build_text_stage2(txt.text1);
     let voc = TextStage2::build_vocab_from_lines_ascii_ws(txt2);
     let num_tokens = TextStage2::num_tokens_s2(&voc);
     println!("{:?}", &voc.vocab);
     println!("There are {} tokens in the text", &num_tokens );
+*/
 
 //    println!("The txt {}", &txt.text1[0..10000]);
 //    println!("Hello, world!");
@@ -225,8 +229,10 @@ pub struct WordsVector {
 }
 
 impl WordsVector {
-    
-// construct vector of all words from a string by splitting on ascii space
+// white space here is Unicode Derived Core Property White_Space 
+// see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace 
+// construct vector of all words from a string.text1 of 
+// TextStage1 by splitting on ascii space
     pub fn from_string_ascii_ws(stage1:TextStage1) -> WordsVector{
         let mut results = Vec::new();
         for line in stage1.text1.lines() {
@@ -238,7 +244,8 @@ impl WordsVector {
     }
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
-// construct vector of all words from a string by splitting on white space
+// construct vector of all words from a string.text1 of 
+// TextStage1 by splitting on white space
     pub fn from_string_ws(stage1:TextStage1) -> WordsVector {
         let mut results = Vec::new();
         for line in stage1.text1
@@ -249,10 +256,34 @@ impl WordsVector {
         }
         WordsVector {words:results}
     }
+
+// add ' ' infront of every char in a word in words vector
+    pub fn infront(vc:WordsVector) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| add_space_infront(x)).collect();
+        WordsVector {words:results} 
+    }
+
+// add symbol:char  to end  of every word in words-vector
+    pub fn toend(vc:WordsVector, symbol:char) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| add_symbol_toend(x,symbol)).collect();
+        WordsVector {words:results} 
+    }
 }
+
+
+
 
 // this function insert space before every char in a string
 // 
+pub fn add_symbol_toend(input: &str, symbol:char) -> String {
+    let mut output = String::new();
+    output.push_str(input);
+    output.push(symbol);
+    output
+}
+
 pub fn add_space_infront(input: &str) -> String {
     let mut output = String::new();
     for c in input.chars() {
@@ -273,7 +304,8 @@ pub fn char_to_string(input: &str, x: char, y: &str) -> String {
     output
 }
 
-
+// white space here is Unicode Derived Core Property White_Space 
+// see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
 // construct vector of all words from a string by splitting on ascii space
 pub fn build_vector_of_words_ascii_ws(s:&str) -> Vec<&str> {
     let mut results = Vec::new();
