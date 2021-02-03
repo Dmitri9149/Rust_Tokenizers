@@ -1,7 +1,8 @@
 /* build and process vector of words 
 **
 */
-
+use std::collections::HashMap;
+use crate::TextStage2;
 
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
@@ -28,6 +29,23 @@ pub fn build_vector_of_words_ws(s:&str) -> Vec<&str> {
     results
 }
 
+// puild vocab from vector of words
+//
+pub fn vocab_from_vector(&vec:Vec<&str>) -> Vec<&str> {
+    let mut vocab= HashMap::new();
+    for word in vec.iter() {
+        let count = vocab.entry(word.to_string()).or_insert(0);
+        *count +=1;
+    }
+}
 
-
+/*
+// build vocab: (token, count) as HashMap<String, i32>
+// from words_vector
+//
+    pub fn build_vocab_from_vector(vec:&Vec<&str>) -> TextStage2 {
+        let mut vocab = vocab_from_vector();
+        TextStage2 {vocab:vocab, ..self }
+    }
+*/
 
