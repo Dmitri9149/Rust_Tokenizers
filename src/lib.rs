@@ -5,7 +5,7 @@ use std::collections::HashMap;
 pub mod string_processing;
 pub use crate::string_processing as str_mod;
 pub mod vector_of_words;
-pub use vector_of_words as words_vec;
+pub use crate::vector_of_words as words_vec;
 
 
 // read file in different modes
