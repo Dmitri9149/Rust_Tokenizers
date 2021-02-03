@@ -1,6 +1,8 @@
+/* the module is for processing of a string as one whole string 
+**
+*/
 
-
-// this function insert space before every char in a string
+// this function add symbol:char to the end of string
 // 
 pub fn add_symbol_toend(input: &str, symbol:char) -> String {
     let mut output = String::new();
@@ -9,6 +11,27 @@ pub fn add_symbol_toend(input: &str, symbol:char) -> String {
     output
 }
 
+// this function add strng:string to the end of string input:string
+// 
+pub fn add_string_toend(input: &str, strng:&string) -> String {
+    let mut output = String::new();
+    output.push_str(input);
+    output.push_str(strng);
+    output
+}
+
+// this function add symbol:char to the end of string
+// 
+pub fn add_symbol_toend(input: &str, symbol:char) -> String {
+    let mut output = String::new();
+    output.push_str(input);
+    output.push(symbol);
+    output
+}
+
+
+// this function insert space before every char in a string
+// 
 pub fn add_space_infront(input: &str) -> String {
     let mut output = String::new();
     for c in input.chars() {
