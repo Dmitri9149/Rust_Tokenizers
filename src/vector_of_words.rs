@@ -2,7 +2,7 @@
 **
 */
 use std::collections::HashMap;
-use crate::TextStage2;
+/* use crate::TextStage2; */
 
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
@@ -31,12 +31,20 @@ pub fn build_vector_of_words_ws(s:&str) -> Vec<&str> {
 
 // puild vocab from vector of words
 //
+<<<<<<< HEAD
 pub fn vocab_from_vector(vec:Vec<&str>) -> HashMap<String,i32> {
+=======
+pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
+>>>>>>> vocab_from_vector
     let mut vocab= HashMap::new();
     for word in vec.iter() {
         let count = vocab.entry(word.to_string()).or_insert(0);
         *count +=1;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> vocab_from_vector
     vocab
 }
 
@@ -49,4 +57,5 @@ pub fn vocab_from_vector(vec:Vec<&str>) -> HashMap<String,i32> {
         TextStage2 {vocab:vocab, ..self }
     }
 */
+
 

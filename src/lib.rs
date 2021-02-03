@@ -5,7 +5,7 @@ use std::collections::HashMap;
 pub mod string_processing;
 pub use crate::string_processing as str_mod;
 pub mod vector_of_words;
-pub use crate::vector_of_words as words_vec;
+pub use crate::vector_of_words as vec_words;
 
 
 // read file in different modes
@@ -148,6 +148,17 @@ impl TextStage2 {
             vocab: voc,
         }
     }
+
+//build vocab from WordsVector
+
+    pub fn build_vocab_from_vector(self, vec:WordsVector) -> TextStage2 {
+        let vocab = vec_words::vocab_from_vector(vec.words);
+        TextStage2 {vocab:vocab, ..self }
+    }
+
+
+
+
 // build vocab: (token, count) as HashMap<String, i32>
 // by splitting the 'whole string' on white spaces
 //
