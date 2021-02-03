@@ -1,11 +1,13 @@
 use WordsVector;
+use TextStage2;
+
 
 pub struct Pairs {
     pairs:HashMap<(&str,&str),i32>;
 };
 
 impl Pairs {
-
+// make empty Pairs
     pub fn empty() -> Pairs {
         let e = HashMap<_,_>::new;
         Pairs {pairs:e}
@@ -24,42 +26,23 @@ impl Pairs {
         }
         Pairs {pairs:self.pairs}
     }
-}
 
-/*
-=======================================================================
-    pub fn separate_punctuation(self, s:&str) -> TextStage1 {
-        let mut new_str = String::new();
-        
-        let mut it = self.text1.chars().peekable();
+    pub fn from_vocab(self, ww:&TextStage2) -> {
+        let mut hsh= HashMap<_,_>::new;
+        for key,value in ww.vocab {
+            let it = key.split_whitespace().peekable();
 
-        while let Some(current) = it.next() {
-            if let Some(&next) = it.peek() {
-                if current != ' ' &&  s.contains(next) {
-                    new_str.push(current);
-                    new_str.push(' ');
-                }  else { new_str.push(current) }
+            while let Some(current) = it.next() {
+                if let Some(&next) = it.peek() {
+                    let count = self.pairs.entry((current,next)).or_insert(0);
+                    *count +=1;          
+                }
             }
         }
-        TextStage1 {text1: new_str, ..self}
+        Pairs {pairs:self.pairs}
     }
 
 
-// build vocab: (token, count) as HashMap<String, i32>
-// by splitting the 'whole string' on white spaces
-//
-    pub fn build_vocab_s2(mut self) -> TextStage2 {
-        for word in self.text0.split_whitespace() { 
-            let count = self.vocab.entry(word.to_string()).or_insert(0);
-            *count +=1; 
-        }  
-        TextStage2 {vocab:self.vocab, ..self }
-    }
-*/
 
-
-
-
-
-
+}
 
