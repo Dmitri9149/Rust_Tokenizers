@@ -48,4 +48,5 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
     pub fn build_vocab_from_vector(vec:&Vec<&str>) -> TextStage2 {
         let mut vocab = vocab_from_vector();
         TextStage2 {vocab:vocab, ..self }
-
+    }
+*/
