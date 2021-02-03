@@ -31,7 +31,7 @@ pub fn build_vector_of_words_ws(s:&str) -> Vec<&str> {
 
 // puild vocab from vector of words
 //
-pub fn vocab_from_vector(vec:&Vec<&str>) -> HashMap<String,i32> {
+pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
     let mut vocab= HashMap::new();
     for word in vec.iter() {
         let count = vocab.entry(word.to_string()).or_insert(0);
