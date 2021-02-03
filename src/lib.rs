@@ -2,7 +2,9 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::collections::HashMap;
 
+pub mod str_mod;
 
+pub use crate::str_mod::add_space_infront;
 
 
 // read file in different modes
@@ -15,7 +17,7 @@ pub struct TextStage1 {
     pub text0: String,
 // strings after some processings belonging to stage1 are saved in text1 field
 // the stage1 is for processing the initial string as 
-// 'one entity': to lowercase, to replace some symbols, to make 
+// 'aone entity': to lowercase, to replace some symbols, to make 
 // unicode unification etc...
     pub text1: String,
 }
@@ -236,7 +238,7 @@ impl WordsVector {
 // add ' ' infront of every char in a word in words vector
     pub fn infront(vc:WordsVector) -> WordsVector {
         let results = vc.words.iter()
-            .map(|x| add_space_infront(x)).collect();
+            .map(|x| str_mod::add_space_infront(x)).collect();
         WordsVector {words:results} 
     }
 
@@ -260,6 +262,7 @@ pub fn add_symbol_toend(input: &str, symbol:char) -> String {
     output
 }
 
+/*
 pub fn add_space_infront(input: &str) -> String {
     let mut output = String::new();
     for c in input.chars() {
@@ -268,6 +271,7 @@ pub fn add_space_infront(input: &str) -> String {
     }
     output
 }
+*/
 
 // this function changes particular character in a string to particular string 
 //
