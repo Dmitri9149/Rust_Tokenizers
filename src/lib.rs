@@ -6,6 +6,8 @@ pub mod string_processing;
 pub use crate::string_processing as str_mod;
 pub mod vector_of_words;
 pub use crate::vector_of_words as vec_words;
+pub mod pairs;
+pub use crate::pairs as pair;
 
 
 // read file in different modes
