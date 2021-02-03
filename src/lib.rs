@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 pub mod str_mod;
 
-pub use crate::str_mod::add_space_infront;
+pub use crate::str_mod as str_modif;
 
 
 // read file in different modes
@@ -238,7 +238,7 @@ impl WordsVector {
 // add ' ' infront of every char in a word in words vector
     pub fn infront(vc:WordsVector) -> WordsVector {
         let results = vc.words.iter()
-            .map(|x| str_mod::add_space_infront(x)).collect();
+            .map(|x| str_modif::add_space_infront(x)).collect();
         WordsVector {words:results} 
     }
 
