@@ -2,9 +2,9 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::collections::HashMap;
 
-pub mod str_mod;
+pub mod string_processing;
 
-pub use crate::str_mod as str_modif;
+pub use crate::string_processing as str_mod;
 
 
 // read file in different modes
@@ -238,51 +238,18 @@ impl WordsVector {
 // add ' ' infront of every char in a word in words vector
     pub fn infront(vc:WordsVector) -> WordsVector {
         let results = vc.words.iter()
-            .map(|x| str_modif::add_space_infront(x)).collect();
+            .map(|x| str_mod::add_space_infront(x)).collect();
         WordsVector {words:results} 
     }
 
 // add symbol:char  to end  of every word in words-vector
     pub fn toend(vc:WordsVector, symbol:char) -> WordsVector {
         let results = vc.words.iter()
-            .map(|x| add_symbol_toend(x,symbol)).collect();
+            .map(|x| str_mod::add_symbol_toend(x,symbol)).collect();
         WordsVector {words:results} 
     }
 }
 
-
-
-
-// this function insert space before every char in a string
-// 
-pub fn add_symbol_toend(input: &str, symbol:char) -> String {
-    let mut output = String::new();
-    output.push_str(input);
-    output.push(symbol);
-    output
-}
-
-/*
-pub fn add_space_infront(input: &str) -> String {
-    let mut output = String::new();
-    for c in input.chars() {
-        output.push_str(" ");
-        output.push(c)
-    }
-    output
-}
-*/
-
-// this function changes particular character in a string to particular string 
-//
-pub fn char_to_string(input: &str, x: char, y: &str) -> String {
-    let mut output = String::new();
-    for c in input.chars() {
-        if  c == x { output.push_str(y); 
-        } else {output.push(c);}
-    }
-    output
-}
 
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
