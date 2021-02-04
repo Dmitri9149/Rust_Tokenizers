@@ -137,9 +137,12 @@ impl TextStage1 {
 // the words may have comples structure (be processed), like 
 // white space inserted before every char in word, 
 // or some special token may be added to the end of every word etc...
+// vocab_bpe -> the words in the vocab are specially processed : 
+// white space inserted before every char and to the a special token may be added
 pub struct VocabStage {
     pub text0: String,
-    pub vocab: HashMap<String, i32>
+    pub vocab: HashMap<String, i32>,
+    pub vocab_bpe: HashMap<String,i32>
 }
 
 impl VocabStage {
@@ -148,9 +151,11 @@ impl VocabStage {
 // intended to take Text1.text1 string to 'text0' and set ''vocab' to new empty HashMap
     pub fn build_text_stage2(strng: String) -> VocabStage {
         let voc = HashMap::new();
+        let voc_bpe = HashMap::new();
         VocabStage {
             text0: strng,
             vocab: voc,
+            vocab_bpe: voc_bpe,
         }
     }
 
@@ -159,6 +164,14 @@ impl VocabStage {
     pub fn build_vocab_from_vector(self, vec:WordsVector) -> VocabStage {
         let vocab = vec_words::vocab_from_vector(vec.words);
         VocabStage {vocab:vocab, ..self }
+    }
+
+ // build vocab_bpe from WordsVector where words are specially preprocessed for 
+ // bpe tokenizer implementation : space is added before every char in word, 
+ // and special token may be added to the end
+    pub fn build_vocab_from_vector_bpe(self, vec:WordsVector) -> VocabStage {
+        let vocab = vec_words::vocab_from_vector(vec.words);
+        VocabStage {vocab_bpe:vocab, ..self }
     }
 
 // build vocab: (token, count) as HashMap<String, i32>
@@ -172,8 +185,8 @@ impl VocabStage {
         VocabStage {vocab:self.vocab, ..self }
     }
 // calculate number of tokens in the vocab
-    pub fn num_tokens_s2(&self) -> usize {
-        return self.vocab.keys().len();
+    pub fn num_tokens_s2(&self) -> (usize, uize) {
+        return (self.vocab.keys().len(), self.vocab_bpe.keys().len());
     }
 
 // split the whole string on lines
