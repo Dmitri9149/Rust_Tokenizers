@@ -132,15 +132,18 @@ impl TextStage1 {
     }
 }
 
-// keep String from which to build vocab
-// split the string , build vocab from splitted parts
+// construct Vocab of word:number pairs 
+// number here reflects the frequency on the word
+// the words may have comples structure (be processed), like 
+// white space inserted before every char in word, 
+// or some special token may be added to the end of every word etc...
 pub struct VocabStage {
     pub text0: String,
     pub vocab: HashMap<String, i32>
 }
 
 impl VocabStage {
-// build the HashMap similar to vocab from preprocessed whole string
+// build the HashMap from preprocessed whole string
 // by splitting the string
 // intended to take Text1.text1 string to 'text0' and set ''vocab' to new empty HashMap
     pub fn build_text_stage2(strng: String) -> VocabStage {
@@ -158,9 +161,6 @@ impl VocabStage {
         VocabStage {vocab:vocab, ..self }
     }
 
-
-
-
 // build vocab: (token, count) as HashMap<String, i32>
 // by splitting the 'whole string' on white spaces
 //
@@ -169,12 +169,13 @@ impl VocabStage {
             let count = self.vocab.entry(word.to_string()).or_insert(0);
             *count +=1; 
         }  
-        Vec {vocab:self.vocab, ..self }
+        VocabStage {vocab:self.vocab, ..self }
     }
 // calculate number of tokens in the vocab
     pub fn num_tokens_s2(&self) -> usize {
         return self.vocab.keys().len();
     }
+
 // split the whole string on lines
 // trim the lines (eliminate multiple white spaces from beginning and end)
 // split_witespace -> split on whitespace 
@@ -207,12 +208,6 @@ impl VocabStage {
         VocabStage {vocab:voc, ..self}
     }
 }
-// insert space before every char in every word in vocab
-//    pub fn space_infront(self) -> TextStage2 {
-//        for word in self.vocab {
-//
-//        }
-//    }
 
 
 // collection of words we may get in some way from string
