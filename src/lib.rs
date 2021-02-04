@@ -139,13 +139,13 @@ pub struct TextStage2 {
     pub vocab: HashMap<String, i32>
 }
 
-impl TextStage2 {
+impl VocabStage {
 // build the HashMap similar to vocab from preprocessed whole string
 // by splitting the string
 // intended to take Text1.text1 string to 'text0' and set ''vocab' to new empty HashMap
-    pub fn build_text_stage2(strng: String) -> TextStage2 {
+    pub fn build_text_stage2(strng: String) -> VocabStage {
         let voc = HashMap::new();
-        TextStage2 {
+        VocabStage {
             text0: strng,
             vocab: voc,
         }
@@ -153,9 +153,9 @@ impl TextStage2 {
 
 //build vocab from WordsVector
 
-    pub fn build_vocab_from_vector(self, vec:WordsVector) -> TextStage2 {
+    pub fn build_vocab_from_vector(self, vec:WordsVector) -> VocabStage {
         let vocab = vec_words::vocab_from_vector(vec.words);
-        TextStage2 {vocab:vocab, ..self }
+        VocabStage {vocab:vocab, ..self }
     }
 
 
@@ -164,12 +164,12 @@ impl TextStage2 {
 // build vocab: (token, count) as HashMap<String, i32>
 // by splitting the 'whole string' on white spaces
 //
-    pub fn build_vocab_s2(mut self) -> TextStage2 {
+    pub fn build_vocab_s2(mut self) -> VocabStage {
         for word in self.text0.split_whitespace() { 
             let count = self.vocab.entry(word.to_string()).or_insert(0);
             *count +=1; 
         }  
-        TextStage2 {vocab:self.vocab, ..self }
+        Vec {vocab:self.vocab, ..self }
     }
 // calculate number of tokens in the vocab
     pub fn num_tokens_s2(&self) -> usize {
@@ -180,7 +180,7 @@ impl TextStage2 {
 // split_witespace -> split on whitespace 
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
-    pub fn build_vocab_from_lines_ws(self) -> TextStage2 {
+    pub fn build_vocab_from_lines_ws(self) -> VocabStage {
         let mut voc = HashMap::new();
         for line in self.text0.lines() {
             for word in line.trim().split_whitespace() { 
@@ -188,7 +188,7 @@ impl TextStage2 {
                 *count +=1; 
             }  
         }
-        TextStage2 {vocab:voc, ..self}
+        VocabStage {vocab:voc, ..self}
     }
 
 // split the whole string on lines
@@ -196,7 +196,7 @@ impl TextStage2 {
 // split_witespace -> split on whitespace 
 // white space here is ASCII White_Space 
 // https://doc.rust-lang.org/std/primitive.str.html#method.split_ascii_whitespace
-    pub fn build_vocab_from_lines_ascii_ws(self) -> TextStage2 {
+    pub fn build_vocab_from_lines_ascii_ws(self) -> VocabStage {
         let mut voc = HashMap::new();
         for line in self.text0.lines() {
             for word in line.trim().split_ascii_whitespace() { 
@@ -204,7 +204,7 @@ impl TextStage2 {
                 *count +=1; 
             }  
         }
-        TextStage2 {vocab:voc, ..self}
+        VocabStage {vocab:voc, ..self}
     }
 }
 // insert space before every char in every word in vocab
