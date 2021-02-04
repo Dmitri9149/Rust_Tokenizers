@@ -1,8 +1,7 @@
-/* build and process vector of words 
+/* build and process vector of words Vec<&str> 
 **
 */
 use std::collections::HashMap;
-/* use crate::TextStage2; */
 
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
