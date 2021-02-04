@@ -1,4 +1,4 @@
-use bpe::Pairs;
+use bpe::pairs::Pairs;
 use bpe::TextStage1;
 use bpe::TextStage2;
 use bpe::WordsVector;
@@ -14,7 +14,7 @@ fn main() {
     let vec = WordsVector::from_string_ws(txt);
     let vec = WordsVector::infront(vec);
 
-    println!("{:?}",&vec.words);
+    println!("{:?}",&vec.words[0..20]);
 
     
 /*    let txt2 = TextStage2::build_text_stage2(txt.text1);
