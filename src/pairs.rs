@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use crate::WordsVector;
-use crate::TextStage2;
+use crate::VocabStage;
 
 // Pais -> Dictionry of (pair of 'tokens') : some frequency measure
 pub struct Pairs<'a> {
@@ -39,12 +39,12 @@ impl<'a> Pairs<'a> {
         }
         Pairs {pairs:self.pairs}
     }
-// get the Dictionary of (pairs): numbers from vocab in TextStage2
+// get the Dictionary of (pairs): numbers from vocab in VocabStage
 // the words (keys) in the vocab are special : space is inserted before every char in original word 
 // so the words are like this : " p a i r s" , " r u s t"
 // the 'simple' means we do not take into account how often a 
 // 'word' is in vocab, we work with set of words
-    pub fn from_vocab_simple(ww:&'a TextStage2) -> Pairs<'a> {
+    pub fn from_vocab_simple(ww:&'a VocabStage) -> Pairs<'a> {
         let mut hsh= HashMap::new();
         for (key,_value) in &ww.vocab {
             let mut it = key.split_whitespace().peekable();
@@ -59,12 +59,12 @@ impl<'a> Pairs<'a> {
         Pairs {pairs:hsh}
     }
 
-// get the Dictionary of (pairs): numbers from vocab in TextStage2
+// get the Dictionary of (pairs): numbers from vocab in VocabStage
 // the words (keys) in the vocab are special : space is inserted before every char in original word 
 // so the words are like this : " p a i r s" , " r u s t"
 // we take into account the frequencies of the words to calculate the 
 // frequencies of the pairs
-    pub fn from_vocab(ww:&'a TextStage2) -> Pairs<'a> {
+    pub fn from_vocab(ww:&'a VocabStage) -> Pairs<'a> {
         let mut hsh= HashMap::new();
         for (key,value) in &ww.vocab {
             let mut it = key.split_whitespace().peekable();
