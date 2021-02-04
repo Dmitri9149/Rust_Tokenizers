@@ -1,6 +1,6 @@
 use bpe::pairs::Pairs;
 use bpe::TextStage1;
-use bpe::TextStage2;
+use bpe::VocabStage;
 use bpe::WordsVector;
 fn main() {
     let txt = TextStage1::build_text_stage1("alice_wonderland.txt");
@@ -20,9 +20,9 @@ fn main() {
 
 
     
-/*    let txt2 = TextStage2::build_text_stage2(txt.text1);
-    let voc = TextStage2::build_vocab_from_lines_ascii_ws(txt2);
-    let num_tokens = TextStage2::num_tokens_s2(&voc);
+/*    let txt2 = VocabStage::build_text_stage2(txt.text1);
+    let voc = VocabStage::build_vocab_from_lines_ascii_ws(txt2);
+    let num_tokens = VocabStage::num_tokens_s2(&voc);
     println!("{:?}", &voc.vocab);
     println!("There are {} tokens in the text", &num_tokens );
 */
