@@ -134,7 +134,7 @@ impl TextStage1 {
 
 // keep String from which to build vocab
 // split the string , build vocab from splitted parts
-pub struct TextStage2 {
+pub struct VocabStage {
     pub text0: String,
     pub vocab: HashMap<String, i32>
 }
