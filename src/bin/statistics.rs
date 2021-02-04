@@ -15,6 +15,9 @@ fn main() {
     let vec = WordsVector::infront(vec);
 
     println!("{:?}",&vec.words[0..20]);
+    let prs = Pairs::from_words_vector(&vec);
+    println!("{:?}",&prs.pairs);
+
 
     
 /*    let txt2 = TextStage2::build_text_stage2(txt.text1);

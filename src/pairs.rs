@@ -4,7 +4,7 @@ use crate::TextStage2;
 
 
 pub struct Pairs<'a> {
-    pairs:HashMap<(&'a str,&'a str),i32>
+    pub pairs:HashMap<(&'a str,&'a str),i32>
 }
 
 impl<'a> Pairs<'a> {
