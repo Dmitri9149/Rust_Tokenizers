@@ -14,18 +14,20 @@ impl<'a> Pairs<'a> {
         Pairs {pairs:e}
     }
 */
-    pub fn from_words_vector(mut self, ww:&'a WordsVector) -> Pairs<'a> {
+    pub fn from_words_vector(ww:&'a WordsVector) -> Pairs<'a> {
+        let mut hsh= HashMap::new();
+
         for word in &ww.words {
             let mut it = word.split_whitespace().peekable();
 
             while let Some(current) = it.next() {
                 if let Some(&next) = it.peek() {
-                    let count = self.pairs.entry((current,next)).or_insert(0);
+                    let count = hsh.entry((current,next)).or_insert(0);
                     *count +=1;          
                 }
             }
         }
-        Pairs {pairs:self.pairs}
+        Pairs {pairs:hsh}
     }
     pub fn from_words_vector_f(mut self, ww:&'a WordsVector) -> Pairs<'a> {
         for word in &ww.words {
