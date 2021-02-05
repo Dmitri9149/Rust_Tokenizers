@@ -283,7 +283,7 @@ mod tests {
 
 //        assert_eq!(vec![" en d p o w e r en d"], vec_words::merge_pairs(pair,one_word_vc));
 
-        assert_eq!(0, vec_words::merge_pairs(pair,one_word_vc));
+        assert_eq!(vec![" rn t"], vec_words::merge_pairs(pair,&one_word_vc));
 
 
     }
