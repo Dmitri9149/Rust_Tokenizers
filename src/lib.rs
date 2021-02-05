@@ -185,7 +185,7 @@ impl VocabStage {
         VocabStage {vocab:self.vocab, ..self }
     }
 // calculate number of tokens in the vocab
-    pub fn num_tokens_s2(&self) -> (usize, uize) {
+    pub fn num_tokens_s2(&self) -> (usize, usize) {
         return (self.vocab.keys().len(), self.vocab_bpe.keys().len());
     }
 
