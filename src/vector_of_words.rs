@@ -2,6 +2,7 @@
 **
 */
 use std::collections::HashMap;
+use regex::Regex;
 
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
@@ -42,6 +43,7 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
 
 pub fn merge_pairs(pairs:(&str,&str), vec:&Vec<&str>) -> Vec<&str> {
     let vc = Vec::new();
+    let union = format!("{}-{}", pair[0], pair[1]);
     return 0;
 }
 
