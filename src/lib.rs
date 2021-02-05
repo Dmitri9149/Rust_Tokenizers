@@ -281,6 +281,10 @@ mod tests {
         let pair = ("e","n");
         let one_word_vc = vec![" e n d p o w e r e n d"];
 
-        assert_eq!(vec![" en d p o w e r en d"], vec_words::merge_pairs(pair,one_word_vc));
+//        assert_eq!(vec![" en d p o w e r en d"], vec_words::merge_pairs(pair,one_word_vc));
+
+        assert_eq!(0, vec_words::merge_pairs(pair,one_word_vc));
+
+
     }
 }
