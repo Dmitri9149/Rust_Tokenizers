@@ -41,11 +41,15 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
     vocab
 }
 
-pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<&'a str> {
+pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> (Vec<&'a str> , bool) {
 //    let vc = Vec::new();
-    let union = format!("{}-{}", pairs.0, pairs.0);
+    let union = format!("{}{}", pairs.0, pairs.1);
+    println!("union {}", &union);
     let moc = vec![" rn t"];
-    return moc
+    let union_escape = regex::escape(union.as_str());
+    let re = Regex::new(format!(r#"{}"#, union_escape).as_str()).unwrap();
+//    let vec_union = vec![union];
+    return (moc, re.is_match("en"))
 }
 
 /*
