@@ -271,3 +271,16 @@ impl WordsVector {
         WordsVector {words:results} 
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_word_dict() {
+        let pair = ("e","n");
+        let one_word_vc = vec![" e n d p o w e r e n d"];
+
+        assert_eq!(vec![" en d p o w e r en d"], vec_words::merge_pairs(pair,one_word_vc));
+    }
+}
