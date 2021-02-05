@@ -40,9 +40,10 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
     vocab
 }
 
-pub fn merge_pairs(vec:&Vec<&str>) -> Vec<&str> {
+pub fn merge_pairs_in_words(pair:(&str,&str), vec:&Vec<&str>) -> Vec<&str> {
     let vc = Vec::new();
-    return vc
+    let union = format!("{}-{}", pair[0], pair[1]);
+    return 0;
 }
 
 /*
