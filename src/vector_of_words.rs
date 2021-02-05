@@ -43,7 +43,7 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
 
 pub fn merge_pairs(pairs:(&str,&str), vec:&Vec<&str>) -> Vec<&str> {
     let vc = Vec::new();
-    let union = format!("{}-{}", pair[0], pair[1]);
+    let union = format!("{}-{}", pairs[0], pairs[1]);
     return 0;
 }
 
