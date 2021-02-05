@@ -8,5 +8,5 @@ edition = "2018"
 
 [dependencies]
 regex = "1"
-fancy_regex = "0.4.1"
+fancy-regex = "0.4.1"
 
