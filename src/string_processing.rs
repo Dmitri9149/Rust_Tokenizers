@@ -42,6 +42,18 @@ pub fn add_char_infront(input: &str, symbol:char) -> String {
     output
 }
 
+// this function insert string before every char in a string
+// 
+pub fn add_string_infront(input: &str, st:&str) -> String {
+    let mut output = String::new();
+    for c in input.chars() {
+        output.push_str(st);
+        output.push(c);
+    }
+    output
+}
+
+
 
 // this function changes particular character in a string to particular string 
 //
