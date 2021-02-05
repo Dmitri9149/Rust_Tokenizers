@@ -2,8 +2,8 @@
 **
 */
 use std::collections::HashMap;
-use regex::Regex;
-use fancy-regex::Regex as RegF;
+//use regex::Regex;
+use fancy_regex::Regex;
 
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
@@ -43,14 +43,18 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
 }
 
 pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> (Vec<&'a str> , bool) {
-//    let vc = Vec::new();
+    let vc = Vec::new();
     let bigram = format!("{}{}{}", pairs.0,' ',pairs.1);
+    let glued_bigram = format!("{}{}",pairs.0,pairs.1);
     println!("bigram {}", &bigram);
     let moc = vec![" rn t"];
     let bigram_escape = regex::escape(bigram.as_str());
     let re = Regex::new(format!(r#"{}{}{}"#, "(?<!\\S)",bigram_escape,"(?!\\S)").as_str()).unwrap();
-//    let vec_union = vec![union];
-    return (moc, re.is_match("e n"))
+    for word in vec {
+        let wd = re.replace_all(word, glued_bigram.as_str());
+        vc.push(wd);
+    }
+    return (moc, re.is_match("e n").is_ok())
 }
 
 /*
