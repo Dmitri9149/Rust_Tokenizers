@@ -185,7 +185,7 @@ impl VocabStage {
         VocabStage {vocab:self.vocab, ..self }
     }
 // calculate number of tokens in the vocab
-    pub fn num_tokens_s2(&self) -> (usize, uize) {
+    pub fn num_tokens_s2(&self) -> (usize, usize) {
         return (self.vocab.keys().len(), self.vocab_bpe.keys().len());
     }
 
@@ -264,10 +264,39 @@ impl WordsVector {
         WordsVector {words:results} 
     }
 
+// add cr:char infront of every char in a word in words vector
+    pub fn char_infront(vc:WordsVector, symbol:char) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| str_mod::add_char_infront(x,symbol)).collect();
+        WordsVector {words:results} 
+    }
+
+// add string infront of every char in a word in words vector
+    pub fn string_infront(vc:WordsVector, st:&str) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| str_mod::add_string_infront(x,st)).collect();
+        WordsVector {words:results} 
+    }
+
+
+
+
 // add symbol:char  to end  of every word in words-vector
     pub fn toend(vc:WordsVector, symbol:char) -> WordsVector {
         let results = vc.words.iter()
             .map(|x| str_mod::add_symbol_toend(x,symbol)).collect();
         WordsVector {words:results} 
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_word_dict() {
+        let pair = ("e","n");
+        let one_word_vc = vec!["  e  n  d  p  o  w  e  r  e  n  d"];
+        assert_eq!(vec!["  en  d  p  o  w  e  r  en  d"], vec_words::merge_pairs(pair, &one_word_vc));
     }
 }
