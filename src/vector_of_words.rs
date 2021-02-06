@@ -58,6 +58,7 @@ impl WordsVector {
 // add string infront of every char in a word in words vector
     pub fn string_infront(vc:WordsVector, st:&str) -> WordsVector {
 
+//=====================================================
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
 // construct vector of all words from a string by splitting on ascii space
@@ -70,7 +71,6 @@ pub fn build_vector_of_words_ascii_ws(s:&str) -> Vec<&str> {
     }
     results
 }
-//=============> end of WordsVector structure <===========
 
 
 
