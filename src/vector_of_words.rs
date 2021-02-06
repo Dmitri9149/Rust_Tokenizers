@@ -3,6 +3,7 @@
 */
 use std::collections::HashMap;
 use regex::Regex;
+use std::ops::Deref;
 //use fancy_regex::Regex;
 
 // white space here is Unicode Derived Core Property White_Space 
@@ -42,23 +43,26 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
     vocab
 }
 
-pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> (Vec<&'a str> , bool) {
+pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<String> {
     let mut vc = Vec::new();
 // two ASCII spaces between tokens, will be used in regex to find the 2-spaces 
 // separated tokens in the text
-    let bigram = format!("{}{}{}", pairs.0,"\x20\x20",pairs.1);
+    let bigram = format!("{}{}{}{}{}","\x20", pairs.0,"\x20\x20",pairs.1,"\x20");
 // will be used as a new token
-    let glued_bigram = format!("{}{}",pairs.0,pairs.1);
+    let glued_bigram = format!("{}{}{}{}","\x20",pairs.0,pairs.1,"\x20");
     println!("bigram {}", &bigram);
     let moc = vec![" rn t"];
 // escape bigram, we may encounter in text special symbols, have to meet them literally
     let bigram_escape = regex::escape(bigram.as_str());
     let re = Regex::new(format!("{}", bigram_escape).as_str()).unwrap();
     for word in vec {
-        let wd = re.replace_all(word, "aaa");
+        println!("word =======> {}", &word);
+        let wd = re.replace_all(word, glued_bigram.as_str()).to_string();
         vc.push(wd);
+ //       println!("========== vc ======{:?}", &vc);
+ //       println!("========== wd {:?}======", &wd);
     }
-    return (moc, re.is_match(" e  n "))
+    return vc
 }
 
 /*

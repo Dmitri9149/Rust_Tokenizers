@@ -296,12 +296,7 @@ mod tests {
     #[test]
     fn one_word_dict() {
         let pair = ("e","n");
-        let one_word_vc = vec![" e n d p o w e r e n d"];
-
-//        assert_eq!(vec![" en d p o w e r en d"], vec_words::merge_pairs(pair,one_word_vc));
-
-        assert_eq!((vec![" rn t"],true) , vec_words::merge_pairs(pair,&one_word_vc));
-
-
+        let one_word_vc = vec!["  e  n  d  p  o  w  e  r  e  n  d"];
+        assert_eq!(vec!["  en  d  p  o  w  e  r  en  d"], vec_words::merge_pairs(pair, &one_word_vc));
     }
 }
