@@ -161,7 +161,7 @@ impl VocabStage {
 
 //build vocab from WordsVector
 
-    pub fn build_vocab_from_vector(self, vec:WordsVector) -> VocabStage {
+    pub fn build_vocab_from_vector(self, vec:vect_words::WordsVector) -> VocabStage {
         let vocab = vec_words::vocab_from_vector(vec.words);
         VocabStage {vocab:vocab, ..self }
     }
@@ -169,7 +169,7 @@ impl VocabStage {
  // build vocab_bpe from WordsVector where words are specially preprocessed for 
  // bpe tokenizer implementation : space is added before every char in word, 
  // and special token may be added to the end
-    pub fn build_vocab_from_vector_bpe(self, vec:WordsVector) -> VocabStage {
+    pub fn build_vocab_from_vector_bpe(self, vec:vec_words::WordsVector) -> VocabStage {
         let vocab = vec_words::vocab_from_vector(vec.words);
         VocabStage {vocab_bpe:vocab, ..self }
     }
