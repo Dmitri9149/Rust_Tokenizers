@@ -42,7 +42,8 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
 
     vocab
 }
-
+// merge tokens in words . where words are composed of tokens separated by 
+// ASCII space symbol 
 pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<String> {
     let mut vc = Vec::new();
 // two ASCII spaces between tokens, will be used in regex to find the 2-spaces 
