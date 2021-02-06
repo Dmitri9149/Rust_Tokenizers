@@ -42,13 +42,6 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
 
     vocab
 }
-<<<<<<< HEAD
-
-pub fn merge_pairs_in_words(pair:(&str,&str), vec:&Vec<&str>) -> Vec<&str> {
-    let vc = Vec::new();
-    let union = format!("{}-{}", pair[0], pair[1]);
-    return 0;
-=======
 // merge tokens in words . where words are composed of tokens separated by 
 // ASCII space symbol 
 pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<String> {
@@ -71,7 +64,6 @@ pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<String> {
  //       println!("========== wd {:?}======", &wd);
     }
     return vc
->>>>>>> merge_pairs
 }
 
 /*
