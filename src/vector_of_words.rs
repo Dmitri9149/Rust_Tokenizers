@@ -2,8 +2,8 @@
 **
 */
 use std::collections::HashMap;
-//use regex::Regex;
-use fancy_regex::Regex;
+use regex::Regex;
+//use fancy_regex::Regex;
 
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
@@ -43,18 +43,22 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
 }
 
 pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> (Vec<&'a str> , bool) {
-    let vc = Vec::new();
-    let bigram = format!("{}{}{}", pairs.0,' ',pairs.1);
+    let mut vc = Vec::new();
+// two ASCII spaces between tokens, will be used in regex to find the 2-spaces 
+// separated tokens in the text
+    let bigram = format!("{}{}{}", pairs.0,"\x20\x20",pairs.1);
+// will be used as a new token
     let glued_bigram = format!("{}{}",pairs.0,pairs.1);
     println!("bigram {}", &bigram);
     let moc = vec![" rn t"];
+// escape bigram, we may encounter in text special symbols, have to meet them literally
     let bigram_escape = regex::escape(bigram.as_str());
-    let re = Regex::new(format!(r#"{}{}{}"#, "(?<!\\S)",bigram_escape,"(?!\\S)").as_str()).unwrap();
+    let re = Regex::new(format!("{}", bigram_escape).as_str()).unwrap();
     for word in vec {
-        let wd = re.replace_all(word, glued_bigram.as_str());
+        let wd = re.replace_all(word, "aaa");
         vc.push(wd);
     }
-    return (moc, re.is_match("e n").is_ok())
+    return (moc, re.is_match(" e  n "))
 }
 
 /*
