@@ -6,6 +6,58 @@ use regex::Regex;
 use std::ops::Deref;
 //use fancy_regex::Regex;
 
+
+// collection of words we may get in some way from string
+pub struct WordsVector {
+    pub words: Vec <String>
+}
+
+impl WordsVector {
+// white space here is Unicode Derived Core Property White_Space 
+// see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace 
+// construct vector of all words from a string.text1 of 
+// TextStage1 by splitting on ascii space
+    pub fn from_string_ascii_ws(stage1:TextStage1) -> WordsVector{
+        let mut results = Vec::new();
+        for line in stage1.text1.lines() {
+            for word in line.trim().split_ascii_whitespace() { 
+                results.push(String::from(word));
+            }  
+        }
+        WordsVector {words: results}
+    }
+// white space here is Unicode Derived Core Property White_Space 
+// see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
+// construct vector of all words from a string.text1 of 
+// TextStage1 by splitting on white space
+    pub fn from_string_ws(stage1:TextStage1) -> WordsVector {
+        let mut results = Vec::new();
+        for line in stage1.text1
+            .lines() {
+            for word in line.trim().split_whitespace() { 
+                results.push(String::from(word));
+            }  
+        }
+        WordsVector {words:results}
+    }
+
+// add ' ' infront of every char in a word in words vector
+    pub fn infront(vc:WordsVector) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| str_mod::add_space_infront(x)).collect();
+        WordsVector {words:results} 
+    }
+
+// add cr:char infront of every char in a word in words vector
+    pub fn char_infront(vc:WordsVector, symbol:char) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| str_mod::add_char_infront(x,symbol)).collect();
+        WordsVector {words:results} 
+    }
+
+// add string infront of every char in a word in words vector
+    pub fn string_infront(vc:WordsVector, st:&str) -> WordsVector {
+
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
 // construct vector of all words from a string by splitting on ascii space
@@ -18,6 +70,10 @@ pub fn build_vector_of_words_ascii_ws(s:&str) -> Vec<&str> {
     }
     results
 }
+//=============> end of WordsVector structure <===========
+
+
+
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
 // construct vector of all words from a string by splitting on white space
@@ -60,18 +116,7 @@ pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<String> {
         println!("word =======> {}", &word);
         let wd = re.replace_all(word, glued_bigram.as_str()).to_string();
         vc.push(wd);
- //       println!("========== vc ======{:?}", &vc);
- //       println!("========== wd {:?}======", &wd);
     }
     return vc
 }
 
-/*
-// build vocab: (token, count) as HashMap<String, i32>
-// from words_vector
-//
-    pub fn build_vocab_from_vector(vec:&Vec<&str>) -> TextStage2 {
-        let mut vocab = vocab_from_vector();
-        TextStage2 {vocab:vocab, ..self }
-    }
-*/
