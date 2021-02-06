@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use crate::WordsVector;
+use crate::vector_of_words::WordsVector;
 use crate::VocabStage;
 
 // Pais -> Dictionry of (pair of 'tokens') : some frequency measure

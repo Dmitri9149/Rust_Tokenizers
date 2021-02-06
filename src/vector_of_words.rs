@@ -5,6 +5,8 @@ use std::collections::HashMap;
 use regex::Regex;
 use std::ops::Deref;
 //use fancy_regex::Regex;
+use crate::string_processing as str_mod;
+use crate::TextStage1;
 
 
 // collection of words we may get in some way from string
@@ -57,8 +59,21 @@ impl WordsVector {
 
 // add string infront of every char in a word in words vector
     pub fn string_infront(vc:WordsVector, st:&str) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| str_mod::add_string_infront(x,st)).collect();
+        WordsVector {words:results}
+    }
 
-//=====================================================
+// add symbol:char  to end  of every word in words-vector
+    pub fn toend(vc:WordsVector, symbol:char) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| str_mod::add_symbol_toend(x,symbol)).collect();
+        WordsVector {words:results}
+    }
+}
+
+//================= end of WordsVector structure ===================
+
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
 // construct vector of all words from a string by splitting on ascii space
@@ -71,8 +86,6 @@ pub fn build_vector_of_words_ascii_ws(s:&str) -> Vec<&str> {
     }
     results
 }
-
-
 
 // white space here is Unicode Derived Core Property White_Space 
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace

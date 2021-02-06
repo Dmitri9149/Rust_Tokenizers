@@ -161,7 +161,7 @@ impl VocabStage {
 
 //build vocab from WordsVector
 
-    pub fn build_vocab_from_vector(self, vec:vect_words::WordsVector) -> VocabStage {
+    pub fn build_vocab_from_vector(self, vec:vec_words::WordsVector) -> VocabStage {
         let vocab = vec_words::vocab_from_vector(vec.words);
         VocabStage {vocab:vocab, ..self }
     }
