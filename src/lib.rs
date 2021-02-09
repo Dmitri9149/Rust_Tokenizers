@@ -9,7 +9,7 @@ pub use crate::vector_of_words as vec_words;
 pub mod pairs;
 pub use crate::pairs as pair;
 pub mod vocab_of_tokens;
-pub use crate::vocab_of_tokens;
+// pub use crate::vocab_of_tokens;
 
 
 // read file in different modes

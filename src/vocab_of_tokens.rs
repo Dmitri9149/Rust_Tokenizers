@@ -1,14 +1,18 @@
+use std::collections::HashMap;
+use crate::VocabStage;
+
 // vocab of tokens , by vocab we mean here the dictionary of 
 // token:number_of_tokens pairs
-pub struct Vocab_of_Tokens {
+
+pub struct VocabOfTokens {
     pub tokens: HashMap<String, i32>,
 }
 
 
-impl Vocab_of_Tokens {
-    pub fn from_words_vocab_bpe (smth: & VocabStagetage) -> {
-        let mut hsh = create_from_words_vocab_bpe(& smth);
-        Vocab_of_Tokens {tokens:hsh}
+impl VocabOfTokens {
+    pub fn from_words_vocab_bpe (smth: & VocabStage) -> VocabOfTokens {
+        let hsh = create_from_words_vocab_bpe(& smth);
+        VocabOfTokens {tokens:hsh}
         
     }
 }
@@ -16,10 +20,12 @@ impl Vocab_of_Tokens {
 
 pub fn create_from_words_vocab_bpe(smth:& VocabStage) -> HashMap<String, i32> {
     let mut hsh = HashMap::new();
-    for (word, frequency) in smth.words.to_iter() {
+    for (word, frequency) in smth.vocab_bpe {
         for token in word.split_ascii_whitespace() {
              let count = hsh.entry(token.to_string()).or_insert(0);
              *count +=frequency;         
         }
     }
+
+    return hsh
 }
