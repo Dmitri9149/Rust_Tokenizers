@@ -2,6 +2,7 @@ use bpe::pairs::Pairs;
 use bpe::TextStage1;
 use bpe::VocabStage;
 use bpe::vector_of_words::WordsVector;
+use bpe::vocab_of_tokens::VocabOfTokens;
 
 fn main() {
     let txt = TextStage1::build_text_stage1("alice_wonderland.txt");
@@ -23,7 +24,6 @@ fn main() {
     println!("{:?}",&prs.pairs);
 
     println!("==========================");
-    println!("Get tokens from BPE vocab");
     let vocab = VocabStage::build_text_stage2("TODO! FROM STRUCT".to_string());
     let vocab = VocabStage::build_vocab_from_vector_bpe(vocab,vec);
     println!("Vocab from words vector!!!!");
@@ -34,7 +34,11 @@ fn main() {
     let prs = Pairs::from_vocab(&vocab);
     println!("{:?}", &prs.pairs);
 
-
+    println!("=========================");
+    println!("Get tokens from bpe vocab");
+//    let tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+    let tokens = VocabOfTokens::merge_pair_if_in_word(vocab, ("t","h"));
+    println!("{:?}", &tokens.tokens);
 
 
 

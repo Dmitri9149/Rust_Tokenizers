@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use crate::VocabStage;
+use crate::vector_of_words::merge_pairs_from_hash;
 
 // vocab of tokens , by vocab we mean here the dictionary of 
 // token:number_of_tokens pairs
@@ -10,14 +11,14 @@ pub struct VocabOfTokens {
 
 
 impl VocabOfTokens {
-    pub fn from_words_vocab_bpe (smth: & VocabStage) -> VocabOfTokens {
-        let hsh = create_from_words_vocab_bpe(& smth);
+    pub fn from_words_vocab_bpe (smth: VocabStage) -> VocabOfTokens {
+        let hsh = create_from_words_vocab_bpe(&smth);
         VocabOfTokens {tokens:hsh}
         
     }
 
-    pub fn merge_pair_if_in_word(self, pair:(&str,&str)) -> VocabOfTokens {
-        let hsh = merge_pairs_from_hash(pair, self.tokens);
+    pub fn merge_pair_if_in_word(smth: VocabStage, pair:(&str,&str)) -> VocabOfTokens {
+        let hsh = merge_pairs_from_hash(pair, smth.vocab_bpe);
         VocabOfTokens {tokens:hsh}
     }
 
