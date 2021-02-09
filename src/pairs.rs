@@ -10,7 +10,7 @@ pub struct Pairs<'a> {
 impl<'a> Pairs<'a> {
 // implement the Pairs from vector of words (same word may be in the vector multiple times)
 // the words are special : space is inserted before every char in original word 
-// so the words are like this : " p a i r s" , " r u s t"
+// so the words are like this : " p  a  i  r  s  </word>" , "  r  u  s  t  </word>"
     pub fn from_words_vector(ww:&'a WordsVector) -> Pairs<'a> {
         let mut hsh= HashMap::new();
 
@@ -66,7 +66,7 @@ impl<'a> Pairs<'a> {
 // frequencies of the pairs
     pub fn from_vocab(ww:&'a VocabStage) -> Pairs<'a> {
         let mut hsh= HashMap::new();
-        for (key,value) in &ww.vocab {
+        for (key,value) in &ww.vocab_bpe {
             let mut it = key.split_whitespace().peekable();
 
             while let Some(current) = it.next() {
