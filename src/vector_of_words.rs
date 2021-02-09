@@ -3,7 +3,7 @@
 */
 use std::collections::HashMap;
 use regex::Regex;
-use std::ops::Deref;
+// use std::ops::Deref;
 //use fancy_regex::Regex;
 use crate::string_processing as str_mod;
 use crate::TextStage1;
@@ -121,7 +121,6 @@ pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<String> {
 // will be used as a new token
     let glued_bigram = format!("{}{}{}{}","\x20",pairs.0,pairs.1,"\x20");
     println!("bigram {}", &bigram);
-    let moc = vec![" rn t"];
 // escape bigram, we may encounter in text special symbols, have to meet them literally
     let bigram_escape = regex::escape(bigram.as_str());
     let re = Regex::new(format!("{}", bigram_escape).as_str()).unwrap();
