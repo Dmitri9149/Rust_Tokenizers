@@ -65,11 +65,19 @@ impl WordsVector {
     }
 
 // add symbol:char  to end  of every word in words-vector
-    pub fn toend(vc:WordsVector, symbol:char) -> WordsVector {
+    pub fn char_toend(vc:WordsVector, symbol:char) -> WordsVector {
         let results = vc.words.iter()
             .map(|x| str_mod::add_symbol_toend(x,symbol)).collect();
         WordsVector {words:results}
     }
+
+// add token:string  to the end of every word in words-vector
+    pub fn string_toend(vc:WordsVector, token:& str) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| str_mod::add_string_toend(x,token)).collect();
+        WordsVector {words:results}
+    }
+
 }
 
 //================= end of WordsVector structure ===================

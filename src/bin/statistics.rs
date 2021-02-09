@@ -1,7 +1,7 @@
 use bpe::pairs::Pairs;
 use bpe::TextStage1;
 use bpe::VocabStage;
-use bpe::WordsVector;
+use bpe::vector_of_words::WordsVector;
 fn main() {
     let txt = TextStage1::build_text_stage1("alice_wonderland.txt");
 //    let txt = TextStage1::replace_u2581(txt);
@@ -12,7 +12,8 @@ fn main() {
     let txt = TextStage1::replace_char_to_char(txt, '🦀', ' ');
 //    println!("{:?}",txt.text1)
     let vec = WordsVector::from_string_ws(txt);
-    let vec = WordsVector::infront(vec);
+    let vec = WordsVector::string_infront(vec, "\x20\x20");
+    let vec = WordsVector::string_toend(vec," </word>");
 
     println!("{:?}",&vec.words[0..20]);
     let prs = Pairs::from_words_vector(&vec);
