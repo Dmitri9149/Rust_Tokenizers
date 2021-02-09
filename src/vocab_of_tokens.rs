@@ -6,7 +6,7 @@ pub struct Vocab_of_Tokens {
 
 
 impl Vocab_of_Tokens {
-    pub fn from_words_vocab_bpe (smth: & WordsVocab) -> {
+    pub fn from_words_vocab_bpe (smth: & VocabStagetage) -> {
         let mut hsh = create_from_words_vocab_bpe(& smth);
         Vocab_of_Tokens {tokens:hsh}
         
