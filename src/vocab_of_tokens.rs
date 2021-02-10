@@ -11,7 +11,7 @@ pub struct VocabOfTokens {
 
 
 impl VocabOfTokens {
-    pub fn from_words_vocab_bpe (smth: VocabStage) -> VocabOfTokens {
+    pub fn from_words_vocab_bpe (smth: &VocabStage) -> VocabOfTokens {
         let hsh = create_from_words_vocab_bpe(&smth);
         VocabOfTokens {tokens:hsh}
         

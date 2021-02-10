@@ -223,12 +223,11 @@ impl VocabStage {
         VocabStage {vocab:voc, ..self}
     }
 
-//    pub fn merge_pairs(self, pairs:(&str,&str)) -> VocabStage {
-//        let mut voc = HashMap::new();
-//        for (word, frequency) in self.vocab_bpe.to_iter() {
-//            
-//        }
-//    }
+   pub fn rebuild_by_merging_pairs(self, pair:(&str,&str)) -> VocabStage {
+        let hsh = vector_of_words::merge_pairs_from_hash(pair, self.vocab_bpe);
+        VocabStage {vocab_bpe:hsh, ..self}
+    }
+
 
 }
 

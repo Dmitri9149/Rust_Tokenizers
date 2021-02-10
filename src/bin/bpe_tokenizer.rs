@@ -35,10 +35,19 @@ fn main() {
     println!("{:?}", &prs.pairs);
 
     println!("=========================");
-    println!("Get tokens from bpe vocab");
-//    let tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
-    let tokens = VocabOfTokens::merge_pair_if_in_word(vocab, ("t","h"));
+    println!("Get initial tokens from bpe vocab");
+    println!("The initial tokens are just the unicode scalars : chars");
+    let tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+    println!("{:?}",&tokens.tokens);
+    let tokens_init_size = tokens.tokens.keys().len();
+    println!("Number of initial tokens {}", tokens_init_size);
+    println!("=========================");
+    println!("After one merging of most frequent pairs: ");
+    let vocab = VocabStage::rebuild_by_merging_pairs(vocab, ("t","h"));
+    let tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
     println!("{:?}", &tokens.tokens);
+    let tokens_aftermerge_size = tokens.tokens.keys().len();
+    println!("Number of tokens after one merge {}", tokens_aftermerge_size);
 
 
 
