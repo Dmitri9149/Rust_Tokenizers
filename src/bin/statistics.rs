@@ -3,7 +3,7 @@ use bpe::TextStage;
 use bpe::VocabStage;
 use bpe::vector_of_words::WordsVector;
 fn main() {
-    let txt = TextStage::build_text_stage1("alice_wonderland.txt");
+    let txt = TextStage::build_text_stage("alice_wonderland.txt");
 //    let txt = TextStage1::replace_u2581(txt);
     let txt = TextStage::to_lowercase(txt);
     let txt = TextStage::separate_punctuation(txt, ".,!?;:");
