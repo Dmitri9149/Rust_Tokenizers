@@ -3,12 +3,18 @@ use crate::vector_of_words::WordsVector;
 use crate::VocabStage;
 use crate::max_key;
 
-// Pais -> Dictionry of (pair of 'tokens') : some frequency measure
+// Pais -> Dictionry of (pair of 'tokens') : some frequency measure (number)
 pub struct Pairs {
     pub pairs:HashMap<(String, String),i32>
 }
 
 impl Pairs {
+
+// implement empty Pairs
+    pub fn () -> Pairs {
+        let pairs = HashMap::new();
+        Pairs {pairs:pairs}
+    }
 // implement the Pairs from vector of words (same word may be in the vector multiple times)
 // the words are special : space is inserted before every char in original word 
 // so the words are like this : " p  a  i  r  s  </word>" , "  r  u  s  t  </word>"
@@ -28,20 +34,7 @@ impl Pairs {
         }
         Pairs {pairs:hsh}
     }
-    pub fn from_words_vector_f(mut self, ww:& WordsVector) -> Pairs {
-        for word in &ww.words {
-            let mut it = word.split_whitespace().peekable();
 
-            while let Some(current) = it.next() {
-                if let Some(&next) = it.peek() {
-                    let count = self
-                        .pairs.entry((current.to_string(),next.to_string())).or_insert(0);
-                    *count +=1;          
-                }
-            }
-        }
-        Pairs {pairs:self.pairs}
-    }
 // get the Dictionary of (pairs): numbers from vocab in VocabStage
 // the words (keys) in the vocab are special : space is inserted before every char in original word 
 // so the words are like this : " p a i r s" , " r u s t"
@@ -84,28 +77,10 @@ impl Pairs {
         Pairs {pairs:hsh}
     }
 
-    pub fn from_vocab_self(self, ww:& VocabStage) -> Pairs {
-        let mut hsh= HashMap::new();
-        for (key,value) in &ww.vocab_bpe {
-            let mut it = key.split_whitespace().peekable();
-
-            while let Some(current) = it.next() {
-                if let Some(&next) = it.peek() {
-                    let count = hsh
-                        .entry((current.to_string(),next.to_string())).or_insert(0);
-                    *count +=value; // we add 'value', not 1 as in case of from_vocab_simple
-                }
-            }
-        }
-        Pairs {pairs:hsh}
-    }
-
-
+// calculate the most frequent pair of consequtive tokens in words of VocabStage
     pub fn key_max(&self) -> (String, String) {
         let res = &*max_key(&self.pairs).expect("The vocabulary is to be not empty");
         (res.0.to_string(),res.1.to_string())
     }
-
-
 }
 
