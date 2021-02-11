@@ -19,7 +19,7 @@ fn main() {
     let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
     
     println!("==========================");
-    let mut vocab = VocabStage::build_text_stage2("TODO! FROM STRUCT".to_string());
+    let mut vocab = VocabStage::build_vocab_from_text_stage("TODO! FROM STRUCT".to_string());
     vocab = VocabStage::build_vocab_from_vector_bpe(vocab,vec);
 
     println!("=========================");
