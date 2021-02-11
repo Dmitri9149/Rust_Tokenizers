@@ -1,4 +1,4 @@
-use bpe::TextStage1;
+use bpe::TextStage;
 use bpe::VocabStage;
 use bpe::vector_of_words::WordsVector;
 fn main() {
