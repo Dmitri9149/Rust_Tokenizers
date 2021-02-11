@@ -165,7 +165,7 @@ impl VocabStage {
 // build the HashMap from preprocessed whole string
 // by splitting the string
 // intended to take TextStage.text1 string to 'text0' and set ''vocab' to new empty HashMap
-    pub fn build_text_stage2(strng: String) -> VocabStage {
+    pub fn build_vocab_from_text_stage(strng: String) -> VocabStage {
         let voc = HashMap::new();
         let voc_bpe = HashMap::new();
         VocabStage {
