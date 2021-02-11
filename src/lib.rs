@@ -13,11 +13,11 @@ pub mod vocab_of_tokens;
 
 
 // read file in different modes
-// Text is treated as one big string at TextStage1
-// Stage1, Stage2 are marked different stages in full string processing
+// Text is treated as one big string at TextStage
+// at the stage we make string processing
 // what preprocessing stages are -> see the impl of the structure and comments
 //
-pub struct TextStage1 {
+pub struct TextStage {
 // original unprocesses string
     pub text0: String,
 // strings after some processings belonging to stage1 are saved in text1 field
@@ -27,30 +27,30 @@ pub struct TextStage1 {
     pub text1: String,
 }
 
-impl TextStage1 {
+impl TextStage {
 // building the string for processing
 // originally build string is saved in text0 and text1 fields
 // processing is with text1 field, text0 is kept without a 
 // change -> the 'original string' is there 
 //
 // build by reading a file, no a buffer
-    pub fn build_text_stage1(path: &str) -> TextStage1 {
+    pub fn build_text_stage1(path: &str) -> TextStage {
         let mut f = File::open(path).unwrap();
         let mut contents = String::new();
         f.read_to_string(&mut contents).unwrap();
-        TextStage1 {
+        TextStage {
             text0: contents.clone(),
             text1: contents
         }
     }
 // replace white space by u{2581} symbol 
-    pub fn replace_u2581(self) -> TextStage1 {
+    pub fn replace_u2581(self) -> TextStage {
         let text = self.text1.replace(' ', "\u{2581}");
-        TextStage1 { text1: text, ..self }
+        TextStage { text1: text, ..self }
     }
 
 // change a char to another char
-    pub fn replace_char_to_char(self, x:char, y:char) -> TextStage1 {
+    pub fn replace_char_to_char(self, x:char, y:char) -> TextStage {
         let xx = x;
         let yy = y;
         let text = self.text1.chars()
@@ -61,13 +61,13 @@ impl TextStage1 {
             })
         .collect();
 
-        TextStage1 {
+        TextStage {
             text1:text, ..self
         }
     }
 
 // change a chars from a list to another char
-    pub fn replace_chars_to_char(self, aa:&str, b:char) -> TextStage1 {
+    pub fn replace_chars_to_char(self, aa:&str, b:char) -> TextStage {
 //        let xx = x;
 //        let yy = y;
         let text = self.text1.chars()
@@ -78,7 +78,7 @@ impl TextStage1 {
             })
         .collect();
 
-        TextStage1 {
+        TextStage {
             text1:text, ..self
         }
     }
@@ -86,7 +86,7 @@ impl TextStage1 {
 
 // insert ' ' between punctuation marks '!,.' and a word 
 //
-    pub fn separate_punctuation(self, s:&str) -> TextStage1 {
+    pub fn separate_punctuation(self, s:&str) -> TextStage {
         let mut new_str = String::new();
         
         let mut it = self.text1.chars().peekable();
@@ -99,13 +99,13 @@ impl TextStage1 {
                 }  else { new_str.push(current) }
             }
         }
-        TextStage1 {text1: new_str, ..self}
+        TextStage {text1: new_str, ..self}
     }
 
 // to lowercase all the string
-    pub fn to_lowercase(self) -> TextStage1 {
+    pub fn to_lowercase(self) -> TextStage {
         let text = self.text1.to_lowercase();
-        TextStage1 { text1: text, ..self }    
+        TextStage { text1: text, ..self }    
     }
 
 //
@@ -113,7 +113,7 @@ impl TextStage1 {
 // is_whitespace -> returns true if this char has the White_Space property.
 // White_Space is specified in the Unicode Character Database PropList.txt.
 // https://www.unicode.org/Public/UCD/latest/ucd/PropList.txt
-    pub fn remove_whitespace(self) -> TextStage1 {
+    pub fn remove_whitespace(self) -> TextStage {
         let text0 = self.text0
             .chars()
             .map(|x| -> char {
@@ -123,14 +123,14 @@ impl TextStage1 {
             })
             .collect();
 
-        TextStage1 {text0:text0, ..self}   
+        TextStage {text0:text0, ..self}   
     }
 
 // replace non-breaking spaces by space
-    pub fn replace_non_breaking(self) -> TextStage1 {
+    pub fn replace_non_breaking(self) -> TextStage {
         let text = self.text1.replace('\t',&' '.to_string()); // '\t'
 
-        TextStage1 { text1: text, ..self }
+        TextStage { text1: text, ..self }
     }
 }
 
@@ -150,7 +150,7 @@ pub struct VocabStage {
 impl VocabStage {
 // build the HashMap from preprocessed whole string
 // by splitting the string
-// intended to take Text1.text1 string to 'text0' and set ''vocab' to new empty HashMap
+// intended to take TextStage.text1 string to 'text0' and set ''vocab' to new empty HashMap
     pub fn build_text_stage2(strng: String) -> VocabStage {
         let voc = HashMap::new();
         let voc_bpe = HashMap::new();
