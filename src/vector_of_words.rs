@@ -6,7 +6,7 @@ use regex::Regex;
 // use std::ops::Deref;
 //use fancy_regex::Regex;
 use crate::string_processing as str_mod;
-use crate::TextStage1;
+use crate::TextStage;
 
 
 // collection of words we may get in some way from string
@@ -19,7 +19,7 @@ impl WordsVector {
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace 
 // construct vector of all words from a string.text1 of 
 // TextStage1 by splitting on ascii space
-    pub fn from_string_ascii_ws(stage1:TextStage1) -> WordsVector{
+    pub fn from_string_ascii_ws(stage1:TextStage) -> WordsVector{
         let mut results = Vec::new();
         for line in stage1.text1.lines() {
             for word in line.trim().split_ascii_whitespace() { 
@@ -32,7 +32,7 @@ impl WordsVector {
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
 // construct vector of all words from a string.text1 of 
 // TextStage1 by splitting on white space
-    pub fn from_string_ws(stage1:TextStage1) -> WordsVector {
+    pub fn from_string_ws(stage1:TextStage) -> WordsVector {
         let mut results = Vec::new();
         for line in stage1.text1
             .lines() {
