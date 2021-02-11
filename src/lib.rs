@@ -34,7 +34,7 @@ impl TextStage {
 // change -> the 'original string' is there 
 //
 // build by reading a file, no a buffer
-    pub fn build_text_stage1(path: &str) -> TextStage {
+    pub fn build_text_stage(path: &str) -> TextStage {
         let mut f = File::open(path).unwrap();
         let mut contents = String::new();
         f.read_to_string(&mut contents).unwrap();
