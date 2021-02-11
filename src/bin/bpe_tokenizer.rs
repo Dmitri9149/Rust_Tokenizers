@@ -47,6 +47,4 @@ fn main() {
     println!("The tokens vocab looks like this{:?}",&tokens.tokens);
     tokens_size = tokens.tokens.keys().len();
     println!("Number of final  tokens {}", tokens_size);
-
-
 }
