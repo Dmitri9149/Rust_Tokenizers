@@ -1,15 +1,15 @@
 use bpe::pairs::Pairs;
-use bpe::TextStage1;
+use bpe::TextStage;
 use bpe::VocabStage;
 use bpe::vector_of_words::WordsVector;
 fn main() {
-    let txt = TextStage1::build_text_stage1("alice_wonderland.txt");
+    let txt = TextStage::build_text_stage1("alice_wonderland.txt");
 //    let txt = TextStage1::replace_u2581(txt);
-    let txt = TextStage1::to_lowercase(txt);
-    let txt = TextStage1::separate_punctuation(txt, ".,!?;:");
-    let txt = TextStage1::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
-    let txt = TextStage1::separate_punctuation(txt, ",.!?;:");
-    let txt = TextStage1::replace_char_to_char(txt, '🦀', ' ');
+    let txt = TextStage::to_lowercase(txt);
+    let txt = TextStage::separate_punctuation(txt, ".,!?;:");
+    let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
+    let txt = TextStage::separate_punctuation(txt, ",.!?;:");
+    let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
 //    println!("{:?}",txt.text1)
     let vec = WordsVector::from_string_ws(txt);
     let vec = WordsVector::string_infront(vec, "\x20\x20");
