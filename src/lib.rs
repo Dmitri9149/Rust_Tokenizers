@@ -236,13 +236,17 @@ impl VocabStage {
         }
         VocabStage {vocab:voc, ..self}
     }
-
+// one of the most important functions:
+// when we iterate we find the most probable pair of strings at 
+// every iteration ; the function takes the string pair , find all words 
+// which have the consecutive tokens as in the pair, and merge the 
+// tokens in one new string : is pair is ("aa","rd") and a 
+// word is '  aa  rd  d  s  wer  </w>  ' 
+// we will get : '  aard  d  s  wer  <\w>  '
    pub fn rebuild_by_merging_pairs(self, pair:(String,String)) -> VocabStage {
         let hsh = vector_of_words::merge_pairs_from_hash(pair, self.vocab_bpe);
         VocabStage {vocab_bpe:hsh, ..self}
     }
-
-
 }
 
 // some usefull functions
@@ -273,4 +277,10 @@ mod tests {
         let one_word_vc = vec!["  e  n  d  p  o  w  e  r  e  n  d"];
         assert_eq!(vec!["  en  d  p  o  w  e  r  en  d"], vec_words::merge_pairs(pair, &one_word_vc));
     }
+    #[test]
+    fn mx() {
+    let map: HashMap<_, _> = vec![(2, 4), (1, 3), (5, 2)].into_iter().collect();  
+    assert_eq!(max_key(&map), Some(&2));
+    }
+
 }
