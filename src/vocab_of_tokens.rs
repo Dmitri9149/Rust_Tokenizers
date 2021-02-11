@@ -24,7 +24,7 @@ impl VocabOfTokens {
         
     }
 
-    pub fn merge_pair_if_in_word(smth: VocabStage, pair:(&str,&str)) -> VocabOfTokens {
+    pub fn merge_pair_if_in_word(smth: VocabStage, pair:(String,String)) -> VocabOfTokens {
         let hsh = merge_pairs_from_hash(pair, smth.vocab_bpe);
         VocabOfTokens {tokens:hsh}
     }

@@ -142,14 +142,14 @@ pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<String> {
 
 // merge tokens in words . where words are composed of tokens separated by 
 // ASCII space symbols, same as above but HashMap is a parameter
-pub fn merge_pairs_from_hash<'a>(pairs:(&str,&str), hsh: HashMap<String, i32>) -> HashMap<String,i32> {
+pub fn merge_pairs_from_hash<'a>(pairs:(String,String), hsh: HashMap<String, i32>) -> HashMap<String,i32> {
     let mut vc = HashMap::new();
 // two ASCII spaces between tokens, will be used in regex to find the 2-spaces 
 // separated tokens in the text
     let bigram = format!("{}{}{}{}{}","\x20", pairs.0,"\x20\x20",pairs.1,"\x20");
 // will be used as a new token
     let glued_bigram = format!("{}{}{}{}","\x20",pairs.0,pairs.1,"\x20");
-//    println!("bigram {}", &bigram);
+    println!("glued_bigram {}", &glued_bigram);
 // escape bigram, we may encounter in text special symbols, have to meet them literally
     let bigram_escape = regex::escape(bigram.as_str());
     let re = Regex::new(format!("{}", bigram_escape).as_str()).unwrap();

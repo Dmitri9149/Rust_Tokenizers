@@ -223,7 +223,7 @@ impl VocabStage {
         VocabStage {vocab:voc, ..self}
     }
 
-   pub fn rebuild_by_merging_pairs(self, pair:(&str,&str)) -> VocabStage {
+   pub fn rebuild_by_merging_pairs(self, pair:(String,String)) -> VocabStage {
         let hsh = vector_of_words::merge_pairs_from_hash(pair, self.vocab_bpe);
         VocabStage {vocab_bpe:hsh, ..self}
     }
