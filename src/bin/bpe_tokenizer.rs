@@ -5,6 +5,8 @@ use bpe::vector_of_words::WordsVector;
 use bpe::vocab_of_tokens::VocabOfTokens;
 
 fn main() {
+// get text from the file 
+// the text is one big string at the stage
     let txt = TextStage::build_text_stage1("alice_wonderland.txt");
 //    let txt = TextStagei::replace_u2581(txt);
     let txt = TextStage::to_lowercase(txt);
