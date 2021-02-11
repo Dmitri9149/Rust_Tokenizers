@@ -14,6 +14,13 @@ impl VocabOfTokens {
     pub fn from_words_vocab_bpe (smth: &VocabStage) -> VocabOfTokens {
         let hsh = create_from_words_vocab_bpe(&smth);
         VocabOfTokens {tokens:hsh}
+     
+    }
+ 
+
+    pub fn from_words_vocab_bpe_self (self, smth: &VocabStage) -> VocabOfTokens {
+        let hsh = create_from_words_vocab_bpe(&smth);
+        VocabOfTokens {tokens:hsh}
         
     }
 

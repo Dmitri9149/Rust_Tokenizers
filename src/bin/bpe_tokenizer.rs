@@ -17,7 +17,7 @@ fn main() {
     let vec = WordsVector::string_infront(vec, "\x20\x20");
     let vec = WordsVector::string_toend(vec,"\x20\x20</word>");
     
-    println!("==========================");
+/*    println!("==========================");
     println!("Vocab of pairs from words vector");
     println!("{:?}",&vec.words[0..20]);
     let prs = Pairs::from_words_vector(&vec);
@@ -48,6 +48,32 @@ fn main() {
     println!("{:?}", &tokens.tokens);
     let tokens_aftermerge_size = tokens.tokens.keys().len();
     println!("Number of tokens after one merge {}", tokens_aftermerge_size);
+*/
+
+
+    let num_merges = 10;
+    let vocab = VocabStage::build_text_stage2("TODO! FROM STRUCT".to_string());
+    let vocab = VocabStage::build_vocab_from_vector_bpe(vocab,vec);
+    let tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+    let prs = Pairs::from_vocab(&vocab);
+    for merge in 0..num_merges {
+        vocab.rebuild_by_merging_pairs(("t","h"));
+        tokens.from_words_vocab_bpe_self(&vocab);
+        prs.from_vocab_self(&vocab);
+        let max_pair = Pairs::key_max(&prs);
+        println!("Pairs is loop");
+//        println!("{:?}", &prs.pairs);
+//        let vocab = VocabStage::rebuild_by_merging_pairs(vocab, ("t","h"));
+//        let tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+//        println!("{:?}", &tokens.tokens);
+    }
+    println!("=========================");
+    println!("After several merging of most frequent pairs: ");
+//    let vocab = VocabStage::rebuild_by_merging_pairs(vocab, ("t","h"));
+//    let tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+//    println!("{:?}", &tokens.tokens);
+//    let tokens_aftermerge_size = tokens.tokens.keys().len();
+//    println!("Number of tokens after one merge {}", tokens_aftermerge_size);
 
 
 

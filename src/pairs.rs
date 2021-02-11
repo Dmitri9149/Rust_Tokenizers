@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use crate::vector_of_words::WordsVector;
 use crate::VocabStage;
+use crate::max_key;
 
 // Pais -> Dictionry of (pair of 'tokens') : some frequency measure
 pub struct Pairs<'a> {
@@ -77,6 +78,26 @@ impl<'a> Pairs<'a> {
             }
         }
         Pairs {pairs:hsh}
+    }
+
+    pub fn from_vocab_self(self, ww:&'a VocabStage) -> Pairs<'a> {
+        let mut hsh= HashMap::new();
+        for (key,value) in &ww.vocab_bpe {
+            let mut it = key.split_whitespace().peekable();
+
+            while let Some(current) = it.next() {
+                if let Some(&next) = it.peek() {
+                    let count = hsh.entry((current,next)).or_insert(0);
+                    *count +=value; // we add 'value', not 1 as in case of from_vocab_simple
+                }
+            }
+        }
+        Pairs {pairs:hsh}
+    }
+
+
+    pub fn key_max(&self) -> (&str,&str) {
+        *max_key(&self.pairs).expect("The vocabulary is to be not empty")
     }
 
 
