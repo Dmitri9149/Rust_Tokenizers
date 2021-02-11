@@ -148,6 +148,20 @@ pub struct VocabStage {
 }
 
 impl VocabStage {
+
+// implement 'empty' VacabStage
+    pub fn new() -> VocabStage {
+        let voc = HashMap::new();
+        let voc_bpe = HashMap::new();
+        let text0 = "".to_string();
+        VocabStage {
+            text0: text0,
+            vocab: voc,
+            vocab_bpe: voc_bpe,
+        }
+
+    }
+//
 // build the HashMap from preprocessed whole string
 // by splitting the string
 // intended to take TextStage.text1 string to 'text0' and set ''vocab' to new empty HashMap
