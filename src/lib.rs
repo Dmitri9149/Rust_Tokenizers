@@ -193,7 +193,7 @@ impl VocabStage {
 // build vocab: (token, count) as HashMap<String, i32>
 // by splitting the 'whole string' on white spaces
 //
-    pub fn build_vocab_s2(mut self) -> VocabStage {
+    pub fn build_vocab_split_on_space(mut self) -> VocabStage {
         for word in self.text0.split_whitespace() { 
             let count = self.vocab.entry(word.to_string()).or_insert(0);
             *count +=1; 
