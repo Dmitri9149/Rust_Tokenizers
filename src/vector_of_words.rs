@@ -108,7 +108,7 @@ pub fn build_vector_of_words_ws(s:&str) -> Vec<&str> {
     results
 }
 
-// puild vocab from vector of words
+// build vocab from vector of words
 //
 pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
     let mut vocab= HashMap::new();
@@ -120,7 +120,12 @@ pub fn vocab_from_vector(vec:Vec<String>) -> HashMap<String,i32> {
     vocab
 }
 // merge tokens in words . where words are composed of tokens separated by 
-// ASCII space symbols 
+// ASCII space symbols \x20\x20 
+// take pair of tokens (strings) , construct bigram:
+// format!("{}{}{}{}{}","\x20", pairs.0,"\x20\x20",pairs.1,"\x20")
+// search every word in vocab for the bigram and 
+// replace it by glued_bigram:
+// format!("{}{}{}{}","\x20",pairs.0,pairs.1,"\x20")
 pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<String> {
     let mut vc = Vec::new();
 // two ASCII spaces between tokens, will be used in regex to find the 2-spaces 
@@ -142,6 +147,11 @@ pub fn merge_pairs<'a>(pairs:(&str,&str), vec:&'a Vec<&'a str>) -> Vec<String> {
 
 // merge tokens in words . where words are composed of tokens separated by 
 // ASCII space symbols, same as above but HashMap is a parameter
+// take pair of tokens (strings) , construct bigram:
+// format!("{}{}{}{}{}","\x20", pairs.0,"\x20\x20",pairs.1,"\x20")
+// search for it in every word of vocab and 
+// replace it by glued_bigram:
+// format!("{}{}{}{}","\x20",pairs.0,pairs.1,"\x20")
 pub fn merge_pairs_from_hash<'a>(pairs:(String,String), hsh: HashMap<String, i32>) -> HashMap<String,i32> {
     let mut vc = HashMap::new();
 // two ASCII spaces between tokens, will be used in regex to find the 2-spaces 

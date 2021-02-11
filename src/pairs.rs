@@ -11,7 +11,7 @@ pub struct Pairs {
 impl Pairs {
 
 // implement empty Pairs
-    pub fn () -> Pairs {
+    pub fn new() -> Pairs {
         let pairs = HashMap::new();
         Pairs {pairs:pairs}
     }
