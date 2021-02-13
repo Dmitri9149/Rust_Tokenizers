@@ -36,6 +36,8 @@ impl VocabOfTokens {
     }
 
 }
+
+// set of tokens which are ordered by length
 //============================ end of VocabOtTokens structure==========
 pub struct OrderedSetOfTokens {
     set_of_tokens: Vec<String>
