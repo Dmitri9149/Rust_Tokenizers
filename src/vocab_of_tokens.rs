@@ -36,6 +36,25 @@ impl VocabOfTokens {
     }
 
 }
+//============================ end of VocabOtTokens structure==========
+pub struct OrderedSetOfTokens {
+    set_of_tokens: Vec<String>
+}
+
+impl OrderedSetOfTokens {
+    pub fn new() -> OrderedSetOfTokens {
+        OrderedSetOfTokens { set_of_tokens: Vec::new(), }
+    }
+
+    pub fn from_bpe_tokens(vocab:&VocabOfTokens) -> OrderedSetOfTokens {
+        let mut vc:Vec<String> = vocab.tokens.keys()
+            .map(|s| s.to_string()).collect();
+            vc.sort_by(|x,y| x.len().cmp(&y.len()));                
+        OrderedSetOfTokens { set_of_tokens: vc }
+    }
+}
+//================= end of OrderedSetOfTokens ======================
+//
 // some helper funtions for tokens stage
 // see 'from_words_vocab_bpe' above
 pub fn create_from_words_vocab_bpe(smth:& VocabStage) -> HashMap<String,i32>{
