@@ -32,7 +32,7 @@ fn main() {
 
     println!("Number of initial tokens {}", tokens_size);
 
-    let num_merges = 100;
+    let num_merges = 50;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -48,14 +48,13 @@ fn main() {
     println!("The tokens vocab looks like this{:?}",&tokens.tokens);
     tokens_size = tokens.tokens.keys().len();
     println!("Number of final  tokens {}", tokens_size);
-    let mut ordered_set = OrderedSetOfTokens::new();
-    ordered_set = OrderedSetOfTokens::from_bpe_tokens(&tokens);
+    let ordered_set = OrderedSetOfTokens::from_bpe_tokens(&tokens);
 
     println!("=========================");
     println!("OrderedSetOfTokens {:?}", &ordered_set.set_of_tokens);
     
     println!("=========================");
-    println!("Tokenize sample word ! {}", "dmitri");
-    let oho = tokenize_word("ha",&ordered_set.set_of_tokens[..],"unc");
+    println!("Tokenize sample word ! {}", "'antidisestablishmentarianism'");
+    let oho = tokenize_word("antidisestablishmentarianism</w>",&ordered_set.set_of_tokens[..],"unc");
     println!("Oho !! {:?}", oho);
 }

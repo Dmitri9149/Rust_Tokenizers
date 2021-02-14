@@ -18,17 +18,16 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String]
             return vec![unknown_token.to_string()]
         }
 
-        let mut string_tokens: Vec<String>;
         let mut token;
         let mut token_escape;
         let mut re_token;
         let mut matched_positions;
         let mut substring_end_positions;
         let mut string_tokens = Vec::new();
-        let mut interm_res =Vec::new();
+        let mut interm_res;
         let mut substring_start_position;
         let mut substring;
-        let mut remaining_substring;
+        let remaining_substring;
 
         for i in 0..len_sorted {
             token = &ordered_tokens[i];

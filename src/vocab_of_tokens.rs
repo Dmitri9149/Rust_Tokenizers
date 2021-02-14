@@ -51,7 +51,7 @@ impl OrderedSetOfTokens {
     pub fn from_bpe_tokens(vocab:&VocabOfTokens) -> OrderedSetOfTokens {
         let mut vc:Vec<String> = vocab.tokens.keys()
             .map(|s| s.to_string()).collect();
-            vc.sort_by(|x,y| x.len().cmp(&y.len()));                
+            vc.sort_by(|x,y| y.len().cmp(&x.len()));                
         OrderedSetOfTokens { set_of_tokens: vc }
     }
 }
