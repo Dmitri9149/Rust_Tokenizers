@@ -10,6 +10,8 @@ pub mod pairs;
 pub use crate::pairs as pair;
 pub mod vocab_of_tokens;
 // pub use crate::vocab_of_tokens;
+pub mod tokenize_bpe_word;
+pub use crate::tokenize_bpe_word as word_bpe;
 
 
 // read file in different modes
