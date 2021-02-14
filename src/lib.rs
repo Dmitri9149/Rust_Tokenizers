@@ -285,4 +285,11 @@ mod tests {
     assert_eq!(max_key(&map), Some(&2));
     }
 
+    #[test]
+    fn tokenize_word_bpe() {
+        let ordered_tokens = ["dmi".to_string(),"tri".to_string()];
+        let word = "dmitri";
+        assert_eq!(vec!["dmi".to_string(), "tri".to_string()], word_bpe::tokenize_word(&word, &ordered_tokens,"unc"));
+    }
+
 }
