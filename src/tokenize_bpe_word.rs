@@ -14,19 +14,29 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String]
             return Vec::new()
         } 
 
-        if ordered_tokens.len() == 0 {
+        if len_sorted == 0 {
             return vec![unknown_token.to_string()]
         }
 
-        let string_tokens = vec![];
-//        let token:String ="".to_str();
-        for i in 0..len_sorted {
-            let token = &ordered_tokens[i];
-            let token_escape = regex::escape(&token);
-            let re_token = Regex::new(&token_escape).unwrap();
+        let mut string_tokens: Vec<String>;
+        let mut token;
+        let mut token_escape;
+        let mut re_token;
+        let mut matched_positions;
+        let mut substring_end_positions;
+        let mut string_tokens = Vec::new();
+        let mut interm_res =Vec::new();
+        let mut substring_start_position;
+        let mut substring;
+        let mut remaining_substring;
 
-            let matched_positions = re_token.find_iter(string);
-            let mut substring_end_positions = Vec::new();
+        for i in 0..len_sorted {
+            token = &ordered_tokens[i];
+            token_escape = regex::escape(&token);
+            re_token = Regex::new(&token_escape).unwrap();
+
+            matched_positions = re_token.find_iter(string);
+            substring_end_positions = Vec::new();
             for mat in matched_positions {
                 substring_end_positions.push(mat.start());
             }
@@ -34,18 +44,18 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String]
                 continue
             }
             
-            let mut string_tokens = Vec::new();
-            let mut interm_res =Vec::new();
-            let mut substring_start_position = 0;
+//            let mut string_tokens = Vec::new();
+//            let mut interm_res =Vec::new();
+            substring_start_position = 0;
             for substring_end_position in substring_end_positions {
-                let substring = &string[substring_start_position .. substring_end_position];
+                substring = &string[substring_start_position .. substring_end_position];
                 interm_res = tokenize_word(substring, &ordered_tokens[i+1 ..], "unc");
                 string_tokens.append(&mut interm_res);
                 string_tokens.push(token.to_string());
                 substring_start_position = substring_end_position + token.len();
             }
             
-            let remaining_substring = &string[substring_start_position..];
+            remaining_substring = &string[substring_start_position..];
             interm_res = tokenize_word(remaining_substring, &ordered_tokens[i+1..], "unc");
             string_tokens.append(&mut interm_res);
             break      
