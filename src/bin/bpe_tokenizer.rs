@@ -6,6 +6,8 @@ use bpe::vector_of_words::WordsVector;
 use bpe::vocab_of_tokens::{VocabOfTokens, OrderedSetOfTokens};
 use bpe::tokenize_bpe_word::tokenize_word;
 
+// static UNC:String = "UNC".to_string;
+
 fn main() {
 // get text from the file 
 // the text is one big string at the stage
@@ -59,19 +61,26 @@ fn main() {
     println!("OrderedSetOfTokens {:?}", &ordered_set.set_of_tokens);
     
     println!("=========================");
-    let oho = tokenize_word("antidisestablishmentarianism\u{2581}"
+/*    let oho = tokenize_word("antidisestablishmentarianism\u{2581}"
                             ,&ordered_set.set_of_tokens[..],&"_N_".to_string());
     let uhtu = tokenize_word("hippopotomonstrosesquippedaliophobia\u{2581}"
                              ,&ordered_set.set_of_tokens[..], &"_N_".to_string());
-    let uhtu_1 = tokenize_word("hiPpopotomonstrosesquippedaliophobia\u{2581}"
-                               ,&ordered_set.set_of_tokens[..], &"_N_".to_string());
+*/
+/*    let uhtu_1 = tokenize_word("hiPpopotomonstrosesquippedaliophobia\u{2581}"
+                               ,&ordered_set.set_of_tokens[..]); */
 
-    println!("Tokenize sample word ! {}", "'antidisestablishmentarianism\u{2581}'");
+    let uhtu_1 = tokenize_word("PPPPPPPaaaNNNNNNNNNNNNNN"
+                               ,&ordered_set.set_of_tokens[..], "UNC");
+
+
+/*    println!("Tokenize sample word ! {}", "'antidisestablishmentarianism\u{2581}'");
     println!("Oho !! {:?}", oho);
     println!("========================");
     println!("Tokenize sample word ! {}", "'hippopotomonstrosesquippedaliophobia\u{2581}'");
     println!("Hippo.... !! {:?}", uhtu);
+*/
     println!("Tokenize sample word ! {}", "'hiPpopotomonstrosesquippedaliophobia\u{2581}'");
+
     println!("HiPpo.... !! {:?}", uhtu_1);
 
 }

@@ -5,20 +5,26 @@ use regex::Regex;
 //use crate::vocab_of_tokens::OrderedSetOfTokens;
 
 // tokenize a word using calculated tokens
-pub fn tokenize_word(string:&str, ordered_tokens:&[String], unknown_token:&str) 
+pub fn tokenize_word(string:&str, ordered_tokens:&[String]) 
     -> Vec<String> {
         let len_sorted = ordered_tokens.len();
-//        println!("Len_sorted at the start !!! {}", &len_sorted);
+        println!("Len_sorted at the start !!! {}", &len_sorted);
 
         if string == "" {
-//            println!("String = ''");
+            println!("String = ''");
             return Vec::new();
         } 
 
         if len_sorted == 0 {
-//            println!("Print an unknown token !!!!!!!!!!!!!!!!");
-            return vec![unknown_token.to_string().clone()];
+            println!("Print an unknown token !!!!!!!!!!!!!!!!");
+            return vec!["UNC".to_string()];
         }
+
+//        if string == "" {
+//            println!("String = ''");
+//            return Vec::new();
+//        } 
+
 
         let mut token="****************";
         let mut token_escape;
@@ -32,56 +38,52 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String], unknown_token:&str)
         let remaining_substring;
 
         for i in 0..len_sorted {
-//            println!("Length of sorted tokens in use {}", &len_sorted);
-//            println!("i in len_sorted {:?}",i);
+            println!("Length of sorted tokens in use {}", &len_sorted);
+            println!("i in len_sorted {:?}",i);
             token = &ordered_tokens[i];
-//            println!("Token in use {:?}", &token);
+            println!("Token in use {:?}", &token);
             token_escape = regex::escape(&token);
             re_token = Regex::new(&token_escape).unwrap();
 
 
-//            println!("String in consideration{:?}", &string);
+            println!("String in consideration{:?}", &string);
             matched_positions = re_token.find_iter(&string).peekable();
             substring_end_positions = Vec::new();
             if matched_positions.peek().is_some() {
                 for mat in matched_positions {
                     substring_end_positions.push(mat.start());
-//                    println!("Pushed starts positions !!!! {:?}", &substring_end_positions );
                 }
             } else {
                 continue;
             }
 
+            /*            for mat in matched_positions {
+                substring_end_positions.push(mat.start());
+            }
+            if substring_end_positions.len() == 0 {
+                continue
+            }
+*/            
+            
+//            let mut string_tokens = Vec::new();
+//            let mut interm_res =Vec::new();
             substring_start_position = 0;
-            for substring_end_position in &substring_end_positions {
-//                println!("Start_position {:?}...End_position {:?}"
-//                         , &substring_start_position, &substring_end_position);
-//                println!("Set of end_positions {:?}", &substring_end_positions);
-                substring = &string[substring_start_position .. *substring_end_position];
-                interm_res = vec![];
-                if substring.len() != 0 {
-                    interm_res = tokenize_word(substring, &ordered_tokens[i+1 ..], unknown_token);
+            for substring_end_position in substring_end_positions {
+                substring = &string[substring_start_position .. substring_end_position];
+                if substring != '' {
+                    interm_res = tokenize_word(substring, &ordered_tokens[i+1 ..]);
                     if interm_res.len() == 0 {
-                        interm_res = vec![unknown_token.to_string()];
+                        interm_res = vec!["UNC".to_string()];
                     }
                 }
-//                println!("Interm result {:?}", &interm_res);
+                println!("Interm result {:?}", &interm_res);
                 string_tokens.append(&mut interm_res);
                 string_tokens.push(token.to_string());
                 substring_start_position = substring_end_position + token.chars().count();
-//                println!("Start position at the end of for substring... {:?}", &substring_start_position);
             }
             
             remaining_substring = &string[substring_start_position..];
-            interm_res = vec![];
-            if remaining_substring.len() != 0 {
-                interm_res = tokenize_word(remaining_substring, &ordered_tokens[i+1 ..], unknown_token);
-                if interm_res.len() == 0 {
-                    interm_res = vec![unknown_token.to_string()];
-                }
-            }
-//            println!("Interm result for the remaining !!!{:?}", &interm_res);
-
+            interm_res = tokenize_word(remaining_substring, &ordered_tokens[i+1..]);
             string_tokens.append(&mut interm_res);
             break;      
         }
