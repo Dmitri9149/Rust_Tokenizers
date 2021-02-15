@@ -6,7 +6,7 @@ use regex::Regex;
 
 // tokenize a word using calculated tokens
 pub fn tokenize_word(string:&str, ordered_tokens:&[String]
-                     , unknown_token:&str) 
+                     , unknown_token:&String) 
     -> Vec<String> {
         let len_sorted = ordered_tokens.len();
 
@@ -15,11 +15,11 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String]
         } 
 
         if len_sorted == 0 {
-            println!("Print an unknown token !!!!!!!!!!!!!!!! {:?}", &unknown_token);
-            return vec![unknown_token.to_string()]
+            println!("Print an unknown token !!!!!!!!!!!!!!!! {:?}", unknown_token.clone());
+            return vec![unknown_token.clone()]
         }
 
-        let mut token;
+        let mut token="****************";
         let mut token_escape;
         let mut re_token;
         let mut matched_positions;
@@ -31,6 +31,8 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String]
         let remaining_substring;
 
         for i in 0..len_sorted {
+//            println!("Length of sorted tokens in use {}", len_sorted);
+//            println!("Token in use {:?}",token);
             token = &ordered_tokens[i];
             token_escape = regex::escape(&token);
             re_token = Regex::new(&token_escape).unwrap();
@@ -50,7 +52,7 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String]
             for substring_end_position in substring_end_positions {
                 substring = &string[substring_start_position .. substring_end_position];
                 interm_res = tokenize_word(substring, &ordered_tokens[i+1 ..], unknown_token);
-                println!("Interm result {:?}", &interm_res);
+                println!("Interm result {:?}", interm_res);
                 string_tokens.append(&mut interm_res);
                 string_tokens.push(token.to_string());
                 substring_start_position = substring_end_position + token.len();

@@ -51,7 +51,7 @@ impl OrderedSetOfTokens {
     pub fn from_bpe_tokens(vocab:&VocabOfTokens) -> OrderedSetOfTokens {
         let mut vc:Vec<String> = vocab.tokens.keys()
             .map(|s| s.to_string()).collect();
-            vc.sort_by(|x,y| y.len().cmp(&x.len()));                
+            vc.sort_by(|x,y| y.chars().count().cmp(&x.chars().count()));                
         OrderedSetOfTokens { set_of_tokens: vc }
     }
 }
@@ -84,14 +84,15 @@ where
 // calculate length of token 
 // we assume there was added special end_token 
 // like ""</w>"" to the end of every word 
-fn length_of_token (token: &str, end_token: &str) -> usize {
+/* fn length_of_token (token: &str, end_token: &str) -> usize {
     let n = end_token.len();
     if &token[n-4 .. ] == end_token {
         &token[0 .. n-4].len()+1
     } else {
         token.len()
     }
-}
+} 
+*/
 
 //fn main() {
 //    let map: HashMap<_, _> = vec![(2, 4), (1, 3), (5, 2)].into_iter().collect();

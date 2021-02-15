@@ -35,7 +35,7 @@ fn main() {
 
     println!("Number of initial tokens {}", tokens_size);
 
-    let num_merges = 50;
+    let num_merges = 10;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -59,9 +59,12 @@ fn main() {
     println!("OrderedSetOfTokens {:?}", &ordered_set.set_of_tokens);
     
     println!("=========================");
-    let oho = tokenize_word("antidisestablishmentarianism\u{2581}",&ordered_set.set_of_tokens[..],"_N_");
-    let uhtu = tokenize_word("hippopotomonstrosesquippedaliophobia\u{2581}",&ordered_set.set_of_tokens[..],"_N_");
-    let uhtu_1 = tokenize_word("hiPpopotomonstrosesquippedaliophobia\u{2581}",&ordered_set.set_of_tokens[..],"_N_");
+    let oho = tokenize_word("antidisestablishmentarianism\u{2581}"
+                            ,&ordered_set.set_of_tokens[..],&"_N_".to_string());
+    let uhtu = tokenize_word("hippopotomonstrosesquippedaliophobia\u{2581}"
+                             ,&ordered_set.set_of_tokens[..], &"_N_".to_string());
+    let uhtu_1 = tokenize_word("hiPpopotomonstrosesquippedaliophobia\u{2581}"
+                               ,&ordered_set.set_of_tokens[..], &"_N_".to_string());
 
     println!("Tokenize sample word ! {}", "'antidisestablishmentarianism\u{2581}'");
     println!("Oho !! {:?}", oho);
