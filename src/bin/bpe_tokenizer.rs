@@ -18,7 +18,9 @@ fn main() {
 //    println!("{:?}",txt.text1)
     let vec = WordsVector::from_string_ws(txt);
     let vec = WordsVector::string_infront(vec, "\x20\x20");
-    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
+//    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
+    let vec = WordsVector::string_toend(vec,"\x20\x20\u{2581}\x20\x20");
+
     
     println!("==========================");
     let mut vocab = VocabStage::build_vocab_from_text_stage("TODO! FROM STRUCT".to_string());
@@ -26,7 +28,7 @@ fn main() {
 
     println!("=========================");
     println!("Get initial tokens from bpe words vocab");
-    println!("The initial tokens correspond to the unicode scalars : chars, except </w> end of word");
+    println!("The initial tokens correspond to the unicode scalars : chars, except \u{2581} end of word");
     let mut tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
     println!("{:?}",&tokens.tokens);
     let mut tokens_size = tokens.tokens.keys().len();
@@ -37,12 +39,14 @@ fn main() {
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
-          tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+//          tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
           prs = Pairs::from_vocab(&vocab);
           max_pair = Pairs::key_max(&prs);
           println!("Iteration number: {}", &merge);
           println!("Max pair !!! {:?}", &max_pair);
           vocab = VocabStage::rebuild_by_merging_pairs(vocab, max_pair);
+          tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+
     }
     println!("=========================");
     println!("After {} merging of most frequent pairs: ", num_merges);
@@ -55,7 +59,10 @@ fn main() {
     println!("OrderedSetOfTokens {:?}", &ordered_set.set_of_tokens);
     
     println!("=========================");
-    println!("Tokenize sample word ! {}", "'antidisestablishmentarianism'");
-    let oho = tokenize_word("antidisestablishmentarianism</w>",&ordered_set.set_of_tokens[..],"unc");
+    let oho = tokenize_word("antidisestablishmentarianism\u{2581}",&ordered_set.set_of_tokens[..],"_N_");
+    let uhtu = tokenize_word("hippopotomonstrosesquippedaliophobia\u{2581}",&ordered_set.set_of_tokens[..],"_N_");
+    println!("Tokenize sample word ! {}", "'antidisestablishmentarianism\u{2581}'");
     println!("Oho !! {:?}", oho);
+    println!("Tokenize sample word ! {}", "'hippopotomonstrosesquippedaliophobia\u{2581}'");
+    println!("Hippo....{:?}", uhtu);
 }
