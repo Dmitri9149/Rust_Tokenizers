@@ -61,8 +61,14 @@ fn main() {
     println!("=========================");
     let oho = tokenize_word("antidisestablishmentarianism\u{2581}",&ordered_set.set_of_tokens[..],"_N_");
     let uhtu = tokenize_word("hippopotomonstrosesquippedaliophobia\u{2581}",&ordered_set.set_of_tokens[..],"_N_");
+    let uhtu_1 = tokenize_word("hiPpopotomonstrosesquippedaliophobia\u{2581}",&ordered_set.set_of_tokens[..],"_N_");
+
     println!("Tokenize sample word ! {}", "'antidisestablishmentarianism\u{2581}'");
     println!("Oho !! {:?}", oho);
+    println!("========================");
     println!("Tokenize sample word ! {}", "'hippopotomonstrosesquippedaliophobia\u{2581}'");
-    println!("Hippo....{:?}", uhtu);
+    println!("Hippo.... !! {:?}", uhtu);
+    println!("Tokenize sample word ! {}", "'hiPpopotomonstrosesquippedaliophobia\u{2581}'");
+    println!("HiPpo.... !! {:?}", uhtu_1);
+
 }

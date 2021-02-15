@@ -15,6 +15,7 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String]
         } 
 
         if len_sorted == 0 {
+            println!("Print an unknown token !!!!!!!!!!!!!!!! {:?}", &unknown_token);
             return vec![unknown_token.to_string()]
         }
 
@@ -49,6 +50,7 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String]
             for substring_end_position in substring_end_positions {
                 substring = &string[substring_start_position .. substring_end_position];
                 interm_res = tokenize_word(substring, &ordered_tokens[i+1 ..], unknown_token);
+                println!("Interm result {:?}", &interm_res);
                 string_tokens.append(&mut interm_res);
                 string_tokens.push(token.to_string());
                 substring_start_position = substring_end_position + token.len();
