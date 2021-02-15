@@ -48,14 +48,14 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String]
             substring_start_position = 0;
             for substring_end_position in substring_end_positions {
                 substring = &string[substring_start_position .. substring_end_position];
-                interm_res = tokenize_word(substring, &ordered_tokens[i+1 ..], "unc");
+                interm_res = tokenize_word(substring, &ordered_tokens[i+1 ..], unknown_token);
                 string_tokens.append(&mut interm_res);
                 string_tokens.push(token.to_string());
                 substring_start_position = substring_end_position + token.len();
             }
             
             remaining_substring = &string[substring_start_position..];
-            interm_res = tokenize_word(remaining_substring, &ordered_tokens[i+1..], "unc");
+            interm_res = tokenize_word(remaining_substring, &ordered_tokens[i+1..], unknown_token);
             string_tokens.append(&mut interm_res);
             break      
         }
