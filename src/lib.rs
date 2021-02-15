@@ -286,10 +286,17 @@ mod tests {
     }
 
     #[test]
-    fn tokenize_word_bpe() {
+    fn tokenize_word_bpe_1() {
         let ordered_tokens = ["dmi".to_string(),"tri".to_string()];
         let word = "dmitri";
         assert_eq!(vec!["dmi".to_string(), "tri".to_string()], word_bpe::tokenize_word(&word, &ordered_tokens,"unc"));
     }
+    #[test]
+    fn tokenize_word_bpe_2() {
+        let ordered_tokens = ["aaaa".to_string(),"tri".to_string()];
+        let word = "dmitri";
+        assert_eq!(vec!["_N_".to_string(), "tri".to_string()], word_bpe::tokenize_word(&word, &ordered_tokens,"_N_"));
+    }
+
 
 }
