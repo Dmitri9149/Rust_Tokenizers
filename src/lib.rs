@@ -242,7 +242,7 @@ impl VocabStage {
 // when we iterate we find the most probable pair of strings at 
 // every iteration ; the function takes the string pair , find all words 
 // which have the consecutive tokens as in the pair, and merge the 
-// tokens in one new string : is pair is ("aa","rd") and a 
+// tokens in one new string : if pair is ("aa","rd") and a 
 // word is '  aa  rd  d  s  wer  </w>  ' 
 // we will get : '  aard  d  s  wer  <\w>  '
    pub fn rebuild_by_merging_pairs(self, pair:(String,String)) -> VocabStage {
@@ -251,7 +251,8 @@ impl VocabStage {
     }
 }
 
-// some usefull functions
+// some usefull functions 
+// the function return the key with biggest value
 fn max_key<K, V>(a_hash_map: &HashMap<K, V>) -> Option<&K>
 where
     V: Ord,
