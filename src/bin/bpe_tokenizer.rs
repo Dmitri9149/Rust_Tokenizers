@@ -1,3 +1,4 @@
+// the BPE tokenizer is composed here from modules
 use bpe::pairs::Pairs;
 use bpe::TextStage;
 use bpe::VocabStage;
@@ -24,7 +25,7 @@ fn main() {
     vocab = VocabStage::build_vocab_from_vector_bpe(vocab,vec);
 
     println!("=========================");
-    println!("Get initial tokens from bpe vocab");
+    println!("Get initial tokens from bpe words vocab");
     println!("The initial tokens correspond to the unicode scalars : chars, except </w> end of word");
     let mut tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
     println!("{:?}",&tokens.tokens);
