@@ -34,7 +34,7 @@ help with it. The next tokenizer I am going to implement will use the theory.
 
 The sample output of the programm may be like this: (the results are at the very botton): 
 
-`   Compiling bpe v0.1.0 (/home/dmitri/bpe)
+```   Compiling bpe v0.1.0 (/home/dmitri/bpe)
     Finished dev [unoptimized + debuginfo] target(s) in 2.97s
      Running `target/debug/bpe_tokenizer`
 ==========================
@@ -107,10 +107,11 @@ Iteration number: 20
 Max pair !!! ("an", "d▁")
 glued_bigram  and▁ 
 Iteration number: 21
-`
+```
 ........................................
 ........................................
-`Iteration number: 1993
+```
+Iteration number: 1993
 Max pair !!! ("ni", "ght▁")
 glued_bigram  night▁ 
 Iteration number: 1994
@@ -151,4 +152,4 @@ hiPpo.... !! ["hi", "UNC", "p", "op", "o", "to", "mon", "UNC", "tro", "se", "s",
 Tokenize sample word ! 'PPPPPPPabacNNNNNNNNNNNNNN▁'
  The result is : ["UNC", "ab", "ac", "UNC", "▁"]
 ~>/bpe$ 
-`
+```
