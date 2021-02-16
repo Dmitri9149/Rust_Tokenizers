@@ -7,6 +7,9 @@ Here the implementation is in Rust.
 We have a text of words. Words are composed of unicode scalars. We start from the 
 initial vocabuary of the scalars (chars) by splitting the text to colleclion of chars. 
 
+The 'Alice's Adventures in Wonderland by Lewis Carroll' of Gutenberg project is used here : 
+http://www.gutenberg.org/ebooks/11 as the text.
+
 After that we recursivly replace most frequent consequtive pair of tokens by a new unseen token.
 Initial tokens are just chars. The token is a sequence of chars. The inspection of consequtive pairs is 
 limited to word boundaries. To the  end of every word a special unicode symbol '\n{2581}' is attached to mark the 
