@@ -27,7 +27,7 @@ There are some problems in the approach. The measure of 'most frequency'. The (i
 quite 'flat': just the quantity of token (or a pair) in the vocabulary. But what is more frequent : 
 100 of "abc" in the text or 100 of "there" ? We have 3 chars and 5 chars tokens, and , intuitively, the 100 of 
 5 chars word is a bigger 'surprise' than 100 of 3 chars word. The question is to find the approppriate 
-measure to compare the 'surprice' or 'most ofteness'. The theory of Generalise Species of Strands may 
+measure to compare the 'surprise' or 'most oftenness'. The theory of Generalise Species of Strands may 
 help with it. The next tokenizer I am going to implement will use the theory. 
 
 
