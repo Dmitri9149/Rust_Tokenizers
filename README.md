@@ -27,14 +27,19 @@ There are some problems in the approach. The measure of 'most frequency'. The (i
 quite 'flat': just the quantity of token (or a pair) in the vocabulary. But what is more frequent : 
 100 of "abc" in the text or 100 of "there" ? We have 3 chars and 5 chars tokens, and , intuitively, the 100 of 
 5 chars word is a bigger 'surprise' than 100 of 3 chars word. The question is to find the approppriate 
-measure to compare the 'surprise' or 'most oftenness'. The theory of Generalise Species of Strands may 
+measure to compare the 'surprise' or 'most oftenness'. The theory of Generalised Species of Strands may 
 help with it. The next tokenizer I am going to implement will use the theory. 
+
+There is also "statistics" crate in the project. I used it for experiments with text processing. 
+In lib.rs there are some tests. 
 
 
 
 The sample output of the programm may be like this: (the results are at the very botton): 
 
-```   Compiling bpe v0.1.0 (/home/dmitri/bpe)
+```
+~>/bpe$ cargo run --bin bpe_tokenizer
+Compiling bpe v0.1.0 (/home/dmitri/bpe)
     Finished dev [unoptimized + debuginfo] target(s) in 2.97s
      Running `target/debug/bpe_tokenizer`
 ==========================
