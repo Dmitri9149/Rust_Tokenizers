@@ -35,7 +35,7 @@ fn main() {
 
     println!("Number of initial tokens {}", tokens_size);
 
-    let num_merges = 500;
+    let num_merges = 2000;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
