@@ -1,4 +1,5 @@
 // the crate for the species structure
+use std::collections::HashMap;
 
 pub str Species {
     length: usize,
@@ -16,6 +17,9 @@ pub fn vocab_with_n_length (n:i32, text:&str) -> HashMap<String, i32> {
             continue;
         }
         key = &text[edge..edge+n].to_string();
-
+        let count = hsh.entry(key).or_insert(0);
+        *count +=1;
     }
+
+    hsh
 }
