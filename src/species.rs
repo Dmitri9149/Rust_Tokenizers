@@ -8,7 +8,7 @@ pub str Species {
 }
 */
 
-
+/*
 pub fn vocab_with_n_length (n:usize, text:&str) -> HashMap<String, i32> {
     let mut hsh = HashMap::new();
     let mut key = " ".to_string();
@@ -28,4 +28,26 @@ pub fn vocab_with_n_length (n:usize, text:&str) -> HashMap<String, i32> {
 
     hsh
 }
+*/
+
+pub fn vocab_with_n_length (n:usize, text:&str) -> HashMap<String, i32> {
+    let mut hsh = HashMap::new();
+    let mut key = " ".to_string();
+    let text_vector:Vec<_> = text
+        .chars()
+        .collect();
+    let length = text_vector.len();
+
+    for i in 0 .. length {
+        if i + n > length {
+            continue;
+        }
+        key = text_vector[i as usize .. i+n as usize].iter().collect();
+        let count = hsh.entry(key).or_insert(0);
+        *count +=1;
+    }
+
+    hsh
+}
+
 

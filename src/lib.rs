@@ -132,11 +132,16 @@ impl TextStage {
 
 // replace non-breaking spaces by space
     pub fn replace_non_breaking(self) -> TextStage {
-        let text = self.text1.replace('\t',&' '.to_string()); // '\t'
+        let mut text = self.text1.replace('\t',&' '.to_string()); // '\t'
+//        self.text1.replace('\t',&' '.to_string()); // '\t'
+        text = text.replace('\n',&' '.to_string()); // '\n'
 
-        TextStage { text1: text, ..self }
+
+        TextStage {text1:text,  ..self }
     }
 }
+
+// 
 
 // construct Vocab of word:number pairs 
 // number here reflects the frequency on the word
