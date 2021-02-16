@@ -1,4 +1,4 @@
-use bpe::species {vocab_with_n_length}
+use bpe::species::{vocab_with_n_length};
 
 use bpe::TextStage;
 //use bpe::VocabStage;
