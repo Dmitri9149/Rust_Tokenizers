@@ -7,7 +7,7 @@ fn main() {
     let txt = TextStage::build_text_stage("alice_wonderland.txt");
     let txt = TextStage::replace_u2581(txt);
     
-    println!("The text looks like: {:?}", txt);
+    println!("The text looks like: {:?}", txt.text1);
 }
  
 

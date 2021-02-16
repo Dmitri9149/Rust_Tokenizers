@@ -12,6 +12,8 @@ pub mod vocab_of_tokens;
 // pub use crate::vocab_of_tokens;
 pub mod tokenize_bpe_word;
 pub use crate::tokenize_bpe_word as word_bpe;
+pub mod species;
+//pub use crate::species;
 
 
 // read file in different modes
