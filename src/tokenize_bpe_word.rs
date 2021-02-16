@@ -68,7 +68,7 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String], unknown_token:&str)
 //                println!("Interm result {:?}", &interm_res);
                 string_tokens.append(&mut interm_res);
                 string_tokens.push(token.to_string());
-                substring_start_position = substring_end_position + token.chars().count();
+                substring_start_position = substring_end_position + token.len();
 //                println!("Start position at the end of for substring... {:?}", &substring_start_position);
             }
             
