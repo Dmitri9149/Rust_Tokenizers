@@ -3,7 +3,7 @@ use crate::VocabStage;
 use crate::vector_of_words::merge_pairs_from_hash;
 
 // vocab of tokens , by vocab we mean here the dictionary of 
-// token:number_of_tokens pairs
+// token:number_of_tokens
 
 pub struct VocabOfTokens {
     pub tokens: HashMap<String, i32>,
@@ -35,10 +35,24 @@ impl VocabOfTokens {
         VocabOfTokens {tokens:hsh}
     }
 
-}
+    pub fn vocab_entropy (&self) -> f32 {
+        let mut sum:f32 = 0.0;
+        let entropy:f32 = 0.0;
+        for (key,value) in &self {
+            sum += value;
+        }
+        for (key,value) in &self {
+            let f = (value/sum);
+            entropy -= (f*f.log2());
+        }
 
+        entropy
+    }
+
+}
+//============================== end of VocabOfTokens ================
 // set of tokens which are ordered by length
-//============================ end of VocabOtTokens structure==========
+
 pub struct OrderedSetOfTokens {
     pub set_of_tokens: Vec<String>,
 }
