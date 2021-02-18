@@ -37,12 +37,12 @@ impl VocabOfTokens {
 
     pub fn vocab_entropy (&self) -> f32 {
         let mut sum:f32 = 0.0;
-        let entropy:f32 = 0.0;
-        for (key,value) in &self {
-            sum += value;
-        }
-        for (key,value) in &self {
-            let f = (value/sum);
+        let mut entropy:f32 = 0.0;
+        for (key,value) in &self.tokens {
+            sum += *value as f32;
+       }
+        for (key,value) in &self.tokens {
+            let f = (*value as f32/sum);
             entropy -= (f*f.log2());
         }
 

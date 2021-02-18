@@ -8,7 +8,8 @@ use bpe::tokenize_bpe_word::tokenize_word;
 
 fn main() {
 // get text from the file 
-// the text is one big string at the stage
+// the text is one big string at the stage/
+    let mut entropy_records:Vec<f32> = Vec::new();
     let txt = TextStage::build_text_stage("alice_wonderland.txt");
     let txt = TextStage::to_lowercase(txt);
     let txt = TextStage::separate_punctuation(txt, ".,!?;:");
@@ -30,12 +31,14 @@ fn main() {
     println!("Get initial tokens from bpe words vocab");
     println!("The initial tokens correspond to the unicode scalars : chars, except \u{2581} end of word");
     let mut tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+    let mut entropy = tokens.vocab_entropy();
+    entropy_records.push(entropy);
     println!("{:?}",&tokens.tokens);
     let mut tokens_size = tokens.tokens.keys().len();
 
     println!("Number of initial tokens {}", tokens_size);
 
-    let num_merges = 2000;
+    let num_merges = 10000;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -46,6 +49,9 @@ fn main() {
           println!("Max pair !!! {:?}", &max_pair);
           vocab = VocabStage::rebuild_by_merging_pairs(vocab, max_pair);
           tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+          entropy= tokens.vocab_entropy();
+          entropy_records.push(entropy);
+          println!("Entropy = {:?}",entropy);
 
     }
     println!("=========================");
@@ -82,5 +88,7 @@ fn main() {
     println!("========================");
     println!("Tokenize sample word ! {}", "'PPPPPPPabacNNNNNNNNNNNNNN\u{2581}'");
     println!(" The result is : {:?}",uhtu_2);
+
+    println!("The entropy_records are {:?}", entropy_records);
 
 }
