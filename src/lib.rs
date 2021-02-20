@@ -130,7 +130,7 @@ impl TextStage {
         TextStage {text0:text0, ..self}   
     }
 
-// replace non-breaking spaces by space
+// replace new line symbols by space (\t \n \r)
     pub fn replace_new_line(self) -> TextStage {
         let mut text = self.text1.replace('\t',&' '.to_string()); // '\t'
 //        self.text1.replace('\t',&' '.to_string()); // '\t'
@@ -183,6 +183,12 @@ impl VocabStage {
             vocab: voc,
             vocab_bpe: voc_bpe,
         }
+    }
+
+    pub fn build_one_string_vocab (&self) -> VocabStage {
+        let hsh = HashMap::new();
+        hsh.push((&self.text0,1);
+        VocabStage { vocab: hsh, ..self }
     }
 
 //build vocab from WordsVector
