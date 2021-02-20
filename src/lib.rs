@@ -131,10 +131,11 @@ impl TextStage {
     }
 
 // replace non-breaking spaces by space
-    pub fn replace_non_breaking(self) -> TextStage {
+    pub fn replace_new_line(self) -> TextStage {
         let mut text = self.text1.replace('\t',&' '.to_string()); // '\t'
 //        self.text1.replace('\t',&' '.to_string()); // '\t'
         text = text.replace('\n',&' '.to_string()); // '\n'
+        text = text.replace('\r', &' '.to_string());
 
 
         TextStage {text1:text,  ..self }
