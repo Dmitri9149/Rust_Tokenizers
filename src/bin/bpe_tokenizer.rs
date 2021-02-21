@@ -30,27 +30,27 @@ fn main() {
 
     
     println!("==========================");
+
     let mut vocab = VocabStage::build_vocab_from_text_stage("TODO! FROM STRUCT".to_string());
     vocab = VocabStage::build_vocab_from_vector_bpe(vocab,vec);
-
-    println!("=========================");
-    println!("Get initial tokens from bpe words vocab");
-    println!("The initial tokens correspond to the unicode scalars : chars, except \u{2581} end of word");
     let mut tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
     let mut entropy = tokens.vocab_entropy();
     entropy_records.push(entropy);
     iter_records.push(0);
+
+    println!("=========================");
+    println!("Get initial tokens from bpe words vocab");
+    println!("The initial tokens correspond to the unicode scalars : chars, except \u{2581} end of word");
     println!("{:?}",&tokens.tokens);
+
     let mut tokens_size = tokens.tokens.keys().len();
     number_of_tokens_records.push(tokens_size);
-
-
     println!("Number of initial tokens {}", tokens_size);
 
     let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
-    let num_merges = 5550;
+    let num_merges = 2000;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -70,11 +70,13 @@ fn main() {
           println!("Number of Tokens : {:?}", tokens_size);
 
     }
+
     println!("=========================");
     println!("After {} merging of most frequent pairs: ", num_merges);
     println!("The tokens vocab looks like this{:?}",&tokens.tokens);
     tokens_size = tokens.tokens.keys().len();
     println!("Number of final  tokens {}", tokens_size);
+
     let ordered_set = OrderedSetOfTokens::from_bpe_tokens(&tokens);
 
     println!("=========================");
@@ -109,8 +111,8 @@ fn main() {
     println!("Tokenize sample word ! {}", "'PPPPPPPabacNNNNNNNNNNNNNN\u{2581}'");
     println!(" The result is : {:?}",uhtu_2);
 
-    println!("The entropy_records are {:?}", entropy_records);
-    println!("The Number of Tokens records are: {:?}", number_of_tokens_records);
+//    println!("The entropy_records are {:?}", entropy_records);
+//    println!("The Number of Tokens records are: {:?}", number_of_tokens_records);
 
     let mut fg = Figure::new();
     fg.axes2d()
