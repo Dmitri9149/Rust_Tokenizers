@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use crate::VocabStage;
 use crate::vector_of_words::merge_pairs_from_hash;
+use std::iter::FromIterator;
 
 // vocab of tokens , by vocab we mean here the dictionary of 
 // token:number_of_tokens
@@ -34,7 +35,7 @@ impl VocabOfTokens {
         let hsh = merge_pairs_from_hash(pair, smth.vocab_bpe);
         VocabOfTokens {tokens:hsh}
     }
-
+// calculate entropy of the vocab
     pub fn vocab_entropy (&self) -> f32 {
         let mut sum:f32 = 0.0;
         let mut entropy:f32 = 0.0;
@@ -42,13 +43,17 @@ impl VocabOfTokens {
             sum += *value as f32;
        }
         for (key,value) in &self.tokens {
-            let f = (*value as f32/sum);
-            entropy -= (f*f.log2());
+            let f = *value as f32/sum;
+            entropy -= f*f.log2();
         }
 
         entropy
     }
 
+    pub fn to_value_ordered_vector(&self) -> Vec<String,usize>{
+        let mut vc = Vec::from_iter(self.hsh);
+        vc.sort_by(|&(_, a), &(_, b)| b.cmp(&a));
+    }
 }
 //============================== end of VocabOfTokens ================
 // set of tokens which are ordered by length
