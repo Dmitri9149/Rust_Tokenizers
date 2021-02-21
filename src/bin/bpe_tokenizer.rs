@@ -47,7 +47,7 @@ fn main() {
 
     println!("Number of initial tokens {}", tokens_size);
 
-    let ordered_tokens = tokens.to_value_ordered_vector();
+    let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
     let num_merges = 2000;
@@ -81,6 +81,10 @@ fn main() {
     println!("OrderedSetOfTokens {:?}", &ordered_set.set_of_tokens);
     
     println!("=========================");
+    ordered_tokens = tokens.to_value_ordered_vector();
+    println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
+
+
     let oho = tokenize_word("antidisestablishmentarianism\u{2581}"
                             ,&ordered_set.set_of_tokens[..],"UNC");
     let uhtu = tokenize_word("hippopotomonstrosesquippedaliophobia\u{2581}"

@@ -52,10 +52,11 @@ impl VocabOfTokens {
     }
 
     pub fn to_value_ordered_vector(&self) -> Vec<(String,i32)> {
-        let vc:Vec<(String,i32)> = self
+        let mut vc:Vec<(String,i32)> = self
             .tokens.iter()
             .map(|x| (x.0.to_owned(), x.1.to_owned()))
             .collect();  
+        vc.sort_by(|&(_, a), &(_, b)| b.cmp(&a));
         vc
     }
 }
