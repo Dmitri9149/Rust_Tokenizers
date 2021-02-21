@@ -1,3 +1,5 @@
+#![feature(allocator_api)]
+
 use std::io::prelude::*;
 use std::fs::File;
 use std::collections::HashMap;
@@ -185,10 +187,14 @@ impl VocabStage {
         }
     }
 
-    pub fn build_one_string_vocab (&self) -> VocabStage {
-        let hsh = HashMap::new();
-        hsh.push((&self.text0,1);
-        VocabStage { vocab: hsh, ..self }
+    pub fn build_one_string_vocab (strng: &str) -> VocabStage {
+        let mut hsh = HashMap::new();
+        hsh.insert(strng.to_string(),1);
+        VocabStage { 
+            vocab: hsh, 
+            text0: strng.to_string(),
+            vocab_bpe: HashMap::new()
+        }
     }
 
 //build vocab from WordsVector
