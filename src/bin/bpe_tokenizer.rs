@@ -5,11 +5,17 @@ use bpe::VocabStage;
 use bpe::vector_of_words::WordsVector;
 use bpe::vocab_of_tokens::{VocabOfTokens, OrderedSetOfTokens};
 use bpe::tokenize_bpe_word::tokenize_word;
+use gnuplot::{Figure, Caption, Color};
+use gnuplot::AxesCommon;
+use gnuplot::Graph;
+
 
 fn main() {
 // get text from the file 
 // the text is one big string at the stage/
     let mut entropy_records:Vec<f32> = Vec::new();
+    let mut iter_records:Vec<i32> = Vec::new();
+    let mut number_of_tokens_records:Vec<usize>= Vec::new();
     let txt = TextStage::build_text_stage("alice_wonderland.txt");
     let txt = TextStage::to_lowercase(txt);
     let txt = TextStage::separate_punctuation(txt, ".,!?;:");
@@ -33,12 +39,18 @@ fn main() {
     let mut tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
     let mut entropy = tokens.vocab_entropy();
     entropy_records.push(entropy);
+    iter_records.push(0);
     println!("{:?}",&tokens.tokens);
     let mut tokens_size = tokens.tokens.keys().len();
+    number_of_tokens_records.push(tokens_size);
+
 
     println!("Number of initial tokens {}", tokens_size);
 
-    let num_merges = 10000;
+    let ordered_tokens = tokens.to_value_ordered_vector();
+    println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
+
+    let num_merges = 2000;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -51,7 +63,11 @@ fn main() {
           tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
           entropy= tokens.vocab_entropy();
           entropy_records.push(entropy);
+          iter_records.push(merge+1);
+          tokens_size = tokens.tokens.keys().len();
+          number_of_tokens_records.push(tokens_size);
           println!("Entropy = {:?}",entropy);
+          println!("Number of Tokens : {:?}", tokens_size);
 
     }
     println!("=========================");
@@ -90,5 +106,19 @@ fn main() {
     println!(" The result is : {:?}",uhtu_2);
 
     println!("The entropy_records are {:?}", entropy_records);
+    println!("The Number of Tokens records are: {:?}", number_of_tokens_records);
+
+    let mut fg = Figure::new();
+    fg.axes2d()
+        .set_title("A plot", &[])
+        .set_legend(Graph(0.5), Graph(0.9), &[], &[])
+        .set_x_label("x", &[])
+        .set_y_label("entropy", &[])
+        .lines(
+            iter_records.iter(),
+            entropy_records.iter(),
+            &[Caption("Parabola")],
+        );
+    fg.show().unwrap();
 
 }

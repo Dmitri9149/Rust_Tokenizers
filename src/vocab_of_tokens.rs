@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+//use std::ops::Deref;
 use crate::VocabStage;
 use crate::vector_of_words::merge_pairs_from_hash;
 use std::iter::FromIterator;
@@ -50,9 +51,12 @@ impl VocabOfTokens {
         entropy
     }
 
-    pub fn to_value_ordered_vector(&self) -> Vec<String,usize>{
-        let mut vc = Vec::from_iter(self.hsh);
-        vc.sort_by(|&(_, a), &(_, b)| b.cmp(&a));
+    pub fn to_value_ordered_vector(&self) -> Vec<(String,i32)> {
+        let vc:Vec<(String,i32)> = self
+            .tokens.iter()
+            .map(|x| (x.0.to_owned(), x.1.to_owned()))
+            .collect();  
+        vc
     }
 }
 //============================== end of VocabOfTokens ================
