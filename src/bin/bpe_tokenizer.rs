@@ -26,7 +26,9 @@ fn main() {
     let vec = WordsVector::from_string_ws(txt);
     let vec = WordsVector::string_infront(vec, "\x20\x20");
 //    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
-    let vec = WordsVector::string_toend(vec,"\x20\x20\u{2581}\x20\x20");
+    let vec = WordsVector::string_toend(vec,"\x20\x20🔸\x20\x20");
+// 🔹 
+    println!("Words Vector for Vocab {:?}", vec.words);
 
     
     println!("==========================");
