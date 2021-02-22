@@ -3,6 +3,7 @@
 */
 use std::collections::HashMap;
 use regex::Regex;
+use unicode_segmentation::UnicodeSegmentation;
 // use std::ops::Deref;
 //use fancy_regex::Regex;
 use crate::string_processing as str_mod;
@@ -49,6 +50,19 @@ impl WordsVector {
         WordsVector {words:text_string}
 
     }
+// split TextStage string (text) on sentences using the crate 
+// UnicodeSegmentation and construct the Vector of Words where every 
+// sentence is treated as a big unique 'word' 
+//
+    pub fn vocab_of_sentences(stage: &TextStage) -> WordsVector{
+        let sentences = stage
+            .text1
+            .unicode_sentences()
+            .map(|x| x.to_owned())
+            .collect::<Vec<String>>();
+        WordsVector {words:sentences}
+
+    }
 
 // add ' ' infront of every char in a word in words vector
     pub fn infront(vc:WordsVector) -> WordsVector {
@@ -83,6 +97,14 @@ impl WordsVector {
         let results = vc.words.iter()
             .map(|x| str_mod::add_string_toend(x,token)).collect();
         WordsVector {words:results}
+    }
+
+    pub fn replace_by_u2581(self)-> WordsVector {
+        let res = self.words
+            .iter()
+            .map(|x| x.replace(' ', "\u{2581}"))
+            .collect::<Vec<String>>();
+        WordsVector {words:res}
     }
 
 }
