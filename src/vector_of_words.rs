@@ -32,15 +32,22 @@ impl WordsVector {
 // see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
 // construct vector of all words from a string.text1 of 
 // TextStage1 by splitting on white space
-    pub fn from_string_ws(stage1:TextStage) -> WordsVector {
+    pub fn from_string_ws(stage:TextStage) -> WordsVector {
         let mut results = Vec::new();
-        for line in stage1.text1
+        for line in stage.text1
             .lines() {
             for word in line.trim().split_whitespace() { 
                 results.push(String::from(word));
             }  
         }
         WordsVector {words:results}
+    }
+
+// generate one big single word corresponding to TextStage text
+    pub fn word_as_text(stage:&TextStage)-> WordsVector{
+        let text_string = vec![stage.text1.to_owned()];
+        WordsVector {words:text_string}
+
     }
 
 // add ' ' infront of every char in a word in words vector
