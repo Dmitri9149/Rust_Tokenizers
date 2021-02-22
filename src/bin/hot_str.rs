@@ -9,6 +9,7 @@ use gnuplot::{Figure, Caption, Color};
 use gnuplot::AxesCommon;
 use gnuplot::Graph;
 
+/*
 fn main() {
     let txt = TextStage::build_text_stage("alice_wonderland.txt");
     let txt = TextStage::replace_new_line(txt);
@@ -20,6 +21,7 @@ fn main() {
 
     println!("The vocab {:?}", vocab.vocab);
 }
+*/
 
 
 fn main() {
@@ -35,7 +37,7 @@ fn main() {
 
     
 //    println!("{:?}",txt.text1)
-    let vec = WordsVector::from_string_ws(txt);
+    let vec = WordsVector::word_as_text(&txt);
     let vec = WordsVector::string_infront(vec, "\x20\x20");
 //    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
     let vec = WordsVector::string_toend(vec,"\x20\x20\'🦀'\x20\x20");
@@ -47,7 +49,7 @@ fn main() {
     vocab = VocabStage::build_vocab_from_vector_bpe(vocab,vec);
     
     println!("==========================");
-    println!("One String Vocab! {:?}", vocab);
+    println!("One String Vocab! {:?}", vocab.vocab_bpe);
     let mut tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
     let mut entropy = tokens.vocab_entropy();
     entropy_records.push(entropy);
@@ -65,7 +67,7 @@ fn main() {
     let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
-    let num_merges = 6000;
+    let num_merges = 12000;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
