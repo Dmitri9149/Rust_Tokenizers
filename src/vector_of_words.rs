@@ -99,6 +99,14 @@ impl WordsVector {
         WordsVector {words:results}
     }
 
+// add token:string  to the beginning of every word in words-vector
+    pub fn string_to_beginning(vc:WordsVector, token:& str) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| str_mod::add_string_toend(token,x)).collect();
+        WordsVector {words:results}
+    }
+
+
     pub fn replace_by_u2581(self)-> WordsVector {
         let res = self.words
             .iter()
