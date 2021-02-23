@@ -44,6 +44,38 @@ impl WordsVector {
         WordsVector {words:results}
     }
 
+// white space here is Unicode Derived Core Property White_Space 
+// see https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace
+// construct vector of all words from a string.text1 of 
+// TextStage1 by splitting on white space
+    pub fn from_string_trim_quotes(string: &str) -> WordsVector {
+        let mut results = Vec::new();
+        for line in string
+            .lines() {
+                line.trim();
+                line.trim_matches('\"');
+/*                line.chars().next().map(|c| if c=='\"'{
+                    &line[c.len_utf8()..]
+                } else {
+                    println!("Can not find quotes at the beginning of string");
+                    line
+                });
+                match line.ends_with('\"') {
+                    Some(true) => &line[..line.len()-1];
+                    None => {
+                        println!("Can not find quotes at the end of string");
+                        line
+                    }
+                }
+*/
+                for word in line.split_whitespace() { 
+                results.push(String::from(word));
+            }  
+        }
+        WordsVector {words:results}
+    }
+
+
 // generate one big single word corresponding to TextStage text
     pub fn word_as_text(stage:&TextStage)-> WordsVector{
         let text_string = vec![stage.text1.to_owned()];
