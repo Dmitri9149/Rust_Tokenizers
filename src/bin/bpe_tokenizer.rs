@@ -13,9 +13,6 @@ use gnuplot::Graph;
 fn main() {
 // get text from the file 
 // the text is one big string at the stage/
-    let mut entropy_records:Vec<f32> = Vec::new();
-    let mut iter_records:Vec<i32> = Vec::new();
-    let mut number_of_tokens_records:Vec<usize>= Vec::new();
     let txt = TextStage::build_text_stage("alice_wonderland.txt");
     let txt = TextStage::to_lowercase(txt);
     let txt = TextStage::separate_punctuation(txt, ".,!?;:");
@@ -26,6 +23,7 @@ fn main() {
     let vec = WordsVector::from_string_ws(txt);
     let vec = WordsVector::string_infront(vec, "\x20\x20");
 //    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
+//    add the symbols to the beginning and end of a word
     let vec = WordsVector::string_toend(vec,"\x20\x20🔸\x20\x20");
     let vec = WordsVector::string_to_beginning(vec, "\x20\x20🔹");
 // 🔹 
@@ -36,14 +34,21 @@ fn main() {
 
     let mut vocab = VocabStage::build_vocab_from_text_stage("TODO! FROM STRUCT".to_string());
     vocab = VocabStage::build_vocab_from_vector_bpe(vocab,vec);
+
     let mut tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
     let mut entropy = tokens.vocab_entropy();
+    let mut entropy_records:Vec<f32> = Vec::new();
+    let mut iter_records:Vec<i32> = Vec::new();
+    let mut number_of_tokens_records:Vec<usize>= Vec::new();
+    let mut max_entropy:f32 = 0.;
+    let mut best_merge:i32 = 0;
+
     entropy_records.push(entropy);
     iter_records.push(0);
 
     println!("=========================");
     println!("Get initial tokens from bpe words vocab");
-    println!("The initial tokens correspond to the unicode scalars : chars, except \u{2581} end of word");
+    println!("The initial tokens correspond to the unicode scalars : chars");
     println!("{:?}",&tokens.tokens);
 
     let mut tokens_size = tokens.tokens.keys().len();
@@ -53,7 +58,7 @@ fn main() {
     let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
-    let num_merges = 5600;
+    let num_merges = 6000;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -65,6 +70,11 @@ fn main() {
           vocab = VocabStage::rebuild_by_merging_pairs(vocab, max_pair);
           tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
           entropy= tokens.vocab_entropy();
+          if entropy > max_entropy {
+              max_entropy = entropy;             
+              best_merge = merge;
+          }
+
           entropy_records.push(entropy);
           iter_records.push(merge+1);
           tokens_size = tokens.tokens.keys().len();
@@ -106,16 +116,18 @@ fn main() {
     println!("Oho !! {:?}", oho);
     println!("========================");
     println!("Tokenize sample word ! {}", "'hippopotomonstrosesquippedaliophobia\u{2581}'");
-    println!("hippo.... !! {:?}", uhtu);
+    println!("hippo.... !! {:?}\n", uhtu);
     println!("========================");
     println!("Tokenize sample word ! {}", "'hiPpopotomonStrosesquippeDaliophobia\u{2581}'");
-    println!("hiPpo.... !! {:?}", uhtu_1);
+    println!("hiPpo.... !! {:?}\n", uhtu_1);
     println!("========================");
     println!("Tokenize sample word ! {}", "'PPPPPPPabacNNNNNNNNNNNNNN\u{2581}'");
-    println!(" The result is : {:?}",uhtu_2);
+    println!(" The result is : {:?}\n",uhtu_2);
+    println!("The best merge is {}\n", best_merge);
 
 //    println!("The entropy_records are {:?}", entropy_records);
 //    println!("The Number of Tokens records are: {:?}", number_of_tokens_records);
+
 
     let mut fg = Figure::new();
     fg.axes2d()
