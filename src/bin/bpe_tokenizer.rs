@@ -13,7 +13,8 @@ use gnuplot::Graph;
 fn main() {
 // get text from the file 
 // the text is one big string at the stage/
-    let txt = TextStage::build_text_stage("alice_wonderland.txt");
+//    let txt = TextStage::build_text_stage("alice_wonderland.txt");
+    let txt = TextStage::build_text_stage("alllines.txt");
     let txt = TextStage::to_lowercase(txt);
     let txt = TextStage::separate_punctuation(txt, ".,!?;:");
     let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
@@ -58,7 +59,7 @@ fn main() {
     let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
-    let num_merges = 6000;
+    let num_merges = 12000;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
