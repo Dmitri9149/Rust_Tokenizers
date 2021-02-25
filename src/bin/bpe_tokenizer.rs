@@ -13,8 +13,8 @@ use gnuplot::Graph;
 fn main() {
 // get text from the file 
 // the text is one big string at the stage/
-//    let txt = TextStage::build_text_stage("alice_wonderland.txt");
-    let txt = TextStage::build_text_stage("alllines.txt");
+    let txt = TextStage::build_text_stage("alice_wonderland.txt");
+//    let txt = TextStage::build_text_stage("alllines.txt");
     let txt = TextStage::to_lowercase(txt);
     let txt = TextStage::separate_punctuation(txt, ".,!?;:");
     let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
@@ -22,12 +22,14 @@ fn main() {
     let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
 //    println!("{:?}",txt.text1)
     let vec = WordsVector::from_string_ws(txt);
-    let vec = WordsVector::string_infront(vec, "\x20\x20");
+    let vec = WordsVector::infront_of_not_first_char(vec, "\x20\x20");
+//    let vec = WordsVector::infront_of_not_first_char(vec, "🔹🔹");
+
 //    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
 //    add the symbols to the beginning and end of a word
-    let vec = WordsVector::string_toend(vec,"\x20\x20🔸\x20\x20");
+    let vec = WordsVector::string_toend(vec,"🔸\x20\x20");
     let vec = WordsVector::string_to_beginning(vec, "\x20\x20🔹");
-// 🔹 
+// 🔹 🔸
     println!("Words Vector for Vocab {:?}", vec.words);
 
     
@@ -59,7 +61,7 @@ fn main() {
     let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
-    let num_merges = 12000;
+    let num_merges = 6200;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -99,30 +101,31 @@ fn main() {
     println!("=========================");
     ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
+// 🔹 🔸
 
 
-    let oho = tokenize_word("antidisestablishmentarianism\u{2581}"
+    let oho = tokenize_word("🔹antidisestablishmentarianism🔸"
                             ,&ordered_set.set_of_tokens[..],"UNC");
-    let uhtu = tokenize_word("hippopotomonstrosesquippedaliophobia\u{2581}"
+    let uhtu = tokenize_word("🔹hippopotomonstrosesquippedaliophobia🔸"
                              ,&ordered_set.set_of_tokens[..], "UNC");
 
-    let uhtu_1 = tokenize_word("hiPpopotomonStrosesquippeDaliophobia\u{2581}"
+    let uhtu_1 = tokenize_word("🔹hiPpopotomonStrosesquippeDaliophobia🔸"
                                ,&ordered_set.set_of_tokens[..], "UNC");
 
-    let uhtu_2 = tokenize_word("PPPPPPPabacNNNNNNNNNNNNNN\u{2581}"
+    let uhtu_2 = tokenize_word("🔹PPPPPPPabacNNNNNNNNNNNNNN🔸"
                                ,&ordered_set.set_of_tokens[..], "UNC");
 
     println!("========================");
-    println!("Tokenize sample word ! {}", "'antidisestablishmentarianism\u{2581}'");
+    println!("Tokenize sample word ! {}", "'🔹antidisestablishmentarianism🔸'");
     println!("Oho !! {:?}", oho);
     println!("========================");
-    println!("Tokenize sample word ! {}", "'hippopotomonstrosesquippedaliophobia\u{2581}'");
+    println!("Tokenize sample word ! {}", "'🔹hippopotomonstrosesquippedaliophobia🔸'");
     println!("hippo.... !! {:?}\n", uhtu);
     println!("========================");
-    println!("Tokenize sample word ! {}", "'hiPpopotomonStrosesquippeDaliophobia\u{2581}'");
+    println!("Tokenize sample word ! {}", "'🔹hiPpopotomonStrosesquippeDaliophobia🔸'");
     println!("hiPpo.... !! {:?}\n", uhtu_1);
     println!("========================");
-    println!("Tokenize sample word ! {}", "'PPPPPPPabacNNNNNNNNNNNNNN\u{2581}'");
+    println!("Tokenize sample word ! {}", "'🔹PPPPPPPabacNNNNNNNNNNNNNN🔸'");
     println!(" The result is : {:?}\n",uhtu_2);
     println!("The best merge is {}\n", best_merge);
 

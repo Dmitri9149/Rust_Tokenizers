@@ -117,6 +117,29 @@ impl WordsVector {
         WordsVector {words:results}
     }
 
+
+// add string infront of every char in a word in words vector
+    pub fn infront_of_not_first_char(vc:WordsVector, st:&str) -> WordsVector {
+        let results = vc.words.iter()
+            .map(|x| str_mod::infront_if_not_first_char(x,st)).collect();
+        WordsVector {words:results}
+    }
+
+/*
+    pub fn infront_of_not_first_char(vc:WordsVector, st:&str) -> WordsVector {
+        let first_iter = vc.words.iter().take(1);
+        let second_iter = vc.words.iter().skip(1)
+           .map(|x| str_mod::add_string_infront(x,st));           
+        let mut results = Vec::with_capacity(first_iter.size_hint().1.unwrap() 
+                                       + second_iter.size_hint().1.unwrap());
+        results.extend(first_iter);
+        results.extend(second_iter);
+        let res = results.collect();
+//        let results = first_iter.chain(second_iter).collect();
+        WordsVector {words:res}
+    }
+*/
+
 // add symbol:char  to end  of every word in words-vector
     pub fn char_toend(vc:WordsVector, symbol:char) -> WordsVector {
         let results = vc.words.iter()

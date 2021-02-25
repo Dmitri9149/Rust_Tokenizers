@@ -53,6 +53,20 @@ pub fn add_string_infront(input: &str, st:&str) -> String {
     output
 }
 
+// this function insert string before every but not the first char in a string
+// 
+pub fn infront_if_not_first_char(input: &str, st:&str) -> String {
+    let mut output = String::new();
+    let mut input = input.chars();
+    output.push(input.next().unwrap());
+    for c in input {
+        output.push_str(st);
+        output.push(c);
+    }
+    output
+}
+
+
 
 
 // this function changes particular character in a string to particular string 

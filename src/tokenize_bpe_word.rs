@@ -12,7 +12,9 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String], unknown_token:&str)
 
         if string == "" {
 //            println!("String = ''");
-            return Vec::new();
+//            return Vec::new();
+            return vec![unknown_token.to_string().clone()];
+
         } 
 
         if len_sorted == 0 {
