@@ -11,9 +11,9 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String], unknown_token:&str)
 //        println!("Len_sorted at the start !!! {}", &len_sorted);
 
         if string == "" {
-//            println!("String = ''");
-//            return Vec::new();
-            return vec![unknown_token.to_string().clone()];
+            println!("String = ''");
+            return Vec::new();
+//            return vec![unknown_token.to_string().clone()];
 
         } 
 
@@ -47,7 +47,9 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String], unknown_token:&str)
             substring_end_positions = Vec::new();
             if matched_positions.peek().is_some() {
                 for mat in matched_positions {
+//                    if mat.start() !="🔹".len() && mat.end()!=(&string.len() - "🔸".len()) {
                     substring_end_positions.push(mat.start());
+//                    }
 //                    println!("Pushed starts positions !!!! {:?}", &substring_end_positions );
                 }
             } else {

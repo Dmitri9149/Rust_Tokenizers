@@ -22,16 +22,15 @@ fn main() {
     let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
 //    println!("{:?}",txt.text1)
     let vec = WordsVector::from_string_ws(txt);
-    let vec = WordsVector::infront_of_not_first_char(vec, "\x20\x20");
+    let vec = WordsVector::infront_of_not_first_char(vec, "\x20\x20🔹");
 //    let vec = WordsVector::infront_of_not_first_char(vec, "🔹🔹");
 
 //    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
 //    add the symbols to the beginning and end of a word
-    let vec = WordsVector::string_toend(vec,"🔸\x20\x20");
-    let vec = WordsVector::string_to_beginning(vec, "\x20\x20🔹");
-// 🔹 🔸
+    let vec = WordsVector::string_toend(vec,"🔻\x20\x20");
+    let vec = WordsVector::string_to_beginning(vec, "\x20\x20🔺");
+// 🔹 🔸 ✔  ✔   📍  ▫️  🔻  🔺
     println!("Words Vector for Vocab {:?}", vec.words);
-
     
     println!("==========================");
 
@@ -61,7 +60,7 @@ fn main() {
     let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
-    let num_merges = 6200;
+    let num_merges = 2000;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {

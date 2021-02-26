@@ -66,7 +66,27 @@ pub fn infront_if_not_first_char(input: &str, st:&str) -> String {
     output
 }
 
+/*
+// this function insert string before every char in a string
+// the chars are split in 3 groups : first char, last char and 
+// all intermediate chars. string1 is added infront of first char
+// string2 infront of intermediate chars
+// string3 infront of last char
+pub fn infront_of_every_char_3(input: &str, st1:&str, st2:&str, st3:&str) 
+    -> String {
+    let mut output = String::new();
+    let mut input = input.chars();
+    output.push(st1);
+    output.push(input.next().unwrap());
+    for c in input.skip_last() {
+        output.push_str(st2);
+        output.push(c);
+    }
+    output.push(st3)
 
+    output
+}
+*/
 
 
 // this function changes particular character in a string to particular string 
