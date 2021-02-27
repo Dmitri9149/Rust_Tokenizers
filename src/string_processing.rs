@@ -76,6 +76,7 @@ pub fn infront_of_every_char_3(input: &str, st1:&str, st2:&str, st3:&str, st4:&s
     -> String {
     let mut output = String::new();
     let mut inp = input.chars().peekable();
+    let mut inp_forward = input.chars().peekable();
     let count = inp.count();
     let ln = input.len();
     if ln == 0 {
@@ -98,20 +99,25 @@ pub fn infront_of_every_char_3(input: &str, st1:&str, st2:&str, st3:&str, st4:&s
         output
                 
         } else {
+//            let last = input.chars().last();
             inp = input.chars().peekable();
+//            inp_forward = input.chars().peekable();
+            inp_forward.next();
+            inp_forward.next();
             output.push_str(&format!("\x20\x20{}", st1));
             output.push(inp.next().unwrap());
-            output.push('\x20');
+            output.push_str("\x20");
             while true  {
-                if inp.peek() == None {
+                if inp_forward.peek() == None {
                     output.push_str(&format!("\x20"));
                     output.push(inp.next().unwrap());
-                    output.push_str(&format!("{}\x20",st4));
+                    output.push_str(&format!("{}\x20\x20",st4));
                     break;
                 }
                 output.push_str(&format!("\x20{}",st2));
                 output.push(inp.next().unwrap());
                 output.push_str(&format!("{}\x20",st3));                               
+                inp_forward.next();
             }
             output
 
