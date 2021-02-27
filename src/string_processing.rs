@@ -66,27 +66,60 @@ pub fn infront_if_not_first_char(input: &str, st:&str) -> String {
     output
 }
 
-/*
+
 // this function insert string before every char in a string
 // the chars are split in 3 groups : first char, last char and 
 // all intermediate chars. string1 is added infront of first char
 // string2 infront of intermediate chars
 // string3 infront of last char
-pub fn infront_of_every_char_3(input: &str, st1:&str, st2:&str, st3:&str) 
+pub fn infront_of_every_char_3(input: &str, st1:&str, st2:&str, st3:&str, st4:&str) 
     -> String {
     let mut output = String::new();
-    let mut input = input.chars();
-    output.push(st1);
-    output.push(input.next().unwrap());
-    for c in input.skip_last() {
-        output.push_str(st2);
-        output.push(c);
+    let mut inp = input.chars().peekable();
+    let count = inp.count();
+    let ln = input.len();
+    if ln == 0 {
+        println!("Input to infront of every cgr 3 is empty");
+        return "".to_string();
     }
-    output.push(st3)
+    
+    inp = input.chars().peekable();
+    if count == 1 {
+        output.push_str(&["\x20\x20",st1].join(""));
+        output.push(inp.next().unwrap());
+        output.push_str(&[st4,"\x20\x20"].join(""));
+        output
+    } else if count == 2 {
+        output.push_str(&format!("\x20\x20{}",st1));
+        output.push(inp.next().unwrap());
+        output.push_str(&format!("\x20\x20"));
+        output.push(inp.next().unwrap());
+        output.push_str(&format!("{}\x20\x20", st4));
+        output
+                
+        } else {
+            let last = inp.last();
+            inp = input.chars().peekable();
+            output.push_str(&format!("\x20\x20{}", st1));
+            output.push(inp.next().unwrap());
+            output.push('\x20');
+            for c in inp {
+                if inp.peek() == None {
+                    output.push_str(&format!("\x20"));
+                    output.push(last.unwrap());
+                    output.push_str(&format!("{}\x20",st4));
+                    break;
+                }
+                output.push_str(&format!("\x20{}",st2));
+                output.push(inp.next().unwrap());
+                output.push(c);
+                output.push_str(&format!("{}\x20",st3));                               
+            }
+            output
 
-    output
+        } 
 }
-*/
+
 
 
 // this function changes particular character in a string to particular string 
