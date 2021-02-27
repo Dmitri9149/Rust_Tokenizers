@@ -22,13 +22,15 @@ fn main() {
     let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
 //    println!("{:?}",txt.text1)
     let vec = WordsVector::from_string_ws(txt);
-    let vec = WordsVector::infront_of_not_first_char(vec, "\x20\x20🔹");
+////    let vec = WordsVector::infront_of_not_first_char(vec, "\x20\x20🔹");
 //    let vec = WordsVector::infront_of_not_first_char(vec, "🔹🔹");
 
 //    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
 //    add the symbols to the beginning and end of a word
-    let vec = WordsVector::string_toend(vec,"🔻\x20\x20");
-    let vec = WordsVector::string_to_beginning(vec, "\x20\x20🔺");
+////    let vec = WordsVector::string_toend(vec,"🔻\x20\x20");
+////    let vec = WordsVector::string_to_beginning(vec, "\x20\x20🔺");
+    let vec = WordsVector::infront_3(vec, "🔺","🔸","🔹","🔻");
+
 // 🔹 🔸 ✔  ✔   📍  ▫️  🔻  🔺
     println!("Words Vector for Vocab {:?}", vec.words);
     
