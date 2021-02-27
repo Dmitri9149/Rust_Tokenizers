@@ -98,21 +98,19 @@ pub fn infront_of_every_char_3(input: &str, st1:&str, st2:&str, st3:&str, st4:&s
         output
                 
         } else {
-            let last = inp.last();
             inp = input.chars().peekable();
             output.push_str(&format!("\x20\x20{}", st1));
             output.push(inp.next().unwrap());
             output.push('\x20');
-            for c in inp {
+            while true  {
                 if inp.peek() == None {
                     output.push_str(&format!("\x20"));
-                    output.push(last.unwrap());
+                    output.push(inp.next().unwrap());
                     output.push_str(&format!("{}\x20",st4));
                     break;
                 }
                 output.push_str(&format!("\x20{}",st2));
                 output.push(inp.next().unwrap());
-                output.push(c);
                 output.push_str(&format!("{}\x20",st3));                               
             }
             output
