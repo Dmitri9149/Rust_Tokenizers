@@ -118,12 +118,15 @@ impl WordsVector {
     }
 
 
-// add string infront of every char in a word in words vector
-    pub fn infront_of_not_first_char(vc:WordsVector, st:&str) -> WordsVector {
+// add needed string infront/end of every char in a word in words vector
+    pub fn infront_3(vc:WordsVector, st1:&str, st2:&str, st3:&str, st4:&str) 
+        -> WordsVector {
         let results = vc.words.iter()
-            .map(|x| str_mod::infront_if_not_first_char(x,st)).collect();
+            .map(|x| str_mod::infront_of_every_char_3(x,st1,st2,st3,st4)).collect();
         WordsVector {words:results}
     }
+
+
 
 /*
     pub fn infront_of_not_first_char(vc:WordsVector, st:&str) -> WordsVector {
