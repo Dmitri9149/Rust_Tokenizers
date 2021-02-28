@@ -121,6 +121,59 @@ pub fn infront_of_every_char_3(input: &str, st1:&str, st2:&str, st3:&str, st4:&s
         } 
 }
 
+// if we have word : 'CAB' it will be transformed in : 
+// 'st1Cst2Ast3Bst4'
+pub fn prepare_for_tokenization_3(input: &str, st1:&str, st2:&str, st3:&str, st4:&str) 
+    -> String {
+    let mut output = String::new();
+    let mut inp = input.chars().peekable();
+    let mut inp_forward = input.chars().peekable();
+    let count = inp.count();
+    let ln = input.len();
+    if ln == 0 {
+        println!("Input to infront of every char 3 is empty");
+        return "".to_string();
+    }
+    
+    inp = input.chars().peekable();
+    if count == 1 {
+        output.push_str(&["",st1].join(""));
+        output.push(inp.next().unwrap());
+        output.push_str(&[st4,""].join(""));
+        output
+    } else if count == 2 {
+        output.push_str(&format!("{}",st1));
+        output.push(inp.next().unwrap());
+        output.push_str(&format!(""));
+        output.push(inp.next().unwrap());
+        output.push_str(&format!("{}", st4));
+        output
+                
+        } else {
+//            let last = input.chars().last();
+            inp = input.chars().peekable();
+//            inp_forward = input.chars().peekable();
+            inp_forward.next();
+            inp_forward.next();
+            output.push_str(&format!("{}", st1));
+            output.push(inp.next().unwrap());
+            output.push_str("");
+            while true  {
+                if inp_forward.peek() == None {
+                    output.push_str(&format!("\x20"));
+                    output.push(inp.next().unwrap());
+                    output.push_str(&format!("{}",st4));
+                    break;
+                }
+                output.push_str(&format!("",st2));
+                output.push(inp.next().unwrap());
+                output.push_str(&format!("{}",st3));                               
+                inp_forward.next();
+            }
+            output
+
+        } 
+}
 
 
 // this function changes particular character in a string to particular string 

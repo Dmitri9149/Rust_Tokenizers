@@ -63,7 +63,7 @@ fn main() {
     let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
-    let num_merges = 6000;
+    let num_merges = 200;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -104,9 +104,11 @@ fn main() {
     ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 // 🔹 🔸
+//
+//
+    let first_word = infront_of_every_char_3("antidisestablishmentarianism", "🔺","🔸","🔹","🔻");
 
-
-    let oho = tokenize_word("🔹antidisestablishmentarianism🔸"
+    let oho = tokenize_word(&first_word
                             ,&ordered_set.set_of_tokens[..],"UNC");
     let uhtu = tokenize_word("🔹hippopotomonstrosesquippedaliophobia🔸"
                              ,&ordered_set.set_of_tokens[..], "UNC");
