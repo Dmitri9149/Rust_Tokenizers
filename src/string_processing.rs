@@ -67,11 +67,8 @@ pub fn infront_if_not_first_char(input: &str, st:&str) -> String {
 }
 
 
-// this function insert string before every char in a string
-// the chars are split in 3 groups : first char, last char and 
-// all intermediate chars. string1 is added infront of first char
-// string2 infront of intermediate chars
-// string3 infront of last char
+// if we have word : 'CAB' it will be transformed in : 
+// '  st1C  st2Ast3  Bst4  '
 pub fn infront_of_every_char_3(input: &str, st1:&str, st2:&str, st3:&str, st4:&str) 
     -> String {
     let mut output = String::new();
@@ -80,7 +77,7 @@ pub fn infront_of_every_char_3(input: &str, st1:&str, st2:&str, st3:&str, st4:&s
     let count = inp.count();
     let ln = input.len();
     if ln == 0 {
-        println!("Input to infront of every cgr 3 is empty");
+        println!("Input to infront of every char 3 is empty");
         return "".to_string();
     }
     
