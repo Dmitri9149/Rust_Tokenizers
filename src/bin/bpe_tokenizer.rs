@@ -5,7 +5,7 @@ use bpe::VocabStage;
 use bpe::vector_of_words::WordsVector;
 use bpe::vocab_of_tokens::{VocabOfTokens, OrderedSetOfTokens};
 use bpe::tokenize_bpe_word::tokenize_word;
-use bpe::string_processing::infront_of_every_char_3;
+use bpe::string_processing::prepare_for_tokenization_3;
 use gnuplot::{Figure, Caption, Color};
 use gnuplot::AxesCommon;
 use gnuplot::Graph;
@@ -32,7 +32,7 @@ fn main() {
 ////    let vec = WordsVector::string_to_beginning(vec, "\x20\x20🔺");
     let vec = WordsVector::infront_3(vec, "🔺","🔸","🔹","🔻");
 
-// 🔹 🔸 ✔  ✔   📍  ▫️  🔻  🔺
+// 🔹 🔸 ✔  ✔   📍  ▫️  🔻  🔺  ▪️    ▫️   
     println!("Words Vector for Vocab {:?}", vec.words);
     
     println!("==========================");
@@ -63,7 +63,7 @@ fn main() {
     let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
-    let num_merges = 200;
+    let num_merges = 2000;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -106,7 +106,7 @@ fn main() {
 // 🔹 🔸
 //
 //
-    let first_word = infront_of_every_char_3("antidisestablishmentarianism", "🔺","🔸","🔹","🔻");
+    let first_word = prepare_for_tokenization_3("antidisestablishmentarianism", "🔺","🔸","🔹","🔻");
 
     let oho = tokenize_word(&first_word
                             ,&ordered_set.set_of_tokens[..],"UNC");

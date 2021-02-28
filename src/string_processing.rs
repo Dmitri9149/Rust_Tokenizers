@@ -160,12 +160,12 @@ pub fn prepare_for_tokenization_3(input: &str, st1:&str, st2:&str, st3:&str, st4
             output.push_str("");
             while true  {
                 if inp_forward.peek() == None {
-                    output.push_str(&format!("\x20"));
+                    output.push_str(&format!(""));
                     output.push(inp.next().unwrap());
                     output.push_str(&format!("{}",st4));
                     break;
                 }
-                output.push_str(&format!("",st2));
+                output.push_str(&format!("{}",st2));
                 output.push(inp.next().unwrap());
                 output.push_str(&format!("{}",st3));                               
                 inp_forward.next();
