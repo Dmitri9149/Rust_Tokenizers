@@ -5,6 +5,7 @@ use bpe::VocabStage;
 use bpe::vector_of_words::WordsVector;
 use bpe::vocab_of_tokens::{VocabOfTokens, OrderedSetOfTokens};
 use bpe::tokenize_bpe_word::tokenize_word;
+use bpe::string_processing::infront_of_every_char_3;
 use gnuplot::{Figure, Caption, Color};
 use gnuplot::AxesCommon;
 use gnuplot::Graph;
@@ -116,6 +117,7 @@ fn main() {
     let uhtu_2 = tokenize_word("🔹PPPPPPPabacNNNNNNNNNNNNNN🔸"
                                ,&ordered_set.set_of_tokens[..], "UNC");
 
+
     println!("========================");
     println!("Tokenize sample word ! {}", "'🔹antidisestablishmentarianism🔸'");
     println!("Oho !! {:?}", oho);
@@ -138,7 +140,7 @@ fn main() {
     fg.axes2d()
         .set_title("Entropy  vs  number of merges", &[])
         .set_legend(Graph(0.6), Graph(0.98), &[], &[])
-        .set_x_label("x", &[])
+        .set_x_label("merges", &[])
         .set_y_label("entropy", &[])
         .lines(
             iter_records.iter(),
