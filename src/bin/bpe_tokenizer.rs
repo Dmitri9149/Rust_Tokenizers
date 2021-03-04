@@ -30,9 +30,12 @@ fn main() {
 //    add the symbols to the beginning and end of a word
 ////    let vec = WordsVector::string_toend(vec,"🔻\x20\x20");
 ////    let vec = WordsVector::string_to_beginning(vec, "\x20\x20🔺");
-    let vec = WordsVector::infront_3(vec, "🔺","🔸","🔹","🔻");
+//==================================================================
+//    let vec = WordsVector::infront_3(vec, "🔺","🔸","🔹","🔻");
+    let vec = WordsVector::infront_3(vec, "🔺","🔹","🔹","🔻");
+//
 
-// 🔹 🔸 ✔  ✔   📍  ▫️  🔻  🔺  ▪️    ▫️   
+// 🔹 🔸 ✔  ✔   📍  ▫️  🔻  🔺  ▪️    ▫️  ❗ 
     println!("Words Vector for Vocab {:?}", vec.words);
     
     println!("==========================");
@@ -63,7 +66,7 @@ fn main() {
     let mut ordered_tokens = tokens.to_value_ordered_vector();
     println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
 
-    let num_merges = 2000;
+    let num_merges = 100;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -106,32 +109,42 @@ fn main() {
 // 🔹 🔸
 //
 //
-    let first_word = prepare_for_tokenization_3("antidisestablishmentarianism", "🔺","🔸","🔹","🔻");
+//=========================================================================
+//    let first_word = prepare_for_tokenization_3("antidisestablishmentarianism", "🔺","🔸","🔹","🔻");
+    let oho_word = prepare_for_tokenization_3("antidisestablishmentarianism", "🔺","🔹","🔹","🔻");
 
-    let oho = tokenize_word(&first_word
+    let uhtu_word = prepare_for_tokenization_3("hippopotomonstrosesquippedaliophobia", "🔺","🔹","🔹","🔻");
+
+    let uhtu_1_word = prepare_for_tokenization_3("hiPpopotomonStrosesquippeDaliophobia", "🔺","🔹","🔹","🔻");
+
+    let uhtu_2_word = prepare_for_tokenization_3("PPPPPPPabacNNNNNNNNNNNNNN", "🔺","🔹","🔹","🔻");
+
+
+
+    let oho = tokenize_word(&oho_word
                             ,&ordered_set.set_of_tokens[..],"UNC");
-    let uhtu = tokenize_word("🔹hippopotomonstrosesquippedaliophobia🔸"
+    let uhtu = tokenize_word(&uhtu_word
                              ,&ordered_set.set_of_tokens[..], "UNC");
 
-    let uhtu_1 = tokenize_word("🔹hiPpopotomonStrosesquippeDaliophobia🔸"
-                               ,&ordered_set.set_of_tokens[..], "UNC");
+    let uhtu_1 = tokenize_word(&uhtu_1_word
+                               ,&ordered_set.set_of_tokens[..], "❗");
 
-    let uhtu_2 = tokenize_word("🔹PPPPPPPabacNNNNNNNNNNNNNN🔸"
+    let uhtu_2 = tokenize_word(&uhtu_2_word
                                ,&ordered_set.set_of_tokens[..], "UNC");
 
 
     println!("========================");
-    println!("Tokenize sample word ! {}", "'🔹antidisestablishmentarianism🔸'");
+    println!("Tokenize sample word ! {}", &oho_word);
     println!("Oho !! {:?}", oho);
     println!("========================");
-    println!("Tokenize sample word ! {}", "'🔹hippopotomonstrosesquippedaliophobia🔸'");
+    println!("Tokenize sample word ! {}", &uhtu_word);
     println!("hippo.... !! {:?}\n", uhtu);
     println!("========================");
-    println!("Tokenize sample word ! {}", "'🔹hiPpopotomonStrosesquippeDaliophobia🔸'");
+    println!("Tokenize sample word ! {}", &uhtu_1_word);
     println!("hiPpo.... !! {:?}\n", uhtu_1);
     println!("========================");
-    println!("Tokenize sample word ! {}", "'🔹PPPPPPPabacNNNNNNNNNNNNNN🔸'");
-    println!(" The result is : {:?}\n",uhtu_2);
+    println!("Tokenize sample word ! {}", &uhtu_2_word);
+    println!(" The result is : {:?}\n",&uhtu_2);
     println!("The best merge is {}\n", best_merge);
 
 //    println!("The entropy_records are {:?}", entropy_records);
