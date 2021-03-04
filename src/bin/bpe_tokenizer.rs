@@ -130,20 +130,24 @@ fn main() {
                                ,&ordered_set.set_of_tokens[..], "❗");
 
     let uhtu_2 = tokenize_word(&uhtu_2_word
-                               ,&ordered_set.set_of_tokens[..], "UNC");
+                               ,&ordered_set.set_of_tokens[..], "❗");
 
 
     println!("========================");
-    println!("Tokenize sample word ! {}", &oho_word);
+    println!("Tokenize sample word ! {}", "antidisestablishmentarianism");
+    println!("");
     println!("Oho !! {:?}", oho);
     println!("========================");
-    println!("Tokenize sample word ! {}", &uhtu_word);
+    println!("Tokenize sample word ! {}", "hippopotomonstrosesquippedaliophobia");
+    println!("");
     println!("hippo.... !! {:?}\n", uhtu);
     println!("========================");
-    println!("Tokenize sample word ! {}", &uhtu_1_word);
+    println!("Tokenize sample word ! {}", "hiPpopotomonStrosesquippeDaliophobia");
+    println!("");
     println!("hiPpo.... !! {:?}\n", uhtu_1);
     println!("========================");
-    println!("Tokenize sample word ! {}", &uhtu_2_word);
+    println!("Tokenize sample word ! {}", "PPPPPPPabacNNNNNNNNNNNNNN");
+    println!("");
     println!(" The result is : {:?}\n",&uhtu_2);
     println!("The best merge is {}\n", best_merge);
 
