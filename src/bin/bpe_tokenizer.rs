@@ -16,6 +16,8 @@ fn main() {
 // the text is one big string at the stage/
     let txt = TextStage::build_text_stage("alice_wonderland.txt");
 //    let txt = TextStage::build_text_stage("alllines.txt");
+//    some text preprosessing before splitting on words
+//    we use only lowercase words
     let txt = TextStage::to_lowercase(txt);
     let txt = TextStage::separate_punctuation(txt, ".,!?;:");
     let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
@@ -23,27 +25,20 @@ fn main() {
     let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
 //    println!("{:?}",txt.text1)
     let vec = WordsVector::from_string_ws(txt);
-////    let vec = WordsVector::infront_of_not_first_char(vec, "\x20\x20🔹");
-//    let vec = WordsVector::infront_of_not_first_char(vec, "🔹🔹");
-
-//    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
-//    add the symbols to the beginning and end of a word
-////    let vec = WordsVector::string_toend(vec,"🔻\x20\x20");
-////    let vec = WordsVector::string_to_beginning(vec, "\x20\x20🔺");
-//==================================================================
-//    let vec = WordsVector::infront_3(vec, "🔺","🔸","🔹","🔻");
     let vec = WordsVector::infront_3(vec, "🔺","🔹","🔹","🔻");
-//
 
 // 🔹 🔸 ✔  ✔   📍  ▫️  🔻  🔺  ▪️    ▫️  ❗ 
-    println!("Words Vector for Vocab {:?}", vec.words);
+    println!("Words Vector for Vocab:===>  {:?}", vec.words);
     
     println!("==========================");
-
+// initialize Vocab
     let mut vocab = VocabStage::build_vocab_from_text_stage("TODO! FROM STRUCT".to_string());
+// build Vocabulary of specially prepared words from WordsVector
     vocab = VocabStage::build_vocab_from_vector_bpe(vocab,vec);
 
+// build vocabulary of tokens 
     let mut tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
+// calculate entropy for distribution corresponding to vocabulary of tokens
     let mut entropy = tokens.vocab_entropy();
     let mut entropy_records:Vec<f32> = Vec::new();
     let mut iter_records:Vec<i32> = Vec::new();
@@ -57,14 +52,15 @@ fn main() {
     println!("=========================");
     println!("Get initial tokens from bpe words vocab");
     println!("The initial tokens correspond to the unicode scalars : chars");
-    println!("{:?}",&tokens.tokens);
+    println!("");
+    println!("{:?}\n",&tokens.tokens);
 
     let mut tokens_size = tokens.tokens.keys().len();
     number_of_tokens_records.push(tokens_size);
-    println!("Number of initial tokens {}", tokens_size);
+    println!("Number of initial tokens {}\n", tokens_size);
 
     let mut ordered_tokens = tokens.to_value_ordered_vector();
-    println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
+    println!("Vocab of Ordered Tokens {:?}\n", ordered_tokens );
 
     let num_merges = 2000;
     let mut prs; // = Pairs::from_vocab(&vocab);
@@ -88,13 +84,13 @@ fn main() {
           tokens_size = tokens.tokens.keys().len();
           number_of_tokens_records.push(tokens_size);
           println!("Entropy = {:?}",entropy);
-          println!("Number of Tokens : {:?}", tokens_size);
+          println!("Number of Tokens : {:?}\n", tokens_size);
 
     }
 
     println!("=========================");
-    println!("After {} merging of most frequent pairs: ", num_merges);
-    println!("The tokens vocab looks like this{:?}",&tokens.tokens);
+    println!("After {} mergings of most frequent pairs: \n", num_merges);
+    println!("The tokens vocab looks like this{:?}:======>",&tokens.tokens);
     tokens_size = tokens.tokens.keys().len();
     println!("Number of final  tokens {}", tokens_size);
 
