@@ -68,7 +68,7 @@ fn main() {
     println!("Vocab of Ordered Tokens: \n {:?}\n", ordered_tokens );
     println!("=========================");
 
-    let num_merges = 2000;
+    let num_merges = 100;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -118,7 +118,7 @@ fn main() {
 
     let uhtu_1_word = prepare_for_tokenization_3("hiPpopotomonStrosesquippeDaliophobia", "🔺","🔹","🔹","🔻");
 
-    let uhtu_2_word = prepare_for_tokenization_3("PPPPPPPabacNNNNNNNNNNNNNN", "🔺","🔹","🔹","🔻");
+    let uhtu_2_word = prepare_for_tokenization_3("PPPPPPPNNNNNNNNNNNNNN", "🔺","🔹","🔹","🔻");
 
 
 
@@ -147,7 +147,7 @@ fn main() {
     println!("");
     println!("hiPpo.... !! {:?}\n", uhtu_1);
     println!("========================");
-    println!("Tokenize sample word ! {}", "PPPPPPPabacNNNNNNNNNNNNNN");
+    println!("Tokenize sample word ! {}", "PPPPPPPNNNNNNNNNNNNNN");
     println!("");
     println!(" The result is : {:?}\n",&uhtu_2);
     println!("The best merge is {}\n", best_merge);

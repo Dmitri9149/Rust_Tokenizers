@@ -44,9 +44,9 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String], unknown_token:&str)
 
 //            println!("String in consideration{:?}", &string);
             matched_positions = re_token.find_iter(&string).peekable();
-//            if matched_positions.peek() == None {
-//                return vec![unknown_token.to_string().clone()];
-//            }
+            if matched_positions.peek() == None {
+                return vec![unknown_token.to_string().clone()];
+            }
             substring_end_positions = Vec::new();
             if matched_positions.peek().is_some() {
                 for mat in matched_positions {

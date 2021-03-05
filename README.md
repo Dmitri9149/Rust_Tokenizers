@@ -52,11 +52,34 @@ If at 🔺a  🔹d🔹 are to be merged (as most frequent pair), we will get:
 "  🔺a🔹d🔹  🔹v🔹  🔹e🔹  🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻  "
 
 Let us take some 'familiar' and 'not familiar' words for the system. 
-Familiar means some words from the 'Alice.....' text like : 'forgetting' , 'alice', 'yourself', 'consented '.
-Not familiar, for example: 'coronavirus', 'tokenization', ''antidisestablishmentarianism', 'hippopotomonstrosesquippedaliophobia'. 
+Familiar means some words from the 'Alice.....' text like : 'forgetting' , 'alice', 'yourself', 'consented'.
+Not familiar, for example: 'coronavirus', 'tokenization', 'antidisestablishmentarianism', 'hippopotomonstrosesquippedaliophobia'. 
 We wil tokenize the words : 
-a.In case the system did juat 2 merges (still just characters are out tokens).
-b.In case of all tokens are merged in original words (about 6000 merges for the text).
+a.In case the system did just 2 merges (still just characters are out tokens).
+ib.In case of all tokens are merged in original words (about 6000 merges for the text).
+
+Only 2 merges: 
+
+/=======================================
+forgetting : ["🔺f", "🔹o🔹", "🔹r🔹", "🔹g🔹", "🔹e🔹", "🔹t🔹", "🔹t🔹", "🔹i🔹", "🔹n🔹", "g🔻"]
+alice : ["🔺a", "🔹l🔹", "🔹i🔹", "🔹c🔹", "e🔻"]
+yourself : ["🔺y", "🔹o🔹", "🔹u🔹", "🔹r🔹", "🔹s🔹", "🔹e🔹", "🔹l🔹", "f🔻"]
+consented : ["🔺c", "🔹o🔹", "🔹n🔹", "🔹s🔹", "🔹e🔹", "🔹n🔹", "🔹t🔹", "🔹e🔹", "d🔻"]
+forgetting : ["🔺f", "🔹o🔹", "🔹r🔹", "🔹g🔹", "🔹e🔹", "🔹t🔹", "🔹t🔹", "🔹i🔹", "🔹n🔹", "g🔻"]
+coronavirus : ["🔺c", "🔹o🔹", "🔹r🔹", "🔹o🔹", "🔹n🔹", "🔹a🔹", "🔹v🔹", "🔹i🔹", "🔹r🔹", "🔹u🔹", "s🔻"]
+forgetting : ["🔺f", "🔹o🔹", "🔹r🔹", "🔹g🔹", "🔹e🔹", "🔹t🔹", "🔹t🔹", "🔹i🔹", "🔹n🔹", "g🔻"]
+tokenization : ["🔺t", "🔹o🔹", "🔹k🔹", "🔹e🔹", "🔹n🔹", "🔹i🔹", "🔹z🔹", "🔹a🔹", "🔹t🔹", "🔹i🔹", "🔹o🔹", "n🔻"]
+antidisestablishmentarianism : ["🔺a", "🔹n🔹", "🔹t🔹", "🔹i🔹", "🔹d🔹", "🔹i🔹", "🔹s🔹", "🔹e🔹", "🔹s🔹", "🔹t🔹", "🔹a🔹", "🔹b🔹", "🔹l🔹", "🔹i🔹", "🔹s🔹", "🔹h🔹", "🔹m🔹", "🔹e🔹", "🔹n🔹", "🔹t🔹", "🔹a🔹", "🔹r🔹", "🔹i🔹", "🔹a🔹", "🔹n🔹", "🔹i🔹", "🔹s🔹", "m🔻"]
+hippopotomonstrosesquippedaliophobia : ["🔺h", "🔹i🔹", "🔹p🔹", "🔹p🔹", "🔹o🔹", "🔹p🔹", "🔹o🔹", "🔹t🔹", "🔹o🔹", "🔹m🔹", "🔹o🔹", "🔹n🔹", "🔹s🔹", "🔹t🔹", "🔹r🔹", "🔹o🔹", "🔹s🔹", "🔹e🔹", "🔹s🔹", "🔹q🔹", "🔹u🔹", "🔹i🔹", "🔹p🔹", "🔹p🔹", "🔹e🔹", "🔹d🔹", "🔹a🔹", "🔹l🔹", "🔹i🔹", "🔹o🔹", "🔹p🔹", "🔹h🔹", "🔹o🔹", "🔹b🔹", "🔹i🔹", "a🔻"]
+/========================
+
+In the case the results are similar. Words of both types re splitted on 'decorated characters'.
+
+/======================
+
+After 6000 merges (all is merged into original words)
+
+
 
 
 

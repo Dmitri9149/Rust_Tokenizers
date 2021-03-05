@@ -24,7 +24,7 @@ fn main() {
     let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*-", '🦀');
     let txt = TextStage::separate_punctuation(txt, ",.!?;:");
     let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
-    println!("{:?}",txt.text1);
+//    println!("{:?}",txt.text1);
     let vec = WordsVector::from_string_ws(txt);
     let vec = WordsVector::infront_3(vec, "🔺","🔹","🔹","🔻");
 
@@ -68,7 +68,7 @@ fn main() {
     println!("Vocab of Ordered Tokens: \n {:?}\n", ordered_tokens );
     println!("=========================");
 
-    let num_merges = 2000;
+    let num_merges = 5720;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -132,6 +132,60 @@ fn main() {
 
     let uhtu_2 = tokenize_word(&uhtu_2_word
                                ,&ordered_set.set_of_tokens[..], "❗");
+////////////////////////////////////////////
+
+    let word_a = prepare_for_tokenization_3("forgetting", "🔺","🔹","🔹","🔻");
+    let word_a_t = tokenize_word(&word_a
+                               ,&ordered_set.set_of_tokens[..], "❗");
+    println!("forgetting : {:?}", word_a_t);
+//
+    let word_a = prepare_for_tokenization_3("alice", "🔺","🔹","🔹","🔻");
+    let word_a_t = tokenize_word(&word_a
+                               ,&ordered_set.set_of_tokens[..], "❗");
+    println!("alice : {:?}", word_a_t);
+//
+    let word_a = prepare_for_tokenization_3("yourself", "🔺","🔹","🔹","🔻");
+    let word_a_t = tokenize_word(&word_a
+                               ,&ordered_set.set_of_tokens[..], "❗");
+    println!("yourself : {:?}", word_a_t);
+
+//
+    let word_a = prepare_for_tokenization_3("consented", "🔺","🔹","🔹","🔻");
+    let word_a_t = tokenize_word(&word_a
+                               ,&ordered_set.set_of_tokens[..], "❗");
+    println!("consented : {:?}", word_a_t);
+    
+    let word_a = prepare_for_tokenization_3("inquisitively" , "🔺","🔹","🔹","🔻");
+    let word_a_t = tokenize_word(&word_a
+                               ,&ordered_set.set_of_tokens[..], "❗");
+    println!("inquisitively : {:?}", word_a_t);
+
+    let word_a = prepare_for_tokenization_3("coronavirus", "🔺","🔹","🔹","🔻");
+    let word_a_t = tokenize_word(&word_a
+                               ,&ordered_set.set_of_tokens[..], "❗");
+    println!("coronavirus : {:?}", word_a_t);
+
+    let word_a = prepare_for_tokenization_3("tokenization", "🔺","🔹","🔹","🔻");
+    let word_a_t = tokenize_word(&word_a
+                               ,&ordered_set.set_of_tokens[..], "❗");
+    println!("tokenization : {:?}", word_a_t);
+
+    let word_a = prepare_for_tokenization_3("antidisestablishmentarianism", "🔺","🔹","🔹","🔻");
+    let word_a_t = tokenize_word(&word_a
+                               ,&ordered_set.set_of_tokens[..], "❗");
+    println!("antidisestablishmentarianism : {:?}", word_a_t);
+
+    let word_a = prepare_for_tokenization_3("hippopotomonstrosesquippedaliophobia", "🔺","🔹","🔹","🔻");
+    let word_a_t = tokenize_word(&word_a
+                               ,&ordered_set.set_of_tokens[..], "❗");
+    println!("hippopotomonstrosesquippedaliophobia : {:?}", word_a_t);
+
+
+
+
+
+
+
 
 
     println!("========================");
@@ -149,6 +203,7 @@ fn main() {
     println!("========================");
     println!("Tokenize sample word ! {}", "PPPPPPPabacNNNNNNNNNNNNNN");
     println!("");
+
     println!(" The result is : {:?}\n",&uhtu_2);
     println!("The best merge is {}\n", best_merge);
 
