@@ -1,17 +1,49 @@
-The tokenizer in the project is similar to Byte Pair Encoding tokenizer.
+This is experimental project (the algorithm is emerging in permanent experiments with text tokenization).
 
+The main idea is similar to the Byte Pair Encoding tokenizer: 
 https://arxiv.org/pdf/1508.07909.pdf - 	the original article; 
 https://leimao.github.io/blog/Byte-Pair-Encoding/ - some Python implementations. 
 Here the implementation is in Rust. 
 
-We have a text of words. Words are composed of unicode scalars. We start from the 
+We have a text and split it in words. Words are composed of unicode scalars. We start from the 
 initial vocabuary of the scalars (chars) by splitting the text to colleclion of chars. 
 
 The 'Alice's Adventures in Wonderland by Lewis Carroll' of Gutenberg project is used here : 
 http://www.gutenberg.org/ebooks/11 as the text.
 
-After that we recursivly replace most frequent consequtive pair of tokens by a new unseen token.
-Initial tokens are just chars. The token is a sequence of chars. The inspection of consequtive pairs is 
+We recursivly replace most frequent consequtive pair of tokens by the new token composed of the merged tokens in the pair.
+
+Initial tokens are just chars. A token is a sequence of chars. Finally all tokens will merge in the initial words in the text.
+
+The procedure was initially invented as splitting of a rare words to more usual components. But in the project I try to use it as a universal algorithm for tokenization of a text to basic tokens, which may be considered as a basis for vectorization of the text: the basic tokens we will find will be the basis (orthogonal) for the text vectorization. This is the program. 
+
+We start from something similar to 'chars' (like scalar unicodes or graphemes). The good point: all words are splitted in chars : dog => 'd o g' , cat => 'c a t'. Not a good point: chars are very unspesific , and if the chars will be our basis vectors the 'bag of chars' will not work: 'd o g' and 'g o d' will be the same vectors if we will try to represent the words as sum of basis vectors 'd' , 'o', 'g'. 
+
+On the other edge of the tokenization process we will have as out tokens the very initial words: 'alice', 
+'her', 'head' etc.... will be same time the initial words and out basis vectors. It is some kind of 'one hot encoding'. Bag of words models is working trivially : word 'alice' is represented as vector 'alice'; 'her' => will be our basis vector 'her'.  There is always one token in the bag. 
+And we have another problem : the vectors are too specific. 'dog' and 'dogs' are different vectors, even there is an intuitive filling the 'dogs' is something like a bag of 'dog' and 's'. We will have very big vocabulary of of basic words-tokens (our basis vectors) without any natural reflection of relations of the words: we declare as basis or basic actually what is not a basis or basic because of the internal relations , which we ignore. 
+
+Let us return to the chars. The chars at the beginning , end and inside a word behave differently. And if we have a standalone I it is mot the same as 'i' at the beginning of end of a word. Let us use 'modifiers'. Modifiers are not a tokens, but they will 'decorate' a characters as a rudimentary type system: 
+"🔺","🔸","🔹","🔻"
+
+  '🔺d🔹o🔹g🔻' and '🔺g🔹 o🔹 d🔻'  ==> now 'd🔻' and '🔺d' are different basis tokens corresponding to 
+the characters at the beginning or end of words. And by two blue diamonds we will '🔹o🔹' modify the internat characters. 'd🔻' ; '🔺d' and '🔹 d🔹' are different basis tokens now (different basis vectors). (We use emoji as the modifiers).
+And 'i🔻' ; '🔺i' ; '🔹 i🔹' ; '🔺i🔻' all are different tokens too. 
+The tokens at the beginning , end , internal of a word all have very different merging statistic withint the process of BPE tokenization. We have to handle them differently and the modifiers help with this. 
+
+Intuition we will use: 
+1.Tokens are resourses. The resourses may merge and produce another resourses : new tokens. 
+2.The resourses are building blocks of our words.
+3.As building blocks the GENERATED tokens may be considered as basis vectors of our system.
+4.The quantity of possible tokens is VERY HUGE. If we use about 100 characters (unicode scalars) 
+in our words and words up to the length 10 in out texts: the number of possible words is more than 10 in power 20.
+5.The number of words and building blocks which are IN REALITY used for words building is VERY SMALL.
+6.All words in the sample text are generated within about 6000 merges, so, we have max up to 6000 'building tokens'.
+7.Modifiers 
+
+
+
+The inspection of consequtive pairs is 
 limited to word boundaries. To the  end of every word a special unicode symbol '\n{2581}' is attached to mark the 
 end of word position. 
 
