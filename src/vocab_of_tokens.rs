@@ -83,6 +83,7 @@ impl OrderedSetOfTokens {
 //
 // some helper funtions for tokens stage
 // see 'from_words_vocab_bpe' above
+//
 pub fn create_from_words_vocab_bpe(smth:& VocabStage) -> HashMap<String,i32>{
     let mut hsh = HashMap::new();
     for (word, frequency) in &smth.vocab_bpe {
@@ -105,20 +106,3 @@ where
         .map(|(k, _v)| k)
 }
 
-// calculate length of token 
-// we assume there was added special end_token 
-// like ""</w>"" to the end of every word 
-/* fn length_of_token (token: &str, end_token: &str) -> usize {
-    let n = end_token.len();
-    if &token[n-4 .. ] == end_token {
-        &token[0 .. n-4].len()+1
-    } else {
-        token.len()
-    }
-} 
-*/
-
-//fn main() {
-//    let map: HashMap<_, _> = vec![(2, 4), (1, 3), (5, 2)].into_iter().collect();
-//    dbg!(max_key(&map));
-// }

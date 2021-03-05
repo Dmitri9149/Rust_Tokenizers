@@ -28,7 +28,7 @@ fn main() {
     let vec = WordsVector::infront_3(vec, "🔺","🔹","🔹","🔻");
 
 // 🔹 🔸 ✔  ✔   📍  ▫️  🔻  🔺  ▪️    ▫️  ❗ 
-    println!("Words Vector for Vocab:===>  {:?}", vec.words);
+    println!("Words Vector for Vocab (first 20 words): ===>  {:?}", vec.words[0:20]);
     
     println!("==========================");
 // initialize Vocab
