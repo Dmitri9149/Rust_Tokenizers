@@ -24,7 +24,7 @@ fn main() {
     let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*-", '🦀');
     let txt = TextStage::separate_punctuation(txt, ",.!?;:");
     let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
-    println!("{:?}",txt.text1);
+//    println!("{:?}",txt.text1);
     let vec = WordsVector::from_string_ws(txt);
     let vec = WordsVector::infront_3(vec, "🔺","🔹","🔹","🔻");
 
