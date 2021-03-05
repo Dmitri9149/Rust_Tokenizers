@@ -6,7 +6,8 @@ use bpe::vector_of_words::WordsVector;
 use bpe::vocab_of_tokens::{VocabOfTokens, OrderedSetOfTokens};
 use bpe::tokenize_bpe_word::tokenize_word;
 use bpe::string_processing::prepare_for_tokenization_3;
-use gnuplot::{Figure, Caption, Color};
+use gnuplot::{Figure, Caption};
+// use gnuplot::Color
 use gnuplot::AxesCommon;
 use gnuplot::Graph;
 
@@ -20,7 +21,7 @@ fn main() {
 //    we use only lowercase words
     let txt = TextStage::to_lowercase(txt);
     let txt = TextStage::separate_punctuation(txt, ".,!?;:");
-    let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
+    let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*-", '🦀');
     let txt = TextStage::separate_punctuation(txt, ",.!?;:");
     let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
 //    println!("{:?}",txt.text1)
@@ -28,9 +29,11 @@ fn main() {
     let vec = WordsVector::infront_3(vec, "🔺","🔹","🔹","🔻");
 
 // 🔹 🔸 ✔  ✔   📍  ▫️  🔻  🔺  ▪️    ▫️  ❗ 
-    println!("Words Vector for Vocab (first 20 words): ===>  {:?}", vec.words[0:20]);
+    println!("==========================");
+    println!("Words Vector for Vocab (first 20 words):\n{:?}", &vec.words[0..20]);
     
     println!("==========================");
+    println!("");
 // initialize Vocab
     let mut vocab = VocabStage::build_vocab_from_text_stage("TODO! FROM STRUCT".to_string());
 // build Vocabulary of specially prepared words from WordsVector
@@ -51,16 +54,19 @@ fn main() {
 
     println!("=========================");
     println!("Get initial tokens from bpe words vocab");
-    println!("The initial tokens correspond to the unicode scalars : chars");
+    println!("The initial tokens correspond to the modified unicode scalars like: '🔺t', '🔹t🔹', 't🔻'");
     println!("");
     println!("{:?}\n",&tokens.tokens);
+    println!("=========================\n");
 
     let mut tokens_size = tokens.tokens.keys().len();
     number_of_tokens_records.push(tokens_size);
     println!("Number of initial tokens {}\n", tokens_size);
 
     let mut ordered_tokens = tokens.to_value_ordered_vector();
-    println!("Vocab of Ordered Tokens {:?}\n", ordered_tokens );
+    println!("=========================");
+    println!("Vocab of Ordered Tokens: \n {:?}\n", ordered_tokens );
+    println!("=========================");
 
     let num_merges = 2000;
     let mut prs; // = Pairs::from_vocab(&vocab);
@@ -90,23 +96,22 @@ fn main() {
 
     println!("=========================");
     println!("After {} mergings of most frequent pairs: \n", num_merges);
-    println!("The tokens vocab looks like this{:?}:======>",&tokens.tokens);
+    println!("The tokens vocab looks like this:\n {:?}",&tokens.tokens);
     tokens_size = tokens.tokens.keys().len();
     println!("Number of final  tokens {}", tokens_size);
 
     let ordered_set = OrderedSetOfTokens::from_bpe_tokens(&tokens);
 
     println!("=========================");
-    println!("OrderedSetOfTokens {:?}", &ordered_set.set_of_tokens);
+    println!("OrderedSetOfTokens: \n {:?}", &ordered_set.set_of_tokens);
     
     println!("=========================");
     ordered_tokens = tokens.to_value_ordered_vector();
-    println!("Vocab of Ordered Tokens {:?}", ordered_tokens );
-// 🔹 🔸
-//
-//
+    println!("Vocab of Ordered Tokens: \n  {:?}", ordered_tokens );
+
 //=========================================================================
 //    let first_word = prepare_for_tokenization_3("antidisestablishmentarianism", "🔺","🔸","🔹","🔻");
+
     let oho_word = prepare_for_tokenization_3("antidisestablishmentarianism", "🔺","🔹","🔹","🔻");
 
     let uhtu_word = prepare_for_tokenization_3("hippopotomonstrosesquippedaliophobia", "🔺","🔹","🔹","🔻");
