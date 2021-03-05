@@ -27,7 +27,7 @@ Let us return to the chars. The chars at the beginning , end and inside a word b
 "🔺","🔸","🔹","🔻"
 
   '🔺d🔹o🔹g🔻' and '🔺g🔹 o🔹 d🔻'  ==> now 'd🔻' and '🔺d' are different basis tokens corresponding to 
-the characters at the beginning or end of words. And by two blue diamonds we will '🔹o🔹' modify the internat characters. 'd🔻' ; '🔺d' and '🔹 d🔹' are different basis tokens now (different basis vectors). (We use emoji as the modifiers).
+the characters at the beginning or end of words. And by two blue diamonds we will '🔹o🔹' modify the internat characters. 'd🔻' ; '🔺d' and '🔹 d🔹' are different basis tokens now (different basis vectors). (We use emoji as the modifiers). The two '🔹' from every side of a token are used in part for not to use 'lookaround' in regex.
 And 'i🔻' ; '🔺i' ; '🔹 i🔹' ; '🔺i🔻' all are different tokens too. 
 The tokens at the beginning , end , internal of a word all have very different merging statistic withint the process of BPE tokenization. We have to handle them differently and the modifiers help with this. 
 
@@ -39,7 +39,29 @@ Intuition we will use:
 in our words and words up to the length 10 in out texts: the number of possible words is more than 10 in power 20.
 5.The number of words and building blocks which are IN REALITY used for words building is VERY SMALL.
 6.All words in the sample text are generated within about 6000 merges, so, we have max up to 6000 'building tokens'.
-7.Modifiers 
+7.Modifiers may be considered as a rudimentary type system or as a rudimentary "positional" encoding.
+
+Because of technical reasons (to simplify the search of a tokens, not to use ''lookaround' but a simple regex ) within the course of merges the words are represented like this: 
+
+"  🔺a  🔹d🔹  🔹v🔹  🔹e🔹  🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻  "  <=== two empty spaces are inserted 
+between every pair of modified tokens (at the end and beginning too).
+
+If at some merge 🔹e🔹  🔹n🔹  pair will merges, we will get : 
+"  🔺a  🔹d🔹  🔹v🔹  🔹e🔹🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻  "
+If at 🔺a  🔹d🔹 are to be merged (as most frequent pair), we will get:
+"  🔺a🔹d🔹  🔹v🔹  🔹e🔹  🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻  "
+
+Let us take some 'familiar' and 'not familiar' words for the system. 
+Familiar means some words from the 'Alice.....' text like : 'forgetting' , 'alice', 'yourself', 'consented '.
+Not familiar, for example: 'coronavirus', 'tokenization', ''antidisestablishmentarianism', 'hippopotomonstrosesquippedaliophobia'. 
+We wil tokenize the words : 
+a.In case the system did juat 2 merges (still just characters are out tokens).
+b.In case of all tokens are merged in original words (about 6000 merges for the text).
+
+
+
+
+
 
 
 
