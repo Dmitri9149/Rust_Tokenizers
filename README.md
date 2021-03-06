@@ -48,7 +48,7 @@ between every pair of modified tokens (at the end and beginning too).
 
 If at some merge 🔹e🔹  🔹n🔹  pair will merges, we will get : 
 "  🔺a  🔹d🔹  🔹v🔹  🔹e🔹🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻  "
-If at 🔺a  🔹d🔹 are to be merged (as most frequent pair), we will get:
+If at some merge 🔺a  🔹d🔹 are to be merged (as most frequent pair), we will get:
 "  🔺a🔹d🔹  🔹v🔹  🔹e🔹  🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻  "
 
 Let us take some 'familiar' and 'not familiar' words for the system. 
@@ -58,7 +58,7 @@ We wil tokenize the words :
 a.In case the system did just 2 merges (still just characters are out tokens).
 ib.In case of all tokens are merged in original words (about 6000 merges for the text).
 
-Only 2 merges: 
+Only 2 merges, out tokens are mostly 'decorated characters': 
 
 /=======================================
 forgetting : ["🔺f", "🔹o🔹", "🔹r🔹", "🔹g🔹", "🔹e🔹", "🔹t🔹", "🔹t🔹", "🔹i🔹", "🔹n🔹", "g🔻"]
@@ -73,13 +73,55 @@ antidisestablishmentarianism : ["🔺a", "🔹n🔹", "🔹t🔹", "🔹i🔹", 
 hippopotomonstrosesquippedaliophobia : ["🔺h", "🔹i🔹", "🔹p🔹", "🔹p🔹", "🔹o🔹", "🔹p🔹", "🔹o🔹", "🔹t🔹", "🔹o🔹", "🔹m🔹", "🔹o🔹", "🔹n🔹", "🔹s🔹", "🔹t🔹", "🔹r🔹", "🔹o🔹", "🔹s🔹", "🔹e🔹", "🔹s🔹", "🔹q🔹", "🔹u🔹", "🔹i🔹", "🔹p🔹", "🔹p🔹", "🔹e🔹", "🔹d🔹", "🔹a🔹", "🔹l🔹", "🔹i🔹", "🔹o🔹", "🔹p🔹", "🔹h🔹", "🔹o🔹", "🔹b🔹", "🔹i🔹", "a🔻"]
 /========================
 
-In the case the results are similar. Words of both types re splitted on 'decorated characters'.
+In the case the results for familiar and unfamiliar words are similar. 
+Words of both types are splitted on 'decorated characters'.
 
 /======================
 
-After 6000 merges (all is merged into original words)
+After 5746 merges (all tokens are merged into original words), we use  "❗" as "UNCNOWN" token:
+/======================
+forgetting : ["🔺f🔹o🔹🔹r🔹🔹g🔹🔹e🔹🔹t🔹🔹t🔹🔹i🔹🔹n🔹g🔻"]
+alice : ["🔺a🔹l🔹🔹i🔹🔹c🔹e🔻"]
+yourself : ["🔺y🔹o🔹🔹u🔹🔹r🔹🔹s🔹🔹e🔹🔹l🔹f🔻"]
+consented : ["🔺c🔹o🔹🔹n🔹🔹s🔹🔹e🔹🔹n🔹🔹t🔹🔹e🔹d🔻"]
+inquisitively : ["🔺i🔹n🔹🔹q🔹🔹u🔹🔹i🔹🔹s🔹🔹i🔹🔹t🔹🔹i🔹🔹v🔹🔹e🔹🔹l🔹y🔻"]
+coronavirus : ["❗"]
+tokenization : ["❗"]
+antidisestablishmentarianism : ["❗"]
+hippopotomonstrosesquippedaliophobia : ["❗"]
+========================
+
+We may see the big difference. Familiar words are tokenized 'by itself'. And it is not a surprise , 
+with the set of tokens the unfamiliar words all become "❗": the tokens can not match any of the 
+words.
+
+The number of the merges in hyperparameter in the system. The question is:
+1.We use the "Alice...." text as a learning text for our system.
+2.Our task is to find some reasonable tokenization for words even not from the very text, but 
+which (tokenization) is more specific than just splitting to characters. 
+3.We believe the "Alice..." text, as a 'big enought' sample of English text, has internal relations 
+between subparts of the text (tokens) , which (in some approximation) reflect the general 
+structure of English language. 
+4.We believe, the relation is more illuminative then just splitting on 'characters'.
+5.We believe , the relation is more general then just the tokens which correspond to the very set of 
+all different words in the "Alice ..." text.
+
+The question: how to find the hyperparameter, which correspond to the tokenization of the text? 
 
 
+
+The results are (Number of merges is 2079): 
+/==================================================
+forgetting : ["🔺f🔹o🔹🔹r🔹🔹g🔹", "🔹e🔹🔹t🔹🔹t🔹🔹i🔹🔹n🔹g🔻"]
+alice : ["🔺a🔹l🔹🔹i🔹🔹c🔹e🔻"]
+yourself : ["🔺y🔹o🔹🔹u🔹🔹r🔹🔹s🔹🔹e🔹🔹l🔹f🔻"]
+consented : ["🔺c🔹o🔹🔹n🔹", "🔹s🔹", "🔹e🔹🔹n🔹🔹t🔹🔹e🔹d🔻"]
+inquisitively : ["🔺i🔹n🔹", "🔹q🔹🔹u🔹", "🔹i🔹🔹s🔹", "🔹i🔹🔹t🔹", "🔹i🔹", "🔹v🔹🔹e🔹🔹l🔹y🔻"]
+coronavirus : ["🔺c🔹o🔹", "🔹r🔹🔹o🔹🔹n🔹", "🔹a🔹", "🔹v🔹", "🔹i🔹🔹r🔹", "🔹u🔹s🔻"]
+tokenization : ["🔺t🔹o🔹", "🔹k🔹", "🔹e🔹🔹n🔹", "🔹i🔹", "🔹z🔹", "🔹a🔹🔹t🔹🔹i🔹🔹o🔹n🔻"]
+antidisestablishmentarianism : ["🔺a🔹n🔹", "🔹t🔹", "🔹i🔹🔹d🔹", "🔹i🔹🔹s🔹", "🔹e🔹🔹s🔹🔹t🔹", "🔹a🔹🔹b🔹", "🔹l🔹", "🔹i🔹🔹s🔹🔹h🔹", "🔹m🔹", "🔹e🔹🔹n🔹🔹t🔹", "🔹a🔹🔹r🔹", "🔹i🔹", "🔹a🔹🔹n🔹", "🔹i🔹🔹s🔹", "m🔻"]
+hippopotomonstrosesquippedaliophobia : ["🔺h🔹i🔹", "🔹p🔹🔹p🔹", "🔹o🔹🔹p🔹", "🔹o🔹🔹t🔹", "🔹o🔹", "🔹m🔹", "🔹o🔹🔹n🔹", "🔹s🔹🔹t🔹", "🔹r🔹", "🔹o🔹🔹s🔹", "🔹e🔹🔹s🔹", "🔹q🔹🔹u🔹", "🔹i🔹", "🔹p🔹🔹p🔹", "🔹e🔹🔹d🔹", "🔹a🔹", "🔹l🔹🔹i🔹", "🔹o🔹🔹p🔹", "🔹h🔹🔹o🔹", "🔹b🔹", "🔹i🔹", "a🔻"]
+========================
 
 
 
