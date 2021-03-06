@@ -254,7 +254,7 @@ pub fn merge_pairs_from_hash<'a>(pairs:(String,String), hsh: HashMap<String, i32
     let bigram = format!("{}{}{}{}{}","\x20", pairs.0,"\x20\x20",pairs.1,"\x20");
 // will be used as a new token
     let glued_bigram = format!("{}{}{}{}","\x20",pairs.0,pairs.1,"\x20");
-    println!("glued_bigram {}", &glued_bigram);
+    println!("Glued_bigram: {}", &glued_bigram);
 // escape bigram, we may encounter in text special symbols, have to meet them literally
     let bigram_escape = regex::escape(bigram.as_str());
     let re = Regex::new(format!("{}", bigram_escape).as_str()).unwrap();
@@ -262,7 +262,7 @@ pub fn merge_pairs_from_hash<'a>(pairs:(String,String), hsh: HashMap<String, i32
 //        println!("word =======> {}", &word);
         let wd = re.replace_all(&word, glued_bigram.as_str()).to_string();
         let count = vc.entry(wd.to_string()).or_insert(0);
-        *count +=frequency;
+        *count +=frequency;   
     }
     return vc
 }
