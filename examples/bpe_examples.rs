@@ -68,7 +68,7 @@ fn main() {
     println!("Vocab of Ordered Tokens: \n {:?}\n", ordered_tokens );
     println!("=========================");
 
-    let num_merges = 5745;
+    let num_merges = 5746;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -76,7 +76,7 @@ fn main() {
           prs = Pairs::from_vocab(&vocab);
           max_pair = Pairs::key_max(&prs);
           println!("Iteration number: {}", &merge);
-          println!("Max pair !!! {:?}", &max_pair);
+          println!("Max pair !!! : {:?}", &max_pair);
           vocab = VocabStage::rebuild_by_merging_pairs(vocab, max_pair);
           tokens = VocabOfTokens::from_words_vocab_bpe(&vocab);
           entropy= tokens.vocab_entropy();
