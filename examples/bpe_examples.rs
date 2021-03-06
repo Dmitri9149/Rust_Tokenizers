@@ -68,7 +68,7 @@ fn main() {
     println!("Vocab of Ordered Tokens: \n {:?}\n", ordered_tokens );
     println!("=========================");
 
-    let num_merges = 5720;
+    let num_merges = 5745;
     let mut prs; // = Pairs::from_vocab(&vocab);
     let mut max_pair;
     for merge in 0..num_merges {
@@ -123,9 +123,9 @@ fn main() {
 
 
     let oho = tokenize_word(&oho_word
-                            ,&ordered_set.set_of_tokens[..],"UNC");
+                            ,&ordered_set.set_of_tokens[..],"❗");
     let uhtu = tokenize_word(&uhtu_word
-                             ,&ordered_set.set_of_tokens[..], "UNC");
+                             ,&ordered_set.set_of_tokens[..], "❗");
 
     let uhtu_1 = tokenize_word(&uhtu_1_word
                                ,&ordered_set.set_of_tokens[..], "❗");
