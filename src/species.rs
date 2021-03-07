@@ -32,7 +32,7 @@ pub fn vocab_with_n_length (n:usize, text:&str) -> HashMap<String, i32> {
 
 pub fn vocab_with_n_length (n:usize, text:&str) -> HashMap<String, i32> {
     let mut hsh = HashMap::new();
-    let mut key = " ".to_string();
+    let mut key;
     let text_vector:Vec<_> = text
         .chars()
         .collect();
