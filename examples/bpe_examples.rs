@@ -107,7 +107,7 @@ fn main() {
     
     println!("=========================");
     ordered_tokens = tokens.to_value_ordered_vector();
-    println!("Vocab of Ordered Tokens (300 samples): \n  {:?}", &ordered_tokens[0..300] );
+    println!("Vocab of Ordered Tokens (300 samples): \n  {:?}", &ordered_tokens[0..300]);
 
 //=========================================================================
 //    let first_word = prepare_for_tokenization_3("antidisestablishmentarianism", "🔺","🔸","🔹","🔻");
