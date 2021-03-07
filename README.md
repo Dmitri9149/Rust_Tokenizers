@@ -18,7 +18,6 @@ http://www.gutenberg.org/ebooks/11 as the text.
 
 The procedure was initially invented for splitting of a rare words to more usual components. But in the project I try to use it as a universal algorithm for tokenization of a text to basic tokens, which may be considered as a basis for vectorization of the text: the basic tokens we find will be the basis (orthogonal) for the text vectorization. This is the program. 
 
-I use modifiers 
 
 We start from something similar to 'chars' (like scalar unicodes or graphemes). The good point: all words are splitted in chars : dog => 'd o g' , cat => 'c a t'. Not a good point: chars are very unspesific , and if the chars will be our basis vectors the 'bag of chars' will not work: 'd o g' and 'g o d' will be the same vectors if we will try to represent the words as sum of basis vectors 'd' , 'o', 'g'. 
 
@@ -35,14 +34,14 @@ And 'i🔻' ; '🔺i' ; '🔹 i🔹' ; '🔺i🔻' all are different tokens too.
 The tokens at the beginning , end , internal of a word all have very different merging statistic withint the process of BPE tokenization. We have to handle them differently and the modifiers help with this. 
 
 Intuition we will use: 
-1.Tokens are resourses. The resourses may merge and produce another resourses : new tokens. 
-2.The resourses are building blocks of our words.
-3.As building blocks the GENERATED tokens may be considered as basis vectors of our system.
+1.Tokens are resourses. The resourses may merge and produce another resourses : new tokens.  
+2.The resourses are building blocks of our words.  
+3.As building blocks the GENERATED tokens may be considered as basis vectors of our system.  
 4.The quantity of possible tokens is VERY HUGE. If we use about 100 characters (unicode scalars) 
 in our words and words up to the length 10 in out texts: the number of possible words is more than 10 in power 20.
-5.The number of words and building blocks which are IN REALITY used for words building is VERY SMALL.
-6.All words in the sample text are generated within about 6000 merges, so, we have max up to 6000 'building tokens'.
-7.Modifiers may be considered as a rudimentary type system or as a rudimentary "positional" encoding.
+5.The number of words and building blocks which are IN REALITY used for words building is VERY SMALL.  
+6.All words in the sample text are generated within about 6000 merges, so, we have max up to 6000 'building tokens'.  
+7.Modifiers may be considered as a rudimentary type system or as a rudimentary "positional" encoding.  
 
 Because of technical reasons (to simplify the search of a tokens, not to use ''lookaround' but a simple regex ) within the course of merges the words are represented like this: 
 
@@ -63,6 +62,7 @@ ib.In case of all tokens are merged in original words (about 6000 merges for the
 
 For only 2 merges, the tokens are mostly 'decorated characters': 
 /=================================
+```
 forgetting : ["🔺f", "🔹o🔹", "🔹r🔹", "🔹g🔹", "🔹e🔹", "🔹t🔹", "🔹t🔹", "🔹i🔹", "🔹n🔹", "g🔻"]
 alice : ["🔺a", "🔹l🔹", "🔹i🔹", "🔹c🔹", "e🔻"]
 yourself : ["🔺y", "🔹o🔹", "🔹u🔹", "🔹r🔹", "🔹s🔹", "🔹e🔹", "🔹l🔹", "f🔻"]
@@ -73,24 +73,26 @@ coronavirus : ["🔺c", "🔹o🔹", "🔹r🔹", "🔹o🔹", "🔹n🔹", "�
 tokenization : ["🔺t", "🔹o🔹", "🔹k🔹", "🔹e🔹", "🔹n🔹", "🔹i🔹", "🔹z🔹", "🔹a🔹", "🔹t🔹", "🔹i🔹", "🔹o🔹", "n🔻"]
 antidisestablishmentarianism : ["🔺a", "🔹n🔹", "🔹t🔹", "🔹i🔹", "🔹d🔹", "🔹i🔹", "🔹s🔹", "🔹e🔹", "🔹s🔹", "🔹t🔹", "🔹a🔹", "🔹b🔹", "🔹l🔹", "🔹i🔹", "🔹s🔹", "🔹h🔹", "🔹m🔹", "🔹e🔹", "🔹n🔹", "🔹t🔹", "🔹a🔹", "🔹r🔹", "🔹i🔹", "🔹a🔹", "🔹n🔹", "🔹i🔹", "🔹s🔹", "m🔻"]
 hippopotomonstrosesquippedaliophobia : ["🔺h", "🔹i🔹", "🔹p🔹", "🔹p🔹", "🔹o🔹", "🔹p🔹", "🔹o🔹", "🔹t🔹", "🔹o🔹", "🔹m🔹", "🔹o🔹", "🔹n🔹", "🔹s🔹", "🔹t🔹", "🔹r🔹", "🔹o🔹", "🔹s🔹", "🔹e🔹", "🔹s🔹", "🔹q🔹", "🔹u🔹", "🔹i🔹", "🔹p🔹", "🔹p🔹", "🔹e🔹", "🔹d🔹", "🔹a🔹", "🔹l🔹", "🔹i🔹", "🔹o🔹", "🔹p🔹", "🔹h🔹", "🔹o🔹", "🔹b🔹", "🔹i🔹", "a🔻"]
-/========================
+========================
+```
 In the case the results for familiar and unfamiliar words are similar. 
 Words of both types are splitted on 'decorated characters'.
 
 
 After 5746 merges (all tokens are merged into original words), we use  "❗" as "UNCNOWN" token:
-/======================
+```
+======================
 forgetting : ["🔺f🔹o🔹🔹r🔹🔹g🔹🔹e🔹🔹t🔹🔹t🔹🔹i🔹🔹n🔹g🔻"]
 alice : ["🔺a🔹l🔹🔹i🔹🔹c🔹e🔻"]
 yourself : ["🔺y🔹o🔹🔹u🔹🔹r🔹🔹s🔹🔹e🔹🔹l🔹f🔻"]
 consented : ["🔺c🔹o🔹🔹n🔹🔹s🔹🔹e🔹🔹n🔹🔹t🔹🔹e🔹d🔻"]
 inquisitively : ["🔺i🔹n🔹🔹q🔹🔹u🔹🔹i🔹🔹s🔹🔹i🔹🔹t🔹🔹i🔹🔹v🔹🔹e🔹🔹l🔹y🔻"]
-
 coronavirus : ["❗"]
 tokenization : ["❗"]
 antidisestablishmentarianism : ["❗"]
 hippopotomonstrosesquippedaliophobia : ["❗"]
-/========================
+========================
+```
 
 We may see the big difference. Familiar words are tokenized 'by itself'. And it is not a surprise , 
 with the set of tokens the unfamiliar words all become "❗": the tokens can not match any of the 
@@ -109,22 +111,23 @@ all different words in the "Alice ..." text.
 
 The question: how to find the hyperparameter, which correspond to the tokenization of the text? 
 
-![plot](entropy_5745_merges_06_03_2021.svg)
+![Alt plot](entropy_5745_merges_06_03_2021.svg)
 
 
 The results are (Number of merges is 2079): 
-/==================================================
+```
+==================================================
 forgetting : ["🔺f🔹o🔹🔹r🔹🔹g🔹", "🔹e🔹🔹t🔹🔹t🔹🔹i🔹🔹n🔹g🔻"]
 alice : ["🔺a🔹l🔹🔹i🔹🔹c🔹e🔻"]
 yourself : ["🔺y🔹o🔹🔹u🔹🔹r🔹🔹s🔹🔹e🔹🔹l🔹f🔻"]
 consented : ["🔺c🔹o🔹🔹n🔹", "🔹s🔹", "🔹e🔹🔹n🔹🔹t🔹🔹e🔹d🔻"]
 inquisitively : ["🔺i🔹n🔹", "🔹q🔹🔹u🔹", "🔹i🔹🔹s🔹", "🔹i🔹🔹t🔹", "🔹i🔹", "🔹v🔹🔹e🔹🔹l🔹y🔻"]
-
 coronavirus : ["🔺c🔹o🔹", "🔹r🔹🔹o🔹🔹n🔹", "🔹a🔹", "🔹v🔹", "🔹i🔹🔹r🔹", "🔹u🔹s🔻"]
 tokenization : ["🔺t🔹o🔹", "🔹k🔹", "🔹e🔹🔹n🔹", "🔹i🔹", "🔹z🔹", "🔹a🔹🔹t🔹🔹i🔹🔹o🔹n🔻"]
 antidisestablishmentarianism : ["🔺a🔹n🔹", "🔹t🔹", "🔹i🔹🔹d🔹", "🔹i🔹🔹s🔹", "🔹e🔹🔹s🔹🔹t🔹", "🔹a🔹🔹b🔹", "🔹l🔹", "🔹i🔹🔹s🔹🔹h🔹", "🔹m🔹", "🔹e🔹🔹n🔹🔹t🔹", "🔹a🔹🔹r🔹", "🔹i🔹", "🔹a🔹🔹n🔹", "🔹i🔹🔹s🔹", "m🔻"]
 hippopotomonstrosesquippedaliophobia : ["🔺h🔹i🔹", "🔹p🔹🔹p🔹", "🔹o🔹🔹p🔹", "🔹o🔹🔹t🔹", "🔹o🔹", "🔹m🔹", "🔹o🔹🔹n🔹", "🔹s🔹🔹t🔹", "🔹r🔹", "🔹o🔹🔹s🔹", "🔹e🔹🔹s🔹", "🔹q🔹🔹u🔹", "🔹i🔹", "🔹p🔹🔹p🔹", "🔹e🔹🔹d🔹", "🔹a🔹", "🔹l🔹🔹i🔹", "🔹o🔹🔹p🔹", "🔹h🔹🔹o🔹", "🔹b🔹", "🔹i🔹", "a🔻"]
 ========================
+```
 
 The sample output: 
 ```
