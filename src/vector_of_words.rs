@@ -52,8 +52,8 @@ impl WordsVector {
         let mut results = Vec::new();
         for line in string
             .lines() {
-                line.trim();
-                line.trim_matches('\"');
+//                line.trim();
+//                line.trim_matches('\"');
 /*                line.chars().next().map(|c| if c=='\"'{
                     &line[c.len_utf8()..]
                 } else {
@@ -68,7 +68,7 @@ impl WordsVector {
                     }
                 }
 */
-                for word in line.split_whitespace() { 
+                for word in line.trim().trim_matches('\"').split_whitespace() { 
                 results.push(String::from(word));
             }  
         }
