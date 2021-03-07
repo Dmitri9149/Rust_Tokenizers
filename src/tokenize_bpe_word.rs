@@ -22,7 +22,7 @@ pub fn tokenize_word(string:&str, ordered_tokens:&[String], unknown_token:&str)
             return vec![unknown_token.to_string().clone()];
         }
 
-        let mut token="****************";
+        let mut token;
         let mut token_escape;
         let mut re_token;
         let mut matched_positions;
