@@ -115,15 +115,19 @@ structure of English language.
 5.We believe , the relation is more general than just the tokens which correspond to the very set of 
 all different words in the "Alice ..." text.
 
-The question: how to find the hyperparameter?
-Blow is the possible answer (and algorithm).  
-At every stage of merge we have vocabulary of: (token:quantity of the token in the text). We may calculate the 
-distribution => (token:frequency of the token in the text). For the distribution, we calculate the entropy. Within 
-the process of tokenization the entropy grows and then decrease.   
-Find the number of merge for the max entropy (NMAX).
-Run the tokenization process from the beginning ('chars' stage) up to the NMAX. The vocabulary of tokens will be our 
-final vocab of tokens. 
-Let us see the plot (the process is run up to the end, 5746 merges). The max of entropy is at about 2000 merges.
+How to find the hyperparameter?  
+
+Below is the possible answer (and algorithm).  
+At every stage of merge we have vocabulary of: (token:quantity of the token in the text).   
+We may calculate the distribution => (token:frequency of the token in the text).   
+For the distribution, we calculate the entropy.   
+Within the process of tokenization the entropy grows and then decrease.   
+Find the number of merge for the max entropy (NMAX).  
+Run the tokenization process from the beginning ('characterss' stage) up to the NMAX.   
+The vocabulary of tokens will be our final vocab of tokens.   
+
+Below is the plot for entropy. The process is run up to the end, 5746 merges.   
+The max of entropy is at about 2000 merges.
 
 ![Alt plot](entropy_5746_merges_07_03_2021.svg)
 
