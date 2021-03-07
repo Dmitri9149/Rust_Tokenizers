@@ -43,7 +43,7 @@ impl VocabOfTokens {
         for (_key,value) in &self.tokens {
             sum += *value as f32;
        }
-        for (key,value) in &self.tokens {
+        for (_key,value) in &self.tokens {
             let f = *value as f32/sum;
             entropy -= f*f.log2();
         }
