@@ -110,7 +110,7 @@ all different words in the "Alice ..." text.
 
 The question: how to find the hyperparameter, which correspond to the tokenization of the text? 
 
-![Alt plot](entropy_5745_merges_06_03_2021.svg)
+![Alt plot](entropy_5746_merges_07_03_2021.svg)
 
 
 The results are (Number of merges is 2079): 
