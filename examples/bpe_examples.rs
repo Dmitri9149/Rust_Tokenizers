@@ -95,19 +95,19 @@ fn main() {
     }
 
     println!("=========================");
-    println!("After {} mergings of most frequent pairs: \n", num_merges);
-    println!("The tokens vocab looks like this:\n {:?}",&tokens.tokens);
+//    println!("After {} mergings of most frequent pairs: \n", num_merges);
+//    println!("The tokens vocab looks like this (300 samples):\n {:?}",&tokens.tokens[&(0..300)];
     tokens_size = tokens.tokens.keys().len();
     println!("Number of final  tokens {}", tokens_size);
 
     let ordered_set = OrderedSetOfTokens::from_bpe_tokens(&tokens);
 
     println!("=========================");
-    println!("OrderedSetOfTokens: \n {:?}", &ordered_set.set_of_tokens);
+    println!("Ordered Set Of Tokens (300 samples): \n {:?}", &ordered_set.set_of_tokens[0..300]);
     
     println!("=========================");
     ordered_tokens = tokens.to_value_ordered_vector();
-    println!("Vocab of Ordered Tokens: \n  {:?}", ordered_tokens );
+    println!("Vocab of Ordered Tokens (300 samples): \n  {:?}", &ordered_tokens[0..300]);
 
 //=========================================================================
 //    let first_word = prepare_for_tokenization_3("antidisestablishmentarianism", "🔺","🔸","🔹","🔻");

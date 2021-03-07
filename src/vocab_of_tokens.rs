@@ -2,7 +2,7 @@ use std::collections::HashMap;
 //use std::ops::Deref;
 use crate::VocabStage;
 use crate::vector_of_words::merge_pairs_from_hash;
-use std::iter::FromIterator;
+//use std::iter::FromIterator;
 
 // vocab of tokens , by vocab we mean here the dictionary of 
 // token:number_of_tokens
@@ -40,10 +40,10 @@ impl VocabOfTokens {
     pub fn vocab_entropy (&self) -> f32 {
         let mut sum:f32 = 0.0;
         let mut entropy:f32 = 0.0;
-        for (key,value) in &self.tokens {
+        for (_key,value) in &self.tokens {
             sum += *value as f32;
        }
-        for (key,value) in &self.tokens {
+        for (_key,value) in &self.tokens {
             let f = *value as f32/sum;
             entropy -= f*f.log2();
         }
