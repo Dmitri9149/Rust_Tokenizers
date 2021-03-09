@@ -20,7 +20,8 @@ fn main() {
     let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*", '🦀');
     let txt = TextStage::separate_punctuation(txt, ",.!?;:");
     let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
-//    println!("{:?}",txt.text1)
+//    println!("{:?}",txt.text1);
+//    return ();
     let vec = WordsVector::from_string_ws(txt);
     let vec = WordsVector::string_infront(vec, "\x20\x20");
 //    let vec = WordsVector::string_toend(vec,"\x20\x20</w>\x20\x20");
