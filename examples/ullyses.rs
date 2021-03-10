@@ -15,16 +15,17 @@ use gnuplot::Graph;
 fn main() {
 // get text from the file 
 // the text is one big string at the stage/
-    let txt = TextStage::build_text_stage("alice_wonderland.txt");
+    let txt = TextStage::build_text_stage("data/Ulysses.txt");
 //    let txt = TextStage::build_text_stage("alllines.txt");
 //    some text preprosessing before splitting on words
 //    we use only lowercase words
-    let txt = TextStage::to_lowercase(txt);
+//    let txt = TextStage::to_lowercase(txt);
     let txt = TextStage::separate_punctuation(txt, ".,!?;:");
     let txt = TextStage::replace_chars_to_char(txt, "—(”)“_\\–[]\"/‘*-", '🦀');
     let txt = TextStage::separate_punctuation(txt, ",.!?;:");
     let txt = TextStage::replace_char_to_char(txt, '🦀', ' ');
-//    println!("{:?}",txt.text1);
+    println!("{:?}",txt.text1);
+//    return ();
     let vec = WordsVector::from_string_ws(txt);
     let vec = WordsVector::infront_3(vec, "🔺","🔹","🔹","🔻");
 
