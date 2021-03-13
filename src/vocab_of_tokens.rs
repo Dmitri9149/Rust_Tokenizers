@@ -16,7 +16,7 @@ impl VocabOfTokens {
 
 // take VocabStage vocab_bpe words (specially organized words where tokens are 
 // separated by white spaces) and 
-// split it on white spaces
+// split it on tokens
     pub fn from_words_vocab_bpe (smth: &VocabStage) -> VocabOfTokens {
         let hsh = create_from_words_vocab_bpe(&smth);
         VocabOfTokens {tokens:hsh}
@@ -50,7 +50,8 @@ impl VocabOfTokens {
 
         entropy
     }
-
+// transform vocab to vector , order the vector in accordance of the 
+// value (frequency)
     pub fn to_value_ordered_vector(&self) -> Vec<(String,i32)> {
         let mut vc:Vec<(String,i32)> = self
             .tokens.iter()
