@@ -79,7 +79,7 @@ impl Pairs {
 
 // calculate the most frequent pair of consequtive tokens in words of VocabStage
     pub fn key_max(&self) -> (String, String) {
-        let res = &*max_key(&self.pairs).expect("The vocabulary is to be not empty");
+        let res = max_key(&self.pairs).expect("The vocabulary is to be not empty");
         (res.0.to_string(),res.1.to_string())
     }
 }
