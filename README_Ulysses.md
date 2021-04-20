@@ -335,9 +335,6 @@ Tokenize sample word ! PPPPPPPabacNNNNNNNNNNNNNN
  The result is : ["P", "P", "P", "P", "P", "P", "Pa", "bac", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"]
 
 The best merge is 21923
-
-
-(gnuplot_qt:20703): Gtk-WARNING **: 20:02:24.735: Failed to fetch network locations: Timeout was reached
 ~>/bpe$ 
 
 
