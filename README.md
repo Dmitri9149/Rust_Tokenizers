@@ -1,63 +1,62 @@
-This is experimental project (the algorithm is emerging in permanent experiments with text tokenization).
+This is project for words tokenization using BPE like tokenizer. Tokenizer in written from Scratch in Rust.  --> -->
+In similar project I make tokenization of texts on the sentence level. 
 
-The main idea is similar to the Byte Pair Encoding tokenizer: 
+
+The main idea of the tokenizer is similar to the Byte Pair Encoding tokenizer: 
 https://arxiv.org/pdf/1508.07909.pdf - 	the original article; 
 https://leimao.github.io/blog/Byte-Pair-Encoding/ - some Python implementations. 
 Here the implementation is in Rust. 
 
-The BPE idea: 
-We have a text and split it in words: the result is vocabulary of: (word,frequency of the word in the text). 
+We have a text and split it in words. The result is vocabulary of: (word, quantity of the word in the text). 
 Initial tokens are characters (more general unicode scalars). We split all words in
 vocabulary to the characters (initially).
-At every step we find the most frequent pair of consequtive tokens in our vacabulary replace the most frequent pair with the new token. The token is the glued pair of most frequent tokens. 
+At every step we find the most frequent pair of consequtive tokens in our vacabulary, find the most frequent pair, replace the most frequent pair with the new token. Something like 't' and 'h' -> 'th'. Usually , in an English text, the the 't' and 'h' are merging at the very beginning, after a few iterations. 
 
 The 'Alice's Adventures in Wonderland by Lewis Carroll' from Gutenberg project is used here : 
 http://www.gutenberg.org/ebooks/11 as the text.
 
+We may say the tokenizer at the level of 'words as collections of characters' generate 'characters idioms', in English text 'i', 'n', 'g' will soon become 'ing'. 
 
-The BPE tokenizer was initially invented for splitting of a rare words to more usual components. But in the project I try to use it as a universal algorithm for tokenization of a text to basic tokens, which may be considered as a basis for vectorization of the text: the basic tokens we find will be the basis (orthogonal) for the text vectorization. This is the program. 
+If we will use BPE like tokenizer on the level of 'sentences as collections of words' it will generate 
+'words idioms', something like 'of' and 'the' to the 'of the'. The 'of the' is a new token , with a separate meaning from 'of' and 'the'. We may expect, in machine translation 'of the' will be translated as a whole token to a similar idiomatic token in target languge. In the process: we decrease number of words in a sentence, generate tokens with idiomatic meaning. Moreover, a sentence, writtem in a new token, is more 'stable' for a words permutations, which makes just a sentence as a bag of tokens model more attractive. This is another project, here we run tokenizer at the level of 'words as collection of characters'.
 
+The BPE tokenizer was initially invented for splitting of a rare words to more usual components. But in the project I try to use it as a universal algorithm for tokenization of a text to basic tokens, which we may use as basis vectors. 
 
-We start from something similar to 'characters' (like scalar unicodes or graphemes). The good point: all words are splitted in chars : dog => 'd o g' , cat => 'c a t'. Not a good point: characters are very unspesific , and if the chars will be our basis vectors the 'bag of chars' will not work: 'd o g' and 'g o d' will be the same vectors if we will try to represent the words as sum of basis vectors 'd' , 'o', 'g'. 
+We may start from the naive approach. 
+A natural basis for text vectorization is basis of 'characters' (unicode scalars). Every character is basis vector, and we have natural orthonormal basis. 'dog' is 'd o g' and 'cat ' is 'c a t'. We can vectorize all words and even think about a sentence as bag of characters: vectorize sentences. But we soon will have problems: 'dog' and 'god' will have the same representation in the basis. This decomposition correnspond to the beginning of the tokenization process. The basis vectors are too unspesific to represent a word as composition of vectors. 
 
-On the other edge of the tokenization process we will have as our tokens the very initial words: 'alice', 
-'her', 'head' etc.... will be same time the initial words and out basis vectors. It is some kind of 'one hot encoding'. Bag of words model is working trivially : word 'alice' is represented as vector 'alice'; 'her' => will be our basis vector 'her'.  There is always one token in the bag. 
-Here we have another problem : the vectors are too specific. 'dog' and 'dogs' are different vectors, even there is an intuitive filling the 'dogs' is something like a bag of 'dog' and 's'. We will have very big vocabulary of of basic words-tokens (our basis vectors) without any natural reflection of relations of the words. We declare as ''basis' (or basic) actually what is not a basic because of the internal relations , which we ignore. 
+Within tokenization, finally, we will get the set of initial words as 'tokens'. The 'dust' of initial characters will generate tokens which same time are words in our text. The set of basis tokens-vectors will be very simple and very big: every word will be our basis vector.  'dogs', 'dog' , 'cat', 'god', 'alice' will repsesent themselves as basis vectors. The basis vectors are too specific: 'dogs' and 'dog' will be orthonormal without any indication that 'dogs' are actually 'dog s'. But there will be exact one to one correspondence between vectors and words. 
 
-Let us return to the chars. The chars at the beginning , end and inside a word behave differently. And if we have a standalone I it is not the same as 'i' at the beginning or end of a word. Let us use 'modifiers'. Modifiers are not a tokens, but they will 'decorate' a characters as a rudimentary type system: 
+We need something in between. If we start from 'dust of characters' quite soon we will see the newly generated tokens may improove our basis system: quite soon new tokens like 'do' and 'go' will be generated from characters. And we will have 'do g' and 'go d' (a word splitting to tokens will always will be done starting from the longest tokens). The bag of tokens 'do' and 'g' (the sum of the basis vectors) is now different from the bag 'go' and 'd'. The two words now have the unique representations as sum of basis vectors (actually bag of tokens, the sum is symmetric to tokens permutation). The bag of 'do' and 'g' still may represent 'g do' word: but there is no such word in English. There is strong 'symmetry breacking' in a language: characters ordering is very important, we can represent words as just a multiset of characters. The hyposesis is: with 'clever' tokenization we will be able to use just 'bag of tokens' as our words representation, or to be much closer to it. 
+
+The characters at the beginning , end and inside a word behave differently. And if we have a standalone 'I' it is not the same as 'i' at the beginning or end of a word.
+That is why I try to use 'modifiers'. Modifiers are not a tokens, but they will 'decorate' a characters as a rudimentary type system: 
 "🔺","🔸","🔹","🔻"
 
-The '🔺d🔹o🔹g🔻' and '🔺g🔹 o🔹 d🔻'  ==> now 'd🔻' and '🔺d' are different basis tokens corresponding to 
-the characters at the beginning or end of words.   
-By two blue diamonds (like'🔹o🔹') we will modify the internal characters. 'd🔻' ; '🔺d' and '🔹 d🔹' are different basis tokens now (different basis vectors). (We use emoji as the modifiers).   
+The '🔺d🔹o🔹g🔻' and '🔺g🔹 o🔹 d🔻'  ==> now 'd🔻' and '🔺d' are different basis tokens corresponding to the characters at the beginning or end of words.   
+Two blue diamonds (like'🔹o🔹') will modify the internal characters. 'd🔻' ; '🔺d' and '🔹 d🔹' are different basis tokens now. I use the emoji as the modifiers just for a better visualization.
 The two '🔹' from every side of a token are used in part for not to use 'lookaround' in regex.
-And 'i🔻' ; '🔺i' ; '🔹 i🔹' ; '🔺i🔻' all are different tokens too. 
+And 'i🔻' ; '🔺i' ; '🔹i🔹' ; '🔺i🔻' all are different tokens too. 
 The tokens at the beginning , end , internal of a word all have very different merging statistic within the process of tokenization. We have to handle them differently and the modifiers help with this. 
 
-Intuition we will use: 
+Intuition I will use: 
 -1.Tokens are resourses. The resourses may merge and produce another resourses : new tokens.  
--2.The merging process is similar to logical derivation rules. But the rules are not 'ad hoc' determened 
-but emerge in the global process of calculation of most frequent pairs. The logic emerges from the statistics of 
-our text.
+-2.The merging process is similar to logical derivation rules. The rules are not 'ad hoc' determened, but emerge in the global process of calculation and merging of most frequent pairs. The logic emerges from the statistics of the text. It reflects the presence of 'characters idioms' and reveals its. 
 -3.The resourses (tokens) are the building blocks of our words.  
--4.The building blocks, the GENERATED tokens may be considered as basis vectors of our system.  
--5.The quantity of possible tokens is VERY HUGE. If we use about 100 characters (unicode scalars) 
+-4.The building blocks, the GENERATED tokens may be considered as natural basis vectors of our system.  
+-5.The quantity of POSSIBLE tokens is VERY HUGE. If we use about 100 characters (unicode scalars) 
 in our words and words up to the length 10 chracters in out texts: the number of possible words is more than 10 in power 20.
--6.The number of words and building blocks which are IN REALITY used for words building is VERY SMALL (in comparison 
-with the all possible 'words').
--7.All words in the sample text are generated within about 6000 merges, so, we have max up 
-to 6000 'building tokens'. 
--8.Modifiers may be considered as a rudimentary type system or as a rudimentary "positional" encoding.  
+-6.The number of words and tokens which are IN REALITY used for words building is VERY SMALL (in comparison with the all possible 'words' and its partitions).
+-7.Modifiers may be considered as a rudimentary type system or as a rudimentary "positional" encoding.  
 
 Because of technical reasons (to simplify the search of a tokens, not to use ''lookaround' but a simple regex ) within the course of merges the words are represented like this: 
 
-"  🔺a  🔹d🔹  🔹v🔹  🔹e🔹  🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻  "  <=== two empty spaces are inserted 
-between every pair of modified tokens and at the end and beginning of a word.
+" 🔺a  🔹d🔹  🔹v🔹  🔹e🔹  🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻 "  <===  empty spaces are inserted from each side of every token.
 
 If at some merge 🔹e🔹  🔹n🔹  pair will merges, we will get : 
-"  🔺a  🔹d🔹  🔹v🔹  🔹e🔹🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻  "
+" 🔺a  🔹d🔹  🔹v🔹  🔹e🔹🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻 "
 If at some merge 🔺a  🔹d🔹 are to be merged (as most frequent pair), we will get:
-"  🔺a🔹d🔹  🔹v🔹  🔹e🔹  🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻  "
+" 🔺a🔹d🔹  🔹v🔹  🔹e🔹  🔹n🔹  🔹t🔹  🔹u🔹  🔹r🔹  🔹e🔹  s🔻 "
 
 Let us take some 'familiar' and 'not familiar' words for the 'Alice ...' text.
 Familiar means some words from the 'Alice.....' text like : 'forgetting' , 'alice', 'yourself', 'consented'.
@@ -100,7 +99,7 @@ hippopotomonstrosesquippedaliophobia : ["❗"]
 ========================
 ```
 
-We may see the big difference. Familiar words are tokenized 'by itself'. And it is not a surprise , 
+We may see the big difference. Familiar words are tokenized 'by itself'. And it is not a surprise, 
 with the set of tokens the unfamiliar words all become "❗". The tokens can not match any of the 
 words.
 
@@ -108,21 +107,19 @@ The number of the merges is hyperparameter in the system. The question is:
 1.We use the "Alice...." text as a learning text for our system.
 2.Our task is to find some reasonable tokenization for words even not from the very text where 
 tokenization is more specific than just splitting to characters. 
-3.We believe the "Alice..." text, as a 'big enought' sample of English text, has internal relations 
-between subparts of the text (tokens) , which (in some approximation) reflect the general 
+3.We may assume the "Alice..." text, as a 'big enought' sample of English text, has internal relations between subparts of the text (tokens), which (in some approximation) reflect the general 
 structure of English language. 
-4.We believe, there exist a relation which is more illuminative than just splitting on 'characters'.
-5.We believe , the relation is more general than just the tokens which correspond to the very set of 
-all different words in the "Alice ..." text.
+4.We may assume, there exist a relation which is more illuminative than just splitting on 'characters'.
+5.We may assume, the relation is more general than just the tokens which correspond to the very set of all different words in the "Alice ..." text.
 
 How to find the hyperparameter?  
 
 Below is the possible answer (and algorithm).  
-At every stage of merge we have vocabulary of: (token:quantity of the token in the text).   
-We may calculate the distribution => (token:frequency of the token in the text).   
+At every stage of merge we have vocabulary: (token -> quantity of the token in the vocabulary).   
+We may calculate the distribution => (token -> frequency of the token in the vocab).   
 For the distribution, we calculate the entropy.   
-Within the process of tokenization the entropy grows and then decrease.   
-Find the number of merge for the max entropy (NMAX).  
+Within the process of tokenization the entropy grows, reach some plato and even then decrease.   
+Find the number of merge for the max entropy (NMAX) (or where plato is reached).
 Run the tokenization process from the beginning ('characterss' stage) up to the NMAX.   
 The vocabulary of tokens will be our final vocab of tokens.   
 
@@ -132,7 +129,8 @@ The max of entropy is at about 2000 merges.
 ![Alt plot](entropy_5746_merges_07_03_2021.svg)
 
 
-The tokenization when Number of merges is 2079: 
+THE TOKENIZATION WHEN WE RUN THE PROGRAM UP TO 2079 ITERATIONS, WHICH CORRESPOND TO THE 
+MAXIMUM OF ENTROPY: 
 ```
 ==================================================
 forgetting : ["🔺f🔹o🔹🔹r🔹🔹g🔹", "🔹e🔹🔹t🔹🔹t🔹🔹i🔹🔹n🔹g🔻"]
@@ -148,7 +146,7 @@ hippopotomonstrosesquippedaliophobia : ["🔺h🔹i🔹", "🔹p🔹🔹p🔹", 
 ```
 
 
-And below is the sample output of the programm: 
+And below is the sample output of the programm (NUMBER OF ITERATIONS IS ABOUT 5745 WHEN ALL THE WORDS IN THE TEXT WILL BE THE GENERATED TOKENS): 
 ```
 ~>/bpe$ cargo run --example bpe_examples
    Compiling bpe v0.1.0 (/home/dmitri/bpe)
